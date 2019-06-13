@@ -1,0 +1,180 @@
+"""
+Module contenant la classe destinée à transformer une ontologie RDFLib en un
+ensemble d'objets. Cette classe est destinée à être appelée par une classe de 
+type "Ontology".
+"""
+
+
+import rdflib
+from rdflib import RDF, OWL
+from .OwlClasses import OwlClass, OwlObjectProperties
+
+
+class OntologyConstructor:
+    """
+    Constructeur d'ontologies
+    """
+
+    def __init__(self, context):
+        self.context = context
+        self._ontologyclasses = {}
+
+    def uriToName(self, uri, *args, **kwargs):
+
+        uriDelimiter = kwargs.get("uriDelimiter", "#")
+
+        swich = {
+            rdflib.term.URIRef: lambda x: x.partition(uriDelimiter)[2],
+            rdflib.term.BNode: lambda x: x.toPython()
+        }
+
+        return swich.get(type(uri), None)(uri)
+
+    def _subClassConstructor(self, uri):
+
+        # Définition uri subClass
+        rdf_subClassOf_uri = rdflib.term.URIRef(
+            'http://www.w3.org/2000/01/rdf-schema#subClassOf')
+
+        # Extraction des objets qui sont des sous-classes de la
+        # classe traitée
+        subclasses = self.context.graph.triples(
+            (uri, rdf_subClassOf_uri, None))
+        subclasses_instances = []
+
+        for subclass in subclasses:
+            # Récupération de l'uri des sous-classes
+            subclass_uri = subclass[2]
+            # Création du nom
+            subclass_name = self.uriToName(subclass_uri)
+
+            # Si la classe n'existe pas on la crée
+            if subclass_name not in self._ontologyclasses:
+                print(subclass_name)
+                self.RdfClassConstructor(subclass_uri)
+
+            # Ajout de la classe créée dans le dictionnaire des attribus
+            if subclass_name not in subclasses_instances:
+                subclass_instance = self._ontologyclasses.get(
+                    subclass_name, None)
+                subclasses_instances.append(subclass_instance)
+            else:
+                raise Exception("fuck")
+
+            print("sub: %s" % (subclass,))
+
+        return subclasses_instances
+
+    def _supClassConstructor(self, cls):
+        # Ajout des supclass
+        for supClass in cls.supClasses:
+            print(supClass)
+            supClass.subClasses.append(cls)
+
+    def RdfClassesConstructor(self):
+
+        classes_dct = {}
+
+        # On appele le constructeur de classe pour chaque classe de l'ontologie
+        for triple in self.context.graph.triples((None, RDF.type, OWL.Class)):
+            key, dct = self.RdfClassConstructor(triple[0])
+
+            if key in classes_dct:
+                # Fusion paramètres.
+                raise Exception("Todo")
+            else:
+                classes_dct[key] = dct
+
+        # Création des classes
+        for i, v in classes_dct.items():
+            # Création de la classe
+            newclass = type(i, (OwlClass,), v)
+            # Ajout de la classe dans le dictionnaire des classes
+            self._ontologyclasses[i] = newclass
+
+        return self._ontologyclasses
+
+    def RdfClassConstructor(self, uri):
+
+        # Nom de la classe
+        name = self.uriToName(uri)
+
+        # Attributs de la classe
+        dct = {
+            "uri": uri,
+            "subClasses": [],
+            "supClasses": []
+        }
+
+        # subclasses_instances = self._subClassConstructor(uri)
+        # dct["supClasses"].extend(subclasses_instances)
+
+        # Ajout des supclass
+        # self._supClassConstructor(newclass)
+
+        return (name, dct)
+
+    def propertyConstructor(self):
+
+        self._ontologyproperties = {}
+
+        rdf_subPropertyOf_uri = rdflib.term.URIRef(
+            'http://www.w3.org/2000/01/rdf-schema#subPropertyOf')
+        rdf_domain_uri = rdflib.term.URIRef(
+            'http://www.w3.org/2000/01/rdf-schema#domain')
+        rdf_range_uri = rdflib.term.URIRef(
+            'http://www.w3.org/2000/01/rdf-schema#range')
+
+        def _propertyConstructor(uri):
+
+            name = self.uriToName(uri)
+
+            dct = {
+                "uri": uri,
+                "subPropertyOf": set(),
+                "supPropertyOf": set(),
+                "domain": set(),
+                "range": set()
+            }
+
+            # Range
+            try:
+                property_range = list(
+                    zip(*self.context.context.graph.triples((uri, rdf_range_uri, None))))[-1]
+            except IndexError:
+                property_range = []
+            property_range = {
+                self._ontologyclasses[self.uriToName(i)] for i in property_range}
+            dct["range"] = property_range
+
+            # Domain
+            try:
+                property_domain = list(
+                    zip(*self.context.graph.triples((uri, rdf_domain_uri, None))))[-1]
+            except IndexError:
+                property_domain = []
+            property_domain = {
+                self._ontologyclasses[self.uriToName(i)] for i in property_domain}
+            dct["domain"] = property_domain
+
+            # subProperty
+            subproperties = self.context.graph.triples(
+                (uri, rdf_subPropertyOf_uri, None))
+            for subproperty in subproperties:
+                subproperty_uri = subproperty[2]
+                subproperty_name = self.uriToName(subproperty_uri)
+                if not subproperty_name in self._ontologyproperties:
+                    _propertyConstructor(subproperty_uri)
+                dct["subPropertyOf"].add(
+                    self._ontologyproperties[subproperty_name])
+
+            # Class generation
+            newproperty = type(name, (OwlObjectProperties,), dct)
+            self._ontologyproperties[name] = newproperty
+
+            # supProperty
+            for supProperty in newproperty.subPropertyOf:
+                supProperty.supPropertyOf.add(newproperty)
+
+        for a in self.context.graph.triples((None, RDF.type, OWL.ObjectProperty)):
+            _propertyConstructor(a[0])
