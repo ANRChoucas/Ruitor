@@ -27,4 +27,14 @@ class Ontology:
         # self.ontology_constructor.propertyConstructor()
 
     def append(self):
+<<<<<<< HEAD
         pass
+=======
+        pass
+
+
+if __name__ == "__main__":
+    g = rdflib.Graph()
+    result = g.parse("data/ontologies/relations_spatiales.owl")
+    Ontology(g)
+>>>>>>> 1913ee7853349e0bbb297608cd31b55de5d919fc
