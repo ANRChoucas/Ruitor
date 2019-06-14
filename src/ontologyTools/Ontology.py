@@ -4,7 +4,7 @@ Module contenant la classe principale du package, Ontology
 
 
 import rdflib
-from .OntologyConstructor import OntologyConstructor
+from . import OntologyConstructor
 
 
 class Ontology:
@@ -12,7 +12,7 @@ class Ontology:
     Classe principale du package
     """
 
-    default_ont_constr_strategy = OntologyConstructor
+    default_ont_constr_strategy = OntologyConstructor.BasicOntologyConstructor
 
     def __init__(self, graph, ont_constr_strategy=None):
         self.graph = graph

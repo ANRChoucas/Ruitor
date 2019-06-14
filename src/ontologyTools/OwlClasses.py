@@ -16,19 +16,35 @@ class _RDFMeta(type):
         return super().__new__(cls, name, bases, dct)
 
 
-class OwlThing(object):
-
+class RdfRessource(object):
     uri = None
 
+    def __str__(self):
+        try:
+            return self.label
+        except AttributeError:
+            return "%s" % (__class__.__name__)
 
-class OwlNamedEntity(OwlThing):
+
+class OwlNamedEntity(RdfRessource):
     pass
 
 
-class OwlObjectProperties(OwlThing):
+class OwlObjectProperties(RdfRessource):
     pass
 
 
-class OwlClass(OwlThing):
+class OwlClass(RdfRessource):
     pass
-    # subClassOf = []
+
+
+class OwlDataType(RdfRessource):
+    pass
+
+
+class OwlAnnotation(RdfRessource):
+    pass
+
+
+class OwlOntology(RdfRessource):
+    pass

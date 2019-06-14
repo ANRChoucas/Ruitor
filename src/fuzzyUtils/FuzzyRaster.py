@@ -5,8 +5,8 @@ Module décrivant la classe FuzzyRaster.
 
 """
 
-from .Fuzzyfiers import FuzzyfierMoreSpeeeeed
-from .FuzzyOperators import ZadehOperators
+from . import Fuzzyfiers
+from . import FuzzyOperators
 
 import numpy as np
 import matplotlib.pyplot as pyplot
@@ -18,8 +18,8 @@ class FuzzyRaster:
     """Classe FuzzyRaster
     """
 
-    default_fuzzy_operators_strategy = ZadehOperators
-    default_fuzzyfier_strategy = FuzzyfierMoreSpeeeeed
+    default_fuzzy_operators_strategy = FuzzyOperators.ZadehOperators
+    default_fuzzyfier_strategy = Fuzzyfiers.FuzzyfierMoreSpeeeeed
 
     def __init__(self, fuzzy_operators_strategy=None,
                  fuzzyfier_strategy=None, **kwargs):
