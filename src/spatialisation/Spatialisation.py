@@ -10,8 +10,8 @@ class Spatialisation:
             self.modifier = modifier
 
     def compute(self, *args):
-        params = self.paramsCalc()
-        return self._compute(*args, params)
+        #params = self.paramsCalc()
+        return self._compute(*args)
 
     def _compute(self, *args):
         raise NotImplementedError
@@ -29,7 +29,7 @@ class Proximity(Spatialisation):
         super().__init__(raster, modifier)
 
     def _paramsCalc(self):
-        return  [(5, 1.0), (10, 0.0)]
+        return [(5, 1.0), (10, 0.0)]
 
     def _compute(self, fuzzyparams):
 

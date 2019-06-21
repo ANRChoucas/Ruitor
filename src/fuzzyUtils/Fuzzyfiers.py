@@ -13,7 +13,6 @@ class Fuzzyfier:
     Classe permettant la fuzzification d'un raster net
     """
 
-
     def __init__(self, context):
         self.context = context
 
@@ -132,6 +131,8 @@ class FuzzyfierMoreSpeeeeed(Fuzzyfier):
         # Définition de la fonction
         # Liste de patterns en fonction du nombre de paramètres
         fun_rules = {
+            # Cas crisp
+            1: (self._inf_vals,),
             # Cas où la fonction est une droite
             2: (self._inf_vals, self._fst_slp, self._sup_vals),
             # la fonction est de forme triangulaire
@@ -142,7 +143,7 @@ class FuzzyfierMoreSpeeeeed(Fuzzyfier):
         # Caneva de la fonction "fuzzy fun"
 
         def fuzzy_fun(raster):
-            raster_copy = raster.copy()
+            raster_copy = np.zeros_like(raster)
             try:
                 # On récupère la liste d'instruction correspondant au nombre d'arguments
                 for ins in fun_rules[largs]:

@@ -1,6 +1,7 @@
 class FuzzyficationFunction(list):
 
     ftypes = {
+        1: 'crisp',
         2: 'linear',
         3: 'triangular',
         4: 'trapezoidal'
