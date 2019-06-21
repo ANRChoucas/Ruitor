@@ -81,7 +81,7 @@ class FuzzyRaster:
         """
 
         self.crisp_values = raster.read()
-        self.values = self.crisp_values
+        self.values = self.crisp_values[0]
         self.raster_meta = raster.meta
 
     def _init_from_numpy(self, array, meta=None):
@@ -116,7 +116,7 @@ class FuzzyRaster:
     #   return self.values[self.values != self.raster_meta['nodata']]
 
     def plot(self):
-        pyplot.matshow(self.values[0], cmap='gray')
+        pyplot.matshow(self.values, cmap='gray')
 
     def summarize(self):
         rastmin = self.values.min()
