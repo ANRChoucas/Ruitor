@@ -17,57 +17,23 @@ class RDFDic(dict):
         graph = kwargs.get('graph')
 
         if graph:
-            self.__dict__ = {}
+            __dict__ = {}
             for i in graph:
                 sub, prd, obj = i
-                if sub in self.__dict__:
-                    if prd in self.__dict__[sub]:
-                        self.__dict__[sub][prd].append(obj)
+                if sub in __dict__:
+                    if prd in __dict__[sub]:
+                        __dict__[sub][prd].append(obj)
                     else:
-                        self.__dict__[sub].update({prd: [obj]})
+                        __dict__[sub].update({prd: [obj]})
                 else:
-                    self.__dict__[sub] = {prd: [obj]}
+                    __dict__[sub] = {prd: [obj]}
         else:
-            self.__dict__ = {**kwargs}
+            __dict__ = {**kwargs}
 
-    def __setitem__(self, key, item):
-        self.__dict__[key] = item
-
-    def __getitem__(self, key):
-        return self.__dict__[key]
-
-    def __repr__(self):
-        return repr(self.__dict__)
-
-    def __len__(self):
-        return len(self.__dict__)
-
-    def __delitem__(self, key):
-        del self.__dict__[key]
-
-    def clear(self):
-        return self.__dict__.clear()
-
-    def has_key(self, k):
-        return k in self.__dict__
-
-    def update(self, *args, **kwargs):
-        return self.__dict__.update(*args, **kwargs)
-
-    def keys(self):
-        return self.__dict__.keys()
-
-    def values(self):
-        return self.__dict__.values()
-
-    def items(self):
-        return self.__dict__.items()
-
-    def pop(self, *args):
-        return self.__dict__.pop(*args)
+        super().__init__(**__dict__)
 
     def __contains__(self, item):
-        if item in self.__dict__:
+        if item in self:
             return True
 
         for v in self.values():
@@ -81,20 +47,21 @@ class RDFDic(dict):
 
         return False
 
-    def __iter__(self):
-        return iter(self.__dict__)
+    def get_subject(self, sub):
+        out = self.get(sub)
+        if out:
+            return RDFDic(**{sub: out})
 
-    def get(self, key, default=None):
-        return self.__dict__.get(key, default)
+    def get_predicate(self, pred):
+        out = {}
+        for i, v in self.items():
+            sub = v.get(pred)
+            if sub:
+                out[i] = {pred: sub}
+        return RDFDic(**out)
 
-    def get_subject(self, sub, default=None):
-        return self.get(sub, default)
-
-    def get_predicate(self, pred, default=None):
-        return RDFDic(**{i: {pred: v.get(pred, default)} for i, v in self.items()})
-
-    def get_object(self, obj):
-        return RDFDic(**{i: {j: obj} for i, v in self.items() for j, w in v.items() if obj in w})
+    def get_object(self, obj):              
+        return RDFDic(**{i: {j: [obj]} for i, v in self.items() for j, w in v.items() if obj in w})
 
     def show(self):
         for i, v in self.items():
