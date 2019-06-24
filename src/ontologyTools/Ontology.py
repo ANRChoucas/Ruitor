@@ -14,7 +14,8 @@ class Ontology:
 
     default_ont_constr_strategy = OntologyConstructor.BasicOntologyConstructor
 
-    def __init__(self, graph, ont_constr_strategy=None):
+    def __init__(self, graph: rdflib.Graph, ont_constr_strategy=None):
+        # Référence au graph rdflib
         self.graph = graph
 
         if ont_constr_strategy:

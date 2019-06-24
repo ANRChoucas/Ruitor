@@ -81,6 +81,8 @@ class OntologyConstructor:
         self.context = context
         self._ontologyclasses = {}
 
+        self._graphDict = RDFDic(graph=self.context.graph)
+
     def uriToName(self, uri, *args, **kwargs):
 
         uriDelimiter = kwargs.get("uriDelimiter", "#")
@@ -91,6 +93,12 @@ class OntologyConstructor:
         }
 
         return swich.get(type(uri), None)(uri)
+
+
+class newOntologyConstructor(OntologyConstructor):
+    
+    def __init__(self, context):
+        super().__init__(context)
 
 
 class BasicOntologyConstructor(OntologyConstructor):
