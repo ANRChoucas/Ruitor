@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<hypothèse>
+ <zir>
+  <boundedBy>
+   <Box>
+    <coord>
+     <X>932530.320406</X>
+     <Y>6435295.22463</Y>
+    </coord>
+    <coord>
+     <X>933980.780671</X>
+     <Y>6433801.15575</Y>
+    </coord>
+   </Box>
+  </boundedBy>
+ </zir>
+ <sequenceIndice>
+  <indice>
+   <cible>
+    <toto>ss</toto>
+   </cible>
+   <relationSpatiale>
+    <toto>ss</toto>
+   </relationSpatiale>
+   <site></site>
+  </indice>
+ </sequenceIndice>
+</hypothèse>

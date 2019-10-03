@@ -12,7 +12,7 @@ dans un référentiel indirect à une position exprimée dans un référentiel
 direct.
 
 .. figure:: _static/ToTheRescue.jpg
-    
+
     St. Bernards - To The Rescue, John Emms
 
 
@@ -21,6 +21,8 @@ direct.
 
     fuzzyutils
     ontologytools
+    spatialisation
+    tt
 
 
 Méta

@@ -12,6 +12,7 @@ import numpy as np
 import matplotlib.pyplot as pyplot
 
 import rasterio
+from rasterio.windows import get_data_window
 
 
 class FuzzyRaster:
@@ -46,7 +47,8 @@ class FuzzyRaster:
         # Construction raster flou
         if 'raster' in kwargs:
             raster = kwargs.get('raster')
-            self._init_from_rasterio(raster)
+            window = kwargs.get('window', None)
+            self._init_from_rasterio(raster, window=window)
         elif 'array' in kwargs:
             array = kwargs.get('array')
             meta = kwargs.get('meta', None)
@@ -75,14 +77,24 @@ class FuzzyRaster:
             self.crisp_values, parameters)
         self.values = self.fuzzy_values
 
-    def _init_from_rasterio(self, raster):
+    def _init_from_rasterio(self, raster, window=None):
         """
         Fonction d'initialisation à partir d'un raster rasterio	
         """
 
-        self.crisp_values = raster.read()
+        self.crisp_values = raster.read(window=window)
         self.values = self.crisp_values[0]
-        self.raster_meta = raster.meta
+        if window:
+            window = get_data_window(self.values)
+
+            self.raster_meta = raster.meta.copy()
+
+            self.raster_meta.update({
+                'height': window.height,
+                'width': window.width,
+                'transform': rasterio.windows.transform(window, raster.transform)})
+        else:
+            self.raster_meta = raster.meta
 
     def _init_from_numpy(self, array, meta=None):
         """
@@ -150,7 +162,7 @@ class FuzzyRaster:
                            meta=self.raster_meta,
                            fuzzy_operators_strategy=self.fuzzy_operators.__class__)
 
-    def write(self, path, write_params=None):
+    def write(self, path, write_params=None, write_window=None):
         """
         Enregistrement du raster
 
@@ -165,4 +177,4 @@ class FuzzyRaster:
 
         # Ecriture du raster avec les paramètres initaux
         with rasterio.open(path, 'w', **write_params) as dst:
-            dst.write(self.values)
+            dst.write(self.values, window=write_window)
