@@ -41,17 +41,13 @@ if __name__ == "__main__":
     mnt = load_data(config.data)
 
     tt = rasterio.open("/home/mbunel/Bureau/tt.tif")
+
     test = Spatialisation("aa", tt, parser.zir)
     fuzz = test.compute()
-    print(tt.meta)
 
      # Export
-    write_param = fuzz.raster_meta
-    wnd =test.set_zir(tt, parser.zir)
-
-    print(write_param)
-    with rasterio.open("/home/mbunel/Bureau/test.tif", 'w', **tt.meta, window=wnd) as dst:
-            dst.write(fuzz.values)
+    fuzz.raster_meta['driver'] = 'GTiff'
+    fuzz.write("/home/mbunel/Bureau/test.tif")
 
     # g = rdflib.Graph()
     # result = g.parse("data/ontologies/relations_spatiales.owl")

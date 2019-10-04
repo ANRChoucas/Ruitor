@@ -50,6 +50,8 @@ class FuzzyRaster:
             window = kwargs.get('window', None)
             self._init_from_rasterio(raster, window=window)
         elif 'array' in kwargs:
+            if 'window' in kwargs:
+                raise Warning("Cannot use a window with a numpy array")
             array = kwargs.get('array')
             meta = kwargs.get('meta', None)
             self._init_from_numpy(array, meta)
@@ -83,16 +85,19 @@ class FuzzyRaster:
         """
 
         self.crisp_values = raster.read(window=window)
-        self.values = self.crisp_values[0]
+        self.values = self.crisp_values  # [0]
+
         if window:
-            window = get_data_window(self.values)
 
             self.raster_meta = raster.meta.copy()
+            nw_transform = rasterio.windows.transform(
+                window, self.raster_meta['transform'])
 
             self.raster_meta.update({
                 'height': window.height,
                 'width': window.width,
-                'transform': rasterio.windows.transform(window, raster.transform)})
+                'transform': nw_transform})
+
         else:
             self.raster_meta = raster.meta
 

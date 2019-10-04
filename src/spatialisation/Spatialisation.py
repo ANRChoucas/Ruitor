@@ -3,7 +3,7 @@ Spatialisation
 """
 
 from fuzzyUtils.FuzzyRaster import FuzzyRaster
-from .Metric import Metric, Distance, Nothing
+from .Metric import Metric, Distance, Nothing, Cell_Distance
 from .Selector import Selector
 
 import rasterio
@@ -25,7 +25,7 @@ class Spatialisation:
         self._init_selector()
 
     def _init_metric(self):
-        self.metric = Distance(self)
+        self.metric = Cell_Distance(self)
 
     def _init_selector(self):
         self.selector = Selector(self)
@@ -39,6 +39,8 @@ class Spatialisation:
         """
         todo
         """
+
+        #import ipdb; ipdb.set_trace()
 
         if zir:
             # Calcul des numéros de ligne et de colonne correspondant aux
@@ -57,5 +59,4 @@ class Spatialisation:
     def compute(self, *args):
         self.metric.compute()
         self.selector.compute()
-
         return self.raster

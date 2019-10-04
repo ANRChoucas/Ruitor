@@ -20,4 +20,4 @@ class Selector:
         return self._compute_ff_params(*args)
 
     def _compute_ff_params(self, *args):
-        return [(250, 1.0), (1000, 0.0)]
+        return [(50, 0.0), (100, 1.0), (150, 0.0)]
