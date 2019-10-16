@@ -1,0 +1,15 @@
+<GMLFeatureClassList>
+  <GMLFeatureClass>
+    <Name>sel_temp2</Name>
+    <ElementPath>sel_temp2</ElementPath>
+    <GeometryType>-2147483645</GeometryType>
+    <SRSName>EPSG:2154</SRSName>
+    <DatasetSpecificInfo>
+      <FeatureCount>64</FeatureCount>
+      <ExtentXMin>933083.70000</ExtentXMin>
+      <ExtentXMax>933278.80000</ExtentXMax>
+      <ExtentYMin>6434468.10000</ExtentYMin>
+      <ExtentYMax>6434672.60000</ExtentYMax>
+    </DatasetSpecificInfo>
+  </GMLFeatureClass>
+</GMLFeatureClassList>

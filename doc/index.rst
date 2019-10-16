@@ -22,7 +22,7 @@ direct.
     fuzzyutils
     ontologytools
     spatialisation
-    tt
+    parser
 
 
 Méta

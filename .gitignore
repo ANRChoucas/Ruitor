@@ -3,3 +3,4 @@ venv/*
 **/_build
 **/.vscode
 **/.ipynb_checkpoints
+**_outTest/

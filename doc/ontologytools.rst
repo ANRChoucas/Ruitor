@@ -1,4 +1,4 @@
-ontologyTools
+OntologyTools
 =============
 
 Contient l'ensemble des classes nécessaires à la gestion des ontologies

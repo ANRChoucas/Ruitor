@@ -19,7 +19,7 @@ class FuzzyRaster:
     """Classe FuzzyRaster
     """
 
-    default_fuzzy_operators_strategy = FuzzyOperators.ZadehOperators
+    default_fuzzy_operators_strategy = FuzzyOperators.ProbabilityOperators
     default_fuzzyfier_strategy = Fuzzyfiers.FuzzyfierMoreSpeeeeed
 
     def __init__(self, fuzzy_operators_strategy=None,
@@ -164,6 +164,16 @@ class FuzzyRaster:
 
     def __or__(self, other):
         return FuzzyRaster(array=self.fuzzy_operators.conorm(other),
+                           meta=self.raster_meta,
+                           fuzzy_operators_strategy=self.fuzzy_operators.__class__)
+
+    def __invert__(self):
+        return FuzzyRaster(array=(1 - self.values),
+                           meta=self.raster_meta,
+                           fuzzy_operators_strategy=self.fuzzy_operators.__class__)
+
+    def __sub__(self, other):
+        return FuzzyRaster(array=(self.values - other.values),
                            meta=self.raster_meta,
                            fuzzy_operators_strategy=self.fuzzy_operators.__class__)
 

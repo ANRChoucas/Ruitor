@@ -12,6 +12,9 @@ Documentation
 .. automodule:: spatialisation.Spatialisation
    :members:
 
+.. automodule:: spatialisation.Triplet
+   :members:
+
 .. automodule:: spatialisation.Metric
    :members:
 

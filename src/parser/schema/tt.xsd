@@ -3,8 +3,9 @@
 <xs:schema
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:gml="http://www.opengis.net/gml/3.2"
-  targetNamespace="urn:tt.Namespace"
-  xmlns="urn:tt.Namespace"
+  xmlns:ogr="http://ogr.maptools.org/"
+  targetNamespace="urn:ruitorXSD"
+  xmlns="urn:ruitorXSD"
   elementFormDefault="qualified">
 
  <xs:import
@@ -21,7 +22,9 @@
   </xs:restriction>
  </xs:simpleType>
 
- <xs:element name="zir"></xs:element>
+ <xs:element
+   name="zir"
+   substitutionGroup="gml:boundedBy" />
 
  <!-- -->
  <xs:element name="cible"></xs:element>
@@ -30,9 +33,10 @@
  <xs:element name="relationSpatiale"></xs:element>
 
  <!-- -->
- <xs:element name="site"></xs:element>
+  <xs:element
+   name="site"
+   substitutionGroup="gml:FeatureCollection" />
 
- <!-- Définition du type d'indice -->
  <xs:element name="indice">
   <xs:complexType>
    <xs:sequence>

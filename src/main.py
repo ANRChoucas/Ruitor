@@ -2,10 +2,8 @@
 # from ontologyTools import Ontology
 import os
 import rasterio
-from tt.Parser import Parser
-from rasterio.windows import Window
-from fuzzyUtils.FuzzyRaster import FuzzyRaster
-from spatialisation.Spatialisation import Spatialisation
+from parser import Parser
+from spatialisation import Spatialisation
 
 import config
 
@@ -35,19 +33,39 @@ if __name__ == "__main__":
     # Import paramètres
     set_proxy(**config.proxy)
 
-    parser = Parser("src/tt/exemple2.xml")
+    parser = Parser("data/xml/exemple2.xml")
+    parameters = parser.values
 
     # Import données
-    mnt = load_data(config.data)
+    #mnt = load_data(config.data)
+    #tt = rasterio.open("/home/mbunel/Bureau/tt.tif")
 
-    tt = rasterio.open("/home/mbunel/Bureau/tt.tif")
+    t1 = rasterio.open("data/raster/test1.tif")
+    t2 = rasterio.open("data/raster/test2.tif")
+    t3 = rasterio.open("data/raster/test3.tif")
 
-    test = Spatialisation("aa", tt, parser.zir)
+    if False:
+        res = []
+
+        for indice in parameters['indices']:
+            prm = {
+                'zir': parameters['zir'],
+                'indice': indice
+            }
+            res.append(Spatialisation(prm, t1, [t2, t3]))
+
+    test = Spatialisation(parameters, t1, [t2, t3])
     fuzz = test.compute()
 
-     # Export
+    # # Test convolution
+    # from scipy import ndimage
+    # import numpy as np
+    # k = np.array([[[1,1,1],[1,1,1],[1,1,1]]])
+    # fuzz.values = ndimage.convolve(fuzz.values, k)
+
+    # Export
     fuzz.raster_meta['driver'] = 'GTiff'
-    fuzz.write("/home/mbunel/Bureau/test.tif")
+    fuzz.write("_outTest/test.tif")
 
     # g = rdflib.Graph()
     # result = g.parse("data/ontologies/relations_spatiales.owl")

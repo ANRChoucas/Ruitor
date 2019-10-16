@@ -2,61 +2,243 @@
 Spatialisation
 """
 
-from fuzzyUtils.FuzzyRaster import FuzzyRaster
-from .Metric import Metric, Distance, Nothing, Cell_Distance
+import numpy as np
+
+from pathos.multiprocessing import ProcessingPool as Pool
+from functools import reduce
+from itertools import groupby
+from operator import itemgetter
+from more_itertools import chunked
+
+from rasterio import features
+from rasterio.windows import Window
+
+from fuzzyUtils import FuzzyRaster
+from .Metric import Cell_Distance, Distance, Metric, Nothing, Angle
 from .Selector import Selector
 
-import rasterio
-from rasterio.windows import Window
-import numpy as np
+
+class SpatialisationElement:
+    """
+    Classe spatialisationElement
+    """
+
+    def __init__(self, context, raster):
+        self.context = context
+        self.raster = raster
+        # Initialisation des objets Metric et Selector
+        self._init_metric()
+        self._init_selector()
+
+    def _init_metric(self):
+        #self.metric = Distance(self)
+        #self.metric = Cell_Distance(self)
+        #self.metric = Nothing(self)
+        self.metric = Angle(self)
+
+    def _init_selector(self):
+        self.selector = Selector(self)
+
+    def compute(self, *args):
+        tmp = self.metric.compute()
+        self.selector.compute(tmp)
+        print("I'm done")
+        return tmp
+
+
+class SpatialisationElementSequence(dict):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _get_partial(self, key, pos):
+        for k in self.keys():
+            if k[pos] == key:
+                yield self[k]
+
+    def _elem_reduce(self, function, values, pools=6, chuncks=12):
+        return reduce(function, values)
+        # Ne marche pas a refaire
+        # _tempRes = []
+        # p = Pool(processes=pools)
+        # def _par_reduce(pool, function, values):
+        #     def fun(x): return reduce(function, x)
+        #     res = p.map(fun, chuncked(values, chuncks))
+        #     return res
+        # _tempRes.append(_par_reduce(p, function, valusq))
+        # if len(_tempRes) > chuncks:
+        #     _par_reduce(p, function, _tempRes)
+        # else:
+        #     return reduce(function, _tempRes)
+
+    def element_compute(self, element):
+        return element.compute()
+
+    def _agg_objects(self, agg):
+        return self._elem_reduce(lambda x, y: x | y, agg.values())
+
+    def _agg_objects_part(self, agg):
+        """
+        """
+        res = {}
+        keysList = list(agg.keys())
+        keysList.sort(key=itemgetter(0))
+
+        grouper = groupby(keysList, key=itemgetter(0))
+        for gr in grouper:
+            val = itemgetter(*gr[1])(agg)
+            try:
+                res[gr[0]] = self._elem_reduce(lambda x, y: x | y, val)
+            except TypeError:
+                res[gr[0]] = val
+        return res
+
+    def _agg_spa_rel(self, agg):
+        """
+        """
+        res = {}
+
+        keysList = list(agg.keys())
+        keysList.sort(key=itemgetter(0, 1))
+
+        grouper = groupby(keysList, key=itemgetter(0, 1))
+        for gr in grouper:
+            val = itemgetter(*gr[1])(agg)
+            try:
+                res[gr[0]] = self._elem_reduce(lambda x, y: x & y, val)
+            except TypeError:
+                res[gr[0]] = val
+        return res
+
+    def compute(self, pools=6):
+        """
+        Fonction pour l'initialisation du calcul
+        """
+
+        # Définition pool pour traitement //
+        # des rasters
+        sp_list = list(zip(*self.items()))
+
+        with Pool(processes=pools) as t:
+            cmp_res = t.map(self.element_compute, sp_list[1])
+
+        print("Compute Done")
+
+        cmp_dic = {k: v for k, v in zip(sp_list[0], cmp_res)}
+        
+        # Écriture fichiers intermédiaires
+        if False:
+            for k, v in cmp_dic.items():
+                f_name = "obj%s_part%s_rel%s" % k
+                v.write("./_outTest/%s.tif" % f_name)
+
+        # Revoir variables
+        zou = self._agg_spa_rel(cmp_dic)
+        print("Zou Done")
+        zi = self._agg_objects_part(zou)
+        print("Zi Done")
+        zu = self._agg_objects(zi)
+        print("Zu Done")
+        # Renvoie l'ensemble des résultats
+        # Même ordre que self.values
+        return zu
 
 
 class Spatialisation:
     """
     Classe spatialisation
+
+    Destinée à modéliser UN élément de localisation
     """
 
-    def __init__(self, triplet, raster, zir=None):
-        self.triplet = triplet
-
-        self._init_raster(raster, zir)
-
-        self._init_metric()
-        self._init_selector()
-
-    def _init_metric(self):
-        self.metric = Cell_Distance(self)
-
-    def _init_selector(self):
-        self.selector = Selector(self)
-
-    def _init_raster(self, raster, zir):
-
-        wnd = self.set_zir(raster, zir)
-        self.raster = FuzzyRaster(raster=raster, window=wnd)
-
-    def set_zir(self, raster, zir, padding={'x': 10, 'y': 10}):
+    def __init__(self, parameters, raster, raster2):
         """
-        todo
+        Fonction d'initialisation de la classe Spatialisation
         """
 
-        #import ipdb; ipdb.set_trace()
+        # Récupération des paramètres
+        self.params = parameters
+        self.spaElms = SpatialisationElementSequence()
 
-        if zir:
-            # Calcul des numéros de ligne et de colonne correspondant aux
-            # deux points de la bbox
-            row_ind, col_ind = zip(*map(lambda x: raster.index(*x), zir))
-            # Extraction du numéro de ligne/colonne minimum
-            row_min, col_min = min(row_ind), min(col_ind)
-            # Calcul du nombre de lignes/colonnes
-            row_num = abs(max(row_ind) - row_min) + padding['x']
-            col_num = abs(max(col_ind) - col_min) + padding['y']
-            # Définition de la fenètre de travail
-            return Window(col_min, row_min, col_num, row_num)
+        # Définition zone initiale de recherche
+        if "zir" in self.params:
+            self.zir = self.set_zir(raster, self.params["zir"])
         else:
-            return None
+            self.zir = None
+
+        # Création du raster flou résultat
+        self.raster = FuzzyRaster(raster=raster, window=self.zir)
+        self.raster2 = FuzzyRaster(raster=raster2[0], window=self.zir)
+        self.raster3 = FuzzyRaster(raster=raster2[1], window=self.zir)
+
+        self.indice_parsing(self.params['indices'])
+
+    def _init_obj(self):
+        pass
+
+    def indice_parsing(self, indice, *args):
+        """
+        """
+
+        indice = indice[0]
+
+        site_counter = 0
+        for s in indice['site']:
+            zi = np.zeros_like(self.raster.values)
+
+            features.rasterize(
+                [s], out=zi,
+                transform=self.raster.raster_meta['transform'],
+                all_touched=True,
+                dtype=self.raster.raster_meta['dtype'])
+
+            fuzz = FuzzyRaster(array=zi, meta=self.raster.raster_meta)
+
+            self.spaElms[(site_counter, 0, 0)
+                         ] = SpatialisationElement(self, fuzz)
+
+            site_counter += 1
+
+        # aa = SpatialisationElement(self, self.raster)
+        # bb = SpatialisationElement(self, self.raster2)
+        # cc = SpatialisationElement(self, self.raster3)
+
+        # self.spaElms[(0, 0, 0)] = aa
+        # self.spaElms[(1, 0, 0)] = bb
+        # self.spaElms[(2, 0, 0)] = cc
+
+    def site_parsing(self, site):
+        pass
+
+    def cible_parsing(self, cible):
+        pass
 
     def compute(self, *args):
-        self.metric.compute()
-        self.selector.compute()
-        return self.raster
+        return self.spaElms.compute()
+
+    def set_zir(self, raster, zir, *args, **kwargs):
+        """
+        Crée une fenêtre rasterio à partir d'une liste de 
+        deux coordonnées.
+
+        Permet de travailler sur une petite zone en lieu et 
+        place de tout le raster.
+
+        Possibilité de spécifier un padding
+        """
+        # Spécification du padding
+        if 'padding' in kwargs:
+            padding = kwargs['padding']
+        else:
+            padding = {'x': 10, 'y': 10}
+        # Calcul Zir
+        # Calcul des numéros de ligne et de colonne correspondant aux
+        # deux points de la bbox
+        row_ind, col_ind = zip(*map(lambda x: raster.index(*x), zir))
+        # Extraction du numéro de ligne/colonne minimum
+        row_min, col_min = min(row_ind), min(col_ind)
+        # Calcul du nombre de lignes/colonnes
+        row_num = abs(max(row_ind) - row_min) + padding['x']
+        col_num = abs(max(col_ind) - col_min) + padding['y']
+        # Définition de la fenêtre de travail
+        return Window(col_min, row_min, col_num, row_num)
