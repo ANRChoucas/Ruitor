@@ -111,22 +111,21 @@ class Angle(Metric):
         super().__init__(context)
 
     def _compute(self, angle=0, *args):
-
-        computeraster = np.empty_like(self.values)
         # Calcule l'angle par rapport à la première coordonée
         # de l'objet. A refaire
         notnullcells = np.argwhere(self.values != 0)[0]
-
+        shape = self.values.shape
         ang = angle - 90
 
-        # Définition de l'itérateur
-        it = np.nditer(self.values, flags=['multi_index'])
-        while not it.finished:
-            computeraster[it.multi_index] = np.arctan2(
-                *np.split((notnullcells - it.multi_index)[1:], 2))
-            it.iternext()
-
-        computeraster = (np.degrees(computeraster) + ang) % 360
+        # Calcul [drow, dcol]
+        # calc_delta =
+        indices = np.indices(shape).transpose((1, 2, 3, 0))
+        _, x, y = np.split(notnullcells - indices, 3, axis=3)
+        # Calcul atan
+        calc_atan = np.squeeze(np.arctan2(
+            x, y, dtype=self.values.dtype), axis=3)
+        # conversion degrés
+        computeraster = (np.degrees(calc_atan) + ang) % 360
 
         return computeraster
 
