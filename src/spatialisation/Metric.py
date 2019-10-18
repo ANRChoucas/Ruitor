@@ -86,16 +86,15 @@ class Distance(Metric):
 
     def _compute(self, *args):
 
-        computeraster = np.empty_like(self.values)
+        #computeraster = np.empty_like(self.values)
+
+        shape = self.values.shape
         notnullcells = np.argwhere(self.values != 0)
 
-        # Définition de l'itérateur
-        it = np.nditer(self.values, flags=['multi_index'])
-        while not it.finished:
-            # Calcul de la distance au plus proche voisin
-            computeraster[it.multi_index] = np.sqrt(
-                np.min(np.sum(np.square(notnullcells - it.multi_index), axis=1)))
-            it.iternext()
+        indices = np.indices(shape).transpose((1, 2, 3, 0))
+        calc = notnullcells - indices[:, :, :, np.newaxis]
+        calc_sqrt = np.square(calc).sum(4)
+        computeraster = np.sqrt(np.min(calc_sqrt, 3), dtype=self.values.dtype)
 
         return computeraster
 
