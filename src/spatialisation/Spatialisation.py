@@ -15,7 +15,7 @@ from rasterio.windows import Window
 
 from fuzzyUtils import FuzzyRaster
 from .Metric import Cell_Distance, Distance, Metric, Nothing, Angle
-from .Selector import Selector
+from .Selector import Selector, Selector2
 
 
 class SpatialisationElement:
@@ -23,26 +23,22 @@ class SpatialisationElement:
     Classe spatialisationElement
     """
 
-    def __init__(self, context, raster):
+    def __init__(self, context, raster, metric, selector):
         self.context = context
         self.raster = raster
         # Initialisation des objets Metric et Selector
-        self._init_metric()
-        self._init_selector()
+        self._init_metric(metric)
+        self._init_selector(selector)
 
-    def _init_metric(self):
-        #self.metric = Distance(self)
-        #self.metric = Cell_Distance(self)
-        #self.metric = Nothing(self)
-        self.metric = Angle(self)
+    def _init_metric(self, metric=Angle):
+        self.metric = metric(self)
 
-    def _init_selector(self):
-        self.selector = Selector(self)
+    def _init_selector(self, selector=Selector):
+        self.selector = selector(self)
 
     def compute(self, *args):
         tmp = self.metric.compute()
         self.selector.compute(tmp)
-        print("I'm done")
         return tmp
 
 
@@ -125,7 +121,7 @@ class SpatialisationElementSequence(dict):
         print("Compute Done")
 
         cmp_dic = {k: v for k, v in zip(sp_list[0], cmp_res)}
-        
+
         # Écriture fichiers intermédiaires
         if False:
             for k, v in cmp_dic.items():
@@ -135,8 +131,15 @@ class SpatialisationElementSequence(dict):
         # Revoir variables
         zou = self._agg_spa_rel(cmp_dic)
         print("Zou Done")
+        if True:
+            for k, v in zou.items():
+                f_name = "obj%s_part%s" % k
+                v.write("./_outTest/%s.tif" % f_name)
+
         zi = self._agg_objects_part(zou)
         print("Zi Done")
+
+
         zu = self._agg_objects(zi)
         print("Zu Done")
         # Renvoie l'ensemble des résultats
@@ -194,8 +197,10 @@ class Spatialisation:
 
             fuzz = FuzzyRaster(array=zi, meta=self.raster.raster_meta)
 
-            self.spaElms[(site_counter, 0, 0)
-                         ] = SpatialisationElement(self, fuzz)
+            # self.spaElms[(site_counter, 0, 0)
+            #             ] = SpatialisationElement(self, fuzz, metric=Angle, selector=Selector)
+            self.spaElms[(site_counter, 0, 1)
+                          ] = SpatialisationElement(self, fuzz, metric=Distance, selector=Selector2)
 
             site_counter += 1
 

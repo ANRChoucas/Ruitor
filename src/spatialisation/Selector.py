@@ -3,6 +3,25 @@ Module Selector
 """
 
 
+class Selector2:
+    """
+    Classe Selector
+    """
+
+    def __init__(self, context):
+        self.context = context
+
+    def compute(self, raster):
+        ff_params = self.compute_ff_params()
+        raster.fuzzyfication(ff_params)
+
+    def compute_ff_params(self, *args):
+        return self._compute_ff_params(*args)
+
+    def _compute_ff_params(self, *args):
+        return [(40, 0.0), (50, 1.0), (60, 0.0)]
+
+
 class Selector:
     """
     Classe Selector

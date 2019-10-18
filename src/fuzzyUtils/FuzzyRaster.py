@@ -19,7 +19,7 @@ class FuzzyRaster:
     """Classe FuzzyRaster
     """
 
-    default_fuzzy_operators_strategy = FuzzyOperators.ProbabilityOperators
+    default_fuzzy_operators_strategy = FuzzyOperators.ZadehOperators
     default_fuzzyfier_strategy = Fuzzyfiers.FuzzyfierMoreSpeeeeed
 
     def __init__(self, fuzzy_operators_strategy=None,
@@ -85,7 +85,7 @@ class FuzzyRaster:
         """
 
         self.crisp_values = raster.read(window=window)
-        self.values = self.crisp_values  # [0]
+        self.values = self.crisp_values  #[0]
 
         if window:
 
