@@ -71,7 +71,12 @@ class SpatialisationElementSequence(dict):
         return element.compute()
 
     def _agg_objects(self, agg):
-        return self._elem_reduce(lambda x, y: x | y, agg.values())
+        res = self._elem_reduce(lambda x, y: x | y, agg.values())
+
+        if __debug__:
+            print("agg_obj : Done")
+
+        return res
 
     def _agg_objects_part(self, agg):
         """
@@ -87,6 +92,10 @@ class SpatialisationElementSequence(dict):
                 res[gr[0]] = self._elem_reduce(lambda x, y: x | y, val)
             except TypeError:
                 res[gr[0]] = val
+
+        if __debug__:
+            print("agg_obj_part : Done")
+
         return res
 
     def _agg_spa_rel(self, agg):
@@ -104,6 +113,10 @@ class SpatialisationElementSequence(dict):
                 res[gr[0]] = self._elem_reduce(lambda x, y: x & y, val)
             except TypeError:
                 res[gr[0]] = val
+
+        if __debug__:
+            print("agg_spa_rel : Done")
+
         return res
 
     def compute(self, pools=6):
@@ -118,32 +131,21 @@ class SpatialisationElementSequence(dict):
         with Pool(processes=pools) as t:
             cmp_res = t.map(self.element_compute, sp_list[1])
 
-        print("Compute Done")
-
         cmp_dic = {k: v for k, v in zip(sp_list[0], cmp_res)}
+        zou = self._agg_spa_rel(cmp_dic)
+        zi = self._agg_objects_part(zou)
+        zu = self._agg_objects(zi)
 
-        # Écriture fichiers intermédiaires
-        if False:
+        if __debug__:
+            print("writing tempfiles")
             for k, v in cmp_dic.items():
                 f_name = "obj%s_part%s_rel%s" % k
                 v.write("./_outTest/%s.tif" % f_name)
 
-        # Revoir variables
-        zou = self._agg_spa_rel(cmp_dic)
-        print("Zou Done")
-        if True:
             for k, v in zou.items():
                 f_name = "obj%s_part%s" % k
                 v.write("./_outTest/%s.tif" % f_name)
 
-        zi = self._agg_objects_part(zou)
-        print("Zi Done")
-
-
-        zu = self._agg_objects(zi)
-        print("Zu Done")
-        # Renvoie l'ensemble des résultats
-        # Même ordre que self.values
         return zu
 
 
@@ -197,10 +199,10 @@ class Spatialisation:
 
             fuzz = FuzzyRaster(array=zi, meta=self.raster.raster_meta)
 
-            # self.spaElms[(site_counter, 0, 0)
-            #             ] = SpatialisationElement(self, fuzz, metric=Angle, selector=Selector)
+            self.spaElms[(site_counter, 0, 0)
+                         ] = SpatialisationElement(self, fuzz, metric=Cell_Distance, selector=Selector2)
             self.spaElms[(site_counter, 0, 1)
-                          ] = SpatialisationElement(self, fuzz, metric=Distance, selector=Selector2)
+                         ] = SpatialisationElement(self, fuzz, metric=Distance, selector=Selector2)
 
             site_counter += 1
 
