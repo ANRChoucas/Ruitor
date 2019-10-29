@@ -19,6 +19,7 @@ class Fuzzyfier:
     def __str__(self):
         description_string = """fuzzyfier class  : {}
         parameters : {}
+        uncertainty : {}
         """
 
         try:
@@ -26,19 +27,32 @@ class Fuzzyfier:
         except AttributeError:
             str_params = "no parameter"
 
-        return description_string.format(self.__class__.__name__, str_params)
+        try:
+            unc_params = self.certainty_parameters
+        except AttributeError:
+            unc_params = "no parameter"
 
-    def fuzzyfy(self, raster, parameters):
-        self.fuzzyfication_parameters = parameters
-        self.fuzzyfication_function = self.def_fuzzyfy_function(*parameters)
+        return description_string.format(self.__class__.__name__, str_params, unc_params)
+
+    def fuzzyfy(self, raster, fuzzyfication_parameters, certainty=0.0):
+        self.fuzzyfication_parameters = fuzzyfication_parameters
+        self.certainty_parameters = certainty
+
+        self.fuzzyfication_function = self.def_fuzzyfy_function(
+            *self.fuzzyfication_parameters)
 
         # Calcul des valeurs
         fuzzyfied_raster = self.fuzzyfication_function(raster)
+        self.set_uncertainty(fuzzyfied_raster, self.certainty_parameters)
 
         return fuzzyfied_raster
 
     def def_fuzzyfy_function(self, *args, **kwargs):
         raise NotImplementedError("No fuzzyfycation function constructor")
+
+    def set_uncertainty(self, raster, certainty=0.0):
+        if certainty != 0.0:
+            raster[raster < certainty] = certainty
 
 
 class FirstFuzzyfier(Fuzzyfier):
@@ -180,5 +194,5 @@ class FuzzyfierMoreSpeeeeed(Fuzzyfier):
             r >= alv[0]) & (r < lv[0])] * a + b
 
     def _sup_vals(self, r, r_copy, *args):
-         # degré flou des valeurs sup au plus grand paramètre
+        # degré flou des valeurs sup au plus grand paramètre
         r_copy[r >= args[-1][0]] = args[-1][1]
