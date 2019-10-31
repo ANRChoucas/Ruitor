@@ -1,0 +1,1223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rt:hypothèse
+        xmlns:rt="urn:ruitorXSD"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:gml="http://www.opengis.net/gml/3.2"
+        xmlns:ogr="http://ogr.maptools.org/"
+        xsi:schemaLocation="urn:ruitorXSD ../../src/parser/schema/tt.xsd http://ogr.maptools.org/ ../../src/parser/schema/sel_bati.xsd">
+    <rt:zir>
+        <gml:Envelope>
+            <gml:lowerCorner>941774.5 6434517.3</gml:lowerCorner>
+            <gml:upperCorner>953103.7 6450327.4</gml:upperCorner>
+        </gml:Envelope>
+    </rt:zir>
+    <rt:sequenceIndice>
+        <rt:indice>
+            <rt:cible></rt:cible>
+            <rt:relationSpatiale></rt:relationSpatiale>
+            <rt:site>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.0">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948261.9,6434488.7,1433.4 948264.0,6434489.1,1433.4 948267.3,6434486.4,1432 948262.2,6434479.4,1433 948257.9,6434482.3,1433.6 948261.9,6434488.7,1433.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.0</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.1">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>944982.2,6443822.6,1352.2 944987.6,6443830.7,1352.2 945003.3,6443821.2,1352.2 944997.3,6443813.4,1352.2 944982.2,6443822.6,1352.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.1</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.2">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>944989.0,6443811.9,1354.9 944997.6,6443806.7,1354.9 944993.5,6443800.1,1354.9 944984.9,6443805.6,1354.9 944989.0,6443811.9,1354.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.2</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.3">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948257.5,6434523.1,1442.2 948262.3,6434521.7,1442.3 948260.1,6434515.3,1443 948256.0,6434516.7,1442.4 948257.5,6434523.1,1442.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.3</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.4">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948236.9,6434479.4,1441 948241.9,6434476.2,1440.8 948235.8,6434467.3,1441.1 948231.0,6434470.8,1441.1 948236.9,6434479.4,1441</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.4</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.5">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948226.3,6434474.3,1442.5 948230.6,6434471.6,1442.4 948229.7,6434469.8,1443.1 948234.4,6434466.9,1442.1 948230.6,6434461.0,1441.9 948227.7,6434462.7,1442 948228.3,6434463.9,1442.4 948222.0,6434467.3,1442.4 948226.3,6434474.3,1442.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.5</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.6">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948247.6,6434486.7,1437.5 948253.1,6434482.7,1437.5 948249.4,6434477.1,1439 948243.7,6434481.2,1438.4 948247.6,6434486.7,1437.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.6</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.7">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>943599.1,6442297.9,966 943614.6,6442297.0,966.8 943615.0,6442286.7,966.8 943598.4,6442287.8,966.6 943599.1,6442297.9,966</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.7</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.8">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>942479.4,6442702.2,1351.6 942486.2,6442704.5,1351.3 942487.1,6442701.4,1351.1 942488.7,6442701.9,1350.8 942490.1,6442697.5,1350.2 942491.4,6442697.9,1349.8 942492.6,6442693.4,1349.7 942488.8,6442692.0,1350.1 942489.7,6442688.4,1348 942481.7,6442685.9,1349.6 942478.6,6442694.4,1349.6 942480.5,6442695.2,1350.1 942479.6,6442697.8,1350.1 942480.6,6442698.1,1350.1 942479.4,6442702.2,1351.6</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.8</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.9">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>947910.0,6443631.4,1285.2 947925.3,6443625.6,1285.2 947922.9,6443619.0,1285.1 947913.2,6443622.2,1285.9 947912.7,6443621.0,1285.7 947906.8,6443623.2,1285.6 947910.0,6443631.4,1285.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.9</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.10">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>947930.5,6443645.6,1290.3 947929.3,6443642.1,1292.9 947929.6,6443642.0,1292.9 947926.5,6443635.6,1292.9 947918.1,6443639.6,1292.2 947921.4,6443646.2,1292.3 947923.8,6443645.1,1292.8 947925.2,6443647.9,1290.3 947930.5,6443645.6,1290.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.10</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.11">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>943593.2,6442311.4,965.7 943606.1,6442308.1,966.4 943603.6,6442298.2,965.8 943590.9,6442301.2,965.8 943593.2,6442311.4,965.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.11</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.12">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>943598.3,6442239.8,963.6 943603.7,6442235.4,965 943599.8,6442229.6,965 943594.8,6442232.5,965 943598.3,6442239.8,963.6</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.12</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.13">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>943755.5,6440779.4,1313.4 943767.9,6440782.1,1313.6 943769.9,6440773.0,1313.7 943757.7,6440770.7,1313.7 943755.5,6440779.4,1313.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.13</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.14">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939527.9,6442582.0,722.9 939536.5,6442580.7,722.9 939541.6,6442577.3,721.8 939539.4,6442572.2,722 939535.8,6442574.0,722.4 939527.2,6442574.9,722.6 939527.9,6442582.0,722.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.14</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.15">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939266.1,6442554.1,723 939277.2,6442554.5,722.8 939277.5,6442549.0,722.8 939276.2,6442549.0,722.8 939276.4,6442541.6,722.8 939266.0,6442541.4,722.8 939266.1,6442554.1,723</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.15</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.16">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939416.1,6442583.9,723.1 939423.7,6442584.4,723.2 939423.9,6442582.8,723.7 939431.3,6442583.3,724.1 939431.5,6442581.7,724.5 939436.1,6442582.0,724.5 939436.7,6442573.6,724.4 939431.1,6442573.2,724.3 939431.0,6442571.9,724.3 939423.3,6442571.5,724.3 939423.2,6442572.8,724.3 939416.6,6442572.4,724.3 939416.1,6442583.9,723.1</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.16</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.17">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939454.6,6442631.2,723.1 939470.4,6442632.1,722.6 939471.1,6442617.5,722.6 939459.4,6442616.8,723.2 939459.0,6442620.7,723.2 939455.2,6442620.4,723.1 939454.6,6442631.2,723.1</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.17</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.18">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939261.8,6442361.3,725.7 939269.1,6442352.0,725.9 939263.2,6442347.2,725.9 939262.1,6442348.4,726.3 939257.0,6442344.4,726.3 939250.2,6442353.0,726 939253.7,6442355.9,725.7 939254.8,6442354.8,725.9 939261.8,6442361.3,725.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.18</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.19">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939366.2,6442574.6,723.7 939372.5,6442575.9,724.3 939372.2,6442581.0,722.8 939382.9,6442581.6,722.8 939383.5,6442570.1,723.7 939373.0,6442569.5,723.7 939366.9,6442568.4,723.7 939366.2,6442574.6,723.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.19</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.20">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939221.9,6442495.9,728.1 939235.7,6442504.4,727.8 939243.5,6442490.9,727.8 939244.7,6442488.2,725.9 939252.1,6442494.9,725.6 939261,6442500,725.1 939265.8,6442491.2,725.1 939257.2,6442485.8,725.5 939255.1,6442484.2,725.6 939255.7,6442483.4,725.6 939240.2,6442469.6,726.7 939233,6442478,726.7 939221.9,6442495.9,728.1</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.20</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.21">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>943225.0,6441678.5,929.5 943237.8,6441679.0,929.7 943238.5,6441667.8,933.7 943238.2,6441658.6,934 943229.3,6441659.2,933.4 943229.9,6441668.9,932.9 943225.6,6441669.1,930.2 943225.0,6441678.5,929.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.21</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.22">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>949442.3,6447292.0,1878.8 949445.9,6447286.3,1878.1 949440.4,6447282.7,1877 949436.7,6447288.4,1877.9 949442.3,6447292.0,1878.8</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.22</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.23">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>945335.1,6444030.8,1307.1 945342.2,6444036.8,1307.1 945341.2,6444038.0,1307.1 945344.7,6444041.1,1307.1 945348.8,6444036.5,1307.1 945347.1,6444033.1,1307.1 945347.6,6444032.4,1307.1 945344.1,6444029.5,1307.1 945346.1,6444027.4,1307.1 945343.0,6444020.5,1307.1 945335.1,6444030.8,1307.1</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.23</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.24">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>945307.3,6443996.6,1299 945312,6443996,1299.5 945311.8,6443994.4,1300.5 945315.1,6443994.1,1300.7 945316.2,6443990.9,1301 945315.6,6443986.2,1299.9 945310.3,6443986.9,1299.5 945310.3,6443988.0,1299.5 945306.0,6443988.6,1299.4 945307.3,6443996.6,1299</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.24</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.25">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941056.6,6445742.7,1466.9 941071.3,6445746.3,1467.7 941072.7,6445738.9,1467.7 941057.9,6445734.9,1467.7 941056.6,6445742.7,1466.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.25</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.26">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941054.2,6445752.4,1470.1 941066.1,6445755.4,1470.1 941068.3,6445746.9,1470.1 941056.4,6445744.0,1470.1 941054.2,6445752.4,1470.1</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.26</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.27">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939560.0,6445478.9,973.6 939566.9,6445474.4,974.9 939559.1,6445461.9,974 939553.7,6445465.3,974.1 939554.0,6445465.8,974.4 939552.6,6445466.6,974.4 939560.0,6445478.9,973.6</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.27</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.28">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>946375.1,6440119.5,1698.9 946387.2,6440119.6,1698.9 946387.3,6440112.8,1698.9 946391.3,6440112.8,1698.9 946391.5,6440105.8,1698.9 946397.2,6440105.8,1698.9 946397.4,6440098.1,1698.9 946402.1,6440098.0,1698.9 946402.1,6440085.8,1698.9 946393.7,6440085.8,1698.9 946393.7,6440093.9,1698.9 946376.0,6440093.7,1698.9 946376.1,6440104.2,1698.9 946374.9,6440104.1,1698.9 946375.1,6440119.5,1698.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.28</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.29">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>945891.2,6438838.8,1650.4 945896.8,6438838.4,1650.6 945896.1,6438832.3,1650.6 945890.7,6438832.7,1650.6 945891.2,6438838.8,1650.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.29</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.30">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>946002.3,6438771.7,1651.4 946002.4,6438776.9,1649 946008.5,6438777.3,1648.8 946009.0,6438759.9,1649.6 946001.2,6438760.1,1649.6 946001.3,6438762.5,1651.4 946007.2,6438762.7,1651.4 946007.8,6438771.7,1651.4 946002.3,6438771.7,1651.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.30</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.31">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>945946.9,6438824.8,1652.2 945970.2,6438830.1,1652.2 945975.2,6438813.2,1652.2 945952.2,6438808.9,1652.2 945948.5,6438811.3,1652.2 945946.9,6438824.8,1652.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.31</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.32">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>936783.1,6448083.1,716 936797.1,6448094.5,716.5 936802.1,6448088.0,717 936797.9,6448084.3,717 936799.0,6448083.2,717 936788.9,6448075.4,717 936783.1,6448083.1,716</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.32</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.33">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>938346.7,6451954.7,730.3 938356,6451960,730.6 938357.9,6451958.1,731.7 938359.9,6451954.5,731.8 938361.2,6451951.4,731.8 938362.6,6451948.6,726.8 938353.6,6451943.2,726.4 938351.9,6451945.7,731.5 938349.8,6451948.0,731.6 938347.5,6451951.6,731.2 938346.7,6451954.7,730.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.33</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.34">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>937637.1,6441549.9,1630.3 937644.4,6441552.5,1630.3 937647.4,6441542.2,1630.3 937640.6,6441539.8,1630.3 937637.1,6441549.9,1630.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.34</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.35">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>942695.5,6436806.1,984.2 942689.6,6436806.1,984.3 942690.1,6436813.3,984.3 942696,6436814,984.2 942695.5,6436806.1,984.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.35</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.36">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>937900.3,6452490.5,1043.9 937908.9,6452500.9,1044.4 937916.8,6452494.4,1043.9 937908.3,6452484.8,1043.9 937900.3,6452490.5,1043.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.36</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.37">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941990.4,6450800.1,1852.2 941993.4,6450799.4,1852.3 941994.3,6450803.2,1852.2 941999.3,6450801.8,1852.4 941998.9,6450799.3,1852.7 942003.9,6450798.2,1852.8 942001.4,6450784.1,1852.8 941998.3,6450784.8,1852.8 941994.8,6450775.5,1851 941991.3,6450776.6,1851 941990.6,6450772.6,1851 941983.7,6450774.0,1851 941990.4,6450800.1,1852.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.37</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.38">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939403.9,6444369.1,722.2 939413.1,6444374.3,722.2 939417.8,6444364.8,722.7 939407.9,6444361.3,722.7 939403.9,6444369.1,722.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.38</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.39">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>937678.5,6441858.8,1687.2 937683.8,6441859.0,1687.8 937682.4,6441854.1,1687.8 937677.1,6441855.1,1687.2 937678.5,6441858.8,1687.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.39</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.40">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>946513.0,6442516.1,1282.4 946520.2,6442515.5,1282.3 946519.0,6442504.8,1282.4 946511.0,6442506.6,1282.2 946513.0,6442516.1,1282.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.40</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.41">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939818.3,6442126.2,722.8 939826.1,6442131.9,722.8 939828.6,6442125.9,722.7 939820.4,6442120.9,722.6 939818.3,6442126.2,722.8</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.41</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.42">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>951200.1,6438021.8,2913.3 951199.0,6438027.4,2913.4 951206.8,6438029.3,2913.4 951208.9,6438023.7,2913.4 951200.1,6438021.8,2913.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.42</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.43">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>959488.5,6431383.8,1705.6 959485.6,6431385.5,1705.4 959487.5,6431388.1,1704.9 959489.1,6431389.7,1705.5 959491.6,6431387.6,1705.4 959488.5,6431383.8,1705.6</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.43</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.44">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>953039.3,6427302.9,1808.1 953040.3,6427291.0,1805.7 953027.7,6427289.9,1805.4 953027.2,6427295.0,1805.9 953021.9,6427294.5,1805.9 953021.9,6427301.9,1806.1 953039.3,6427302.9,1808.1</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.44</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.45">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941931.4,6443732.3,1712.5 941922.9,6443724.6,1712.6 941916.2,6443731.4,1712.6 941924.6,6443740.2,1712.6 941931.4,6443732.3,1712.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.45</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.46">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>961558.1,6428460.8,1915.5 961563.6,6428457.3,1915.4 961561.6,6428453.7,1915.4 961555.9,6428457.2,1915.4 961558.1,6428460.8,1915.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.46</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.47">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>939054.6,6442508.1,721.8 939063.9,6442518.0,721 939072.7,6442508.9,721 939063.2,6442499.5,721.3 939060.9,6442501.8,721.4 939054.6,6442508.1,721.8</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.47</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.48">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>942713.4,6450970.1,2085.8 942719.1,6450965.9,2083.8 942713.1,6450959.5,2084.4 942707.2,6450963.5,2084.8 942708.8,6450965.6,2086.3 942713.4,6450970.1,2085.8</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.48</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.49">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>959590.8,6431400.6,1716.3 959596.9,6431398.6,1716.3 959594.4,6431393.3,1716.3 959588.6,6431395.4,1716.3 959590.8,6431400.6,1716.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.49</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.50">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>943204.0,6441667.4,933.1 943201.0,6441657.4,934.7 943197.5,6441658.5,935.9 943197.2,6441657.2,935.8 943188.3,6441660.2,935.8 943187.6,6441658.5,935.3 943175.9,6441661.9,935.8 943169.2,6441665.4,929.3 943173.2,6441679.0,927.9 943180.6,6441676.9,928.8 943180.2,6441675.3,935.7 943191.7,6441672.0,935.7 943191.4,6441671.0,935.7 943204.0,6441667.4,933.1</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.50</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.51">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941153.9,6447837.2,1817.4 941153.0,6447842.1,1817.5 941149.4,6447846.5,1817.5 941152.6,6447848.8,1817.5 941156.7,6447844.0,1817.5 941158.3,6447844.1,1817.5 941159.5,6447838.3,1817.5 941153.9,6447837.2,1817.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.51</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.52">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>946240.2,6438780.9,1666.8 946244.6,6438779.7,1666.2 946242.4,6438773.0,1666.2 946238,6438774,1666.2 946240.2,6438780.9,1666.8</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.52</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.53">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948799.8,6447760.6,1399.3 948799.1,6447756.2,1399.5 948792.5,6447757.5,1399.8 948794.0,6447764.2,1400.2 948796.3,6447763.9,1399.3 948799.8,6447760.6,1399.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.53</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.54">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948792.5,6447757.5,1399.8 948791.9,6447755.1,1400 948779.0,6447758.1,1401 948780.1,6447768.5,1400.9 948794.3,6447765.2,1400.2 948794.0,6447764.2,1400.2 948792.5,6447757.5,1399.8</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.54</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.55">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948824.0,6447767.7,1398.3 948814.7,6447770.4,1398.9 948817.0,6447777.2,1398 948825.8,6447774.6,1397.5 948824.0,6447767.7,1398.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.55</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.56">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948812.2,6447764.1,1396.3 948808.8,6447758.1,1396.9 948804.2,6447761.0,1396.9 948801.1,6447764.0,1396.8 948802.6,6447768.5,1396.8 948812.2,6447764.1,1396.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.56</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.57">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948881.6,6447761.2,1396.7 948880.2,6447750.8,1396.3 948867.9,6447752.5,1396.5 948867.5,6447750.7,1396.1 948862.0,6447751.9,1396.3 948864.0,6447763.6,1396.4 948881.6,6447761.2,1396.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.57</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.58">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941013.7,6445753.2,1455.6 941017.8,6445753.0,1457.3 941017.8,6445754.7,1457 941024.1,6445754.5,1457 941023.6,6445746.3,1457 941012.9,6445746.8,1456.4 941013.7,6445753.2,1455.6</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.58</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.59">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>944927.3,6437392.5,1177 944938.7,6437393.9,1177 944939.5,6437385.7,1177 944936.2,6437385.0,1177.9 944936.9,6437377.4,1174 944926.3,6437375.0,1175.9 944925.7,6437385.8,1178.1 944928.1,6437386.0,1178.1 944927.3,6437392.5,1177</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.59</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.60">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>944925.5,6437406.6,1181.4 944940.0,6437406.8,1182.3 944940.1,6437400.8,1182.2 944936.7,6437400.7,1182.3 944936.6,6437399.9,1180 944930.9,6437399.7,1179.9 944930.7,6437398.1,1179.6 944926.5,6437398.1,1179.4 944926.4,6437400.6,1180.7 944925.5,6437400.5,1180.7 944925.5,6437406.6,1181.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.60</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.61">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>938727.8,6453505.7,956 938724.9,6453502.9,956 938720.8,6453506.4,956 938723.5,6453509.4,956 938727.8,6453505.7,956</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.61</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.62">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>946042.8,6438457.2,1619.9 946050.8,6438457.6,1619.4 946050.9,6438455.4,1619.5 946053.0,6438455.5,1619.2 946053.0,6438454.4,1619 946054.7,6438454.5,1616.5 946054.9,6438448.1,1616.4 946056.5,6438448.2,1615.7 946057.0,6438440.6,1615.5 946049.5,6438440.0,1620.5 946049.7,6438432.7,1620.5 946037.7,6438432.4,1620.5 946037.2,6438443.1,1621.3 946038.4,6438443.2,1622.2 946038.4,6438444.5,1622.2 946040.0,6438448.3,1622 946041.6,6438448.4,1623.5 946041.1,6438453.4,1620.8 946042.8,6438457.2,1619.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.62</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.63">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>946013.1,6438450.2,1620 946014.6,6438451.6,1621 946024.8,6438452.3,1621.3 946025.0,6438445.6,1621.3 946030.8,6438445.8,1621.3 946030.9,6438436.1,1621.4 946030.0,6438436.1,1622.2 946030.3,6438431.4,1618.3 946024,6438431,1618.3 946022.2,6438431.8,1618.3 946022.0,6438433.8,1621.5 946018.4,6438433.6,1622 946018.3,6438434.4,1623 946010.8,6438434.1,1622.2 946010.4,6438442.8,1621.4 946013.6,6438442.9,1621.7 946013.1,6438450.2,1620</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.63</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.64">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>945901.2,6436748.7,936.7 945906.5,6436745.9,936.7 945905.6,6436744.0,936.7 945906.7,6436743.3,936.7 945904.6,6436739.4,936.7 945898.2,6436743.1,936.7 945901.2,6436748.7,936.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.64</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.65">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>945730.6,6436765.5,931.7 945739.3,6436766.0,931.7 945739.8,6436761.8,931.7 945730.8,6436761.4,931.7 945730.6,6436765.5,931.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.65</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.66">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>945364.5,6443940.1,1286.2 945369.6,6443947.0,1286.2 945368.2,6443948.0,1286.2 945369.7,6443951.6,1286.2 945371.7,6443950.0,1286.2 945372.5,6443951.1,1286.2 945383.4,6443942.9,1286.2 945376,6443932,1286.2 945364.5,6443940.1,1286.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.66</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.67">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>945349.6,6443962.8,1293.2 945355.8,6443966.9,1293.2 945359.8,6443960.7,1293.2 945353.3,6443956.7,1293.2 945349.6,6443962.8,1293.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.67</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.68">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948252.3,6446366.9,1377 948245.0,6446376.3,1378.5 948252.5,6446381.9,1379 948259.2,6446372.7,1378 948258.6,6446372.2,1377.9 948253.6,6446368.1,1377.2 948252.3,6446366.9,1377</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.68</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.69">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948272.4,6446381.2,1378.5 948265.2,6446377.7,1378.4 948258.6,6446374.5,1378.4 948254.2,6446381.8,1378.4 948268.1,6446388.9,1378.5 948272.4,6446381.2,1378.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.69</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.70">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948307.3,6446404.1,1372.2 948303.4,6446397.7,1374.7 948304.9,6446396.4,1374.4 948300.9,6446391.1,1374.2 948299.4,6446392.3,1374.5 948291.2,6446385.0,1374.7 948282.6,6446395.2,1377.7 948280.7,6446393.4,1377.7 948278.0,6446396.3,1378 948276.3,6446398.1,1378.2 948276.9,6446398.7,1378.4 948275.0,6446401.1,1378.4 948278.0,6446404.1,1378.4 948280.2,6446401.5,1378.4 948281.0,6446402.1,1378.5 948283.2,6446399.4,1377.9 948285.4,6446402.7,1379.2 948289.6,6446404.2,1376.2 948291.2,6446406.3,1375.4 948296.5,6446401.2,1375 948298.1,6446403.5,1374.2 948298.7,6446402.9,1374 948301.8,6446407.6,1373.7 948307.3,6446404.1,1372.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.70</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.71">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948240.2,6446348.2,1372.4 948241.6,6446350.3,1373.5 948254.8,6446354.6,1372 948257.9,6446347.5,1371.5 948257,6446347,1371.5 948244.9,6446340.7,1371.5 948240.2,6446348.2,1372.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.71</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.72">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948270.4,6446371.1,1376.5 948264.4,6446366.5,1377.4 948259.2,6446373.0,1378.7 948265.2,6446377.7,1378.4 948270.4,6446371.1,1376.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.72</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.73">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948235.8,6446350.8,1375 948230.2,6446359.9,1375.7 948241.7,6446367.7,1376.7 948242.7,6446366.3,1376.5 948246.4,6446369.4,1375.7 948248.6,6446366.6,1375.4 948246.7,6446365.0,1375.5 948248.8,6446362.1,1375.4 948246.6,6446360.2,1375.9 948248.1,6446358.1,1375.7 948235.8,6446350.8,1375</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.73</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.74">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948287.2,6446365.3,1371 948284.2,6446367.9,1371.7 948280.4,6446363.9,1371.7 948283.6,6446360.5,1369.2 948280.3,6446356.5,1369 948269.4,6446369.4,1373 948285.5,6446385.9,1373.5 948290.9,6446383.3,1373.7 948291.7,6446384.3,1373.5 948293.0,6446385.9,1373.4 948293.3,6446385.7,1373.2 948297.4,6446383.2,1371.9 948287.2,6446365.3,1371</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.74</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.75">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948265.4,6446336.8,1368.7 948259.6,6446344.3,1369.2 948261.3,6446345.9,1369.5 948259.5,6446348.1,1368.5 948263.7,6446351.4,1369.2 948265.6,6446348.9,1369.5 948268.6,6446351.8,1369 948272.9,6446347.3,1367.7 948270.0,6446344.1,1368.5 948270.8,6446343.4,1368.7 948265.4,6446336.8,1368.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.75</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.76">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948302.7,6446354.7,1366.2 948296.2,6446346.0,1366.4 948288.5,6446351.5,1366.4 948287.2,6446349.7,1366.4 948283.7,6446352.4,1366.7 948290.0,6446362.2,1367.4 948291.5,6446362.6,1367.5 948302.7,6446354.7,1366.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.76</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.77">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948252.1,6446384.0,1379.4 948240.8,6446380.2,1379.7 948240.6,6446381.0,1379.7 948237.5,6446379.9,1379 948236.3,6446383.4,1379.5 948239.5,6446384.4,1380 948238.0,6446389.1,1380.4 948249.3,6446392.8,1380.4 948252.1,6446384.0,1379.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.77</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.78">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948268.6,6446354.9,1371.7 948263.5,6446360.9,1372 948269.7,6446367.9,1372.2 948275.1,6446361.8,1371.5 948268.6,6446354.9,1371.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.78</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.79">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941533.3,6448298.6,1821.4 941547.4,6448300.8,1821.3 941549.4,6448288.9,1821.4 941535.1,6448286.6,1821.4 941533.3,6448298.6,1821.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.79</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.80">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941663.5,6447929.2,1797.5 941671.9,6447929.8,1798 941672.0,6447927.9,1798.5 941676.8,6447928.2,1798.5 941677.1,6447924.1,1799 941679.7,6447924.1,1799 941682.0,6447915.3,1799 941680.2,6447914.3,1799 941683.0,6447907.9,1799 941686.6,6447909.4,1798.2 941689.5,6447902.4,1798.5 941693.3,6447898.5,1799.3 941692.7,6447897.9,1799.3 941694.0,6447896.7,1799.3 941694.9,6447897.6,1799.3 941698.8,6447893.5,1799 941697.9,6447892.4,1799.3 941699.1,6447891.3,1799.3 941681.1,6447873.3,1799.7 941678.1,6447876.1,1803 941676.5,6447874.5,1802.9 941664.8,6447885.8,1802.8 941670.9,6447891.6,1802.8 941672.0,6447890.5,1802.8 941672.5,6447891.0,1802.8 941664.2,6447909.4,1799.4 941665.3,6447911.0,1802 941664.2,6447913.4,1801.9 941667.5,6447914.9,1802 941667.3,6447917.2,1801.9 941668.2,6447917.3,1801.8 941667.6,6447922.9,1801.7 941664.0,6447922.7,1798.7 941663.5,6447929.2,1797.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.80</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.81">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>940943.1,6448219.6,1788.7 940952.5,6448218.6,1794.5 940958.5,6448216.5,1791.3 940962.2,6448213.5,1788.4 940957.9,6448199.8,1788.9 940937.4,6448206.0,1790.3 940939.3,6448212.5,1789.7 940940.7,6448212.1,1789.8 940943.1,6448219.6,1788.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.81</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.82">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948254.4,6446355.5,1374.4 948250.7,6446360.0,1375.2 948256,6446365,1376.2 948253.6,6446368.1,1375 948258.6,6446372.2,1374.7 948263.4,6446366.6,1373.5 948261.8,6446365.1,1373.4 948263.3,6446363.4,1373.4 948262.5,6446362.7,1375.5 948254.4,6446355.5,1374.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.82</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.83">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>942205.4,6447910.6,1816.8 942225.3,6447923.6,1816.9 942227,6447921,1816.9 942229.9,6447922.9,1815.5 942233.2,6447917.6,1815.5 942230.4,6447916.0,1816.3 942232.4,6447912.8,1816.8 942234.8,6447908.9,1810.9 942233.9,6447908.2,1810.9 942236.2,6447904.7,1810.9 942218.6,6447893.7,1810.9 942214.3,6447900.9,1811.9 942210.3,6447898.2,1811.9 942203.0,6447909.2,1810.5 942205.4,6447910.6,1816.8</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.83</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.84">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941198.5,6448237.1,1817.4 941212.8,6448238.9,1818.5 941214.8,6448226.5,1819.2 941200.8,6448224.1,1818.9 941198.5,6448237.1,1817.4</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.84</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.85">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941032.8,6448123.6,1775.3 941039,6448124,1775.7 941039.5,6448116.9,1775.7 941033.0,6448116.5,1775.7 941032.8,6448123.6,1775.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.85</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.86">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941037.7,6448157.2,1781.9 941038.2,6448161.4,1781.9 941033.1,6448161.8,1782 941034.1,6448168.8,1782.5 941032.8,6448168.9,1789.3 941023.8,6448169.2,1788.5 941015.1,6448172.7,1788.9 941013.9,6448170.2,1788.9 941000.4,6448175.7,1788.5 941005.0,6448187.1,1790 941007.5,6448186.0,1790.7 941009.1,6448190.2,1790.5 941017.3,6448187.0,1790.9 941016.5,6448184.9,1790.9 941019.4,6448183.8,1789 941019.9,6448185.6,1789 941021.7,6448184.9,1788.8 941022.2,6448186.3,1788.5 941028.0,6448184.2,1788.5 941027.5,6448182.9,1790 941031.6,6448181.5,1790 941032.6,6448184.3,1790 941021.5,6448188.7,1786.4 941021.1,6448187.8,1786.4 941009.3,6448191.9,1786.5 941009.6,6448192.8,1789.2 941011.7,6448198.0,1792 941010.5,6448198.5,1791.8 941014.6,6448208.9,1791.9 941027.0,6448204.2,1798 941027.5,6448205.5,1798 941038.8,6448201.3,1796.2 941041.6,6448200.5,1787.5 941036.3,6448182.0,1789.7 941036.9,6448181.5,1790 941040.9,6448181.0,1790.3 941041.6,6448185.6,1790 941039,6448186,1789.7 941039.9,6448192.6,1789.4 941041.8,6448192.4,1790 941042.7,6448197.0,1790.3 941083.7,6448194.4,1792 941092.3,6448190.5,1791.5 941090.7,6448181.1,1791.3 941090.0,6448181.2,1791.3 941087.9,6448175.5,1791 941098.3,6448174.1,1781.9 941097.2,6448160.6,1781.9 941093.9,6448156.2,1781.9 941096.0,6448153.6,1781 941089.0,6448150.4,1781 941079.6,6448151.2,1781.5 941079.6,6448152.8,1781 941068.3,6448153.7,1781 941067.7,6448148.0,1781 941063.5,6448146.8,1781 941060.1,6448149.0,1780.7 941060.6,6448153.0,1780.7 941045.5,6448154.5,1780.9 941037.7,6448157.2,1781.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.86</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.87">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941201.6,6448217.6,1817.8 941213.8,6448220.1,1818 941216.4,6448208.2,1818.4 941204.4,6448205.5,1818.2 941205.4,6448201.4,1812.2 941201.7,6448200.4,1811.5 941197.4,6448207.8,1811.4 941195.0,6448218.3,1812 941201.3,6448219.7,1812.5 941201.6,6448217.6,1817.8</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.87</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.88">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>940965.6,6448164.3,1781.3 940980.2,6448156.2,1781.5 940975.0,6448146.8,1782.2 940968.4,6448150.0,1784.9 940965.0,6448144.6,1784.9 940956.6,6448149.1,1782 940965.6,6448164.3,1781.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.88</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.89">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948218.6,6446339.8,1374.2 948217.0,6446350.1,1374.5 948223.2,6446351.8,1374.4 948222.5,6446354.4,1373.7 948229.0,6446356.8,1373.9 948231.7,6446354.8,1374.7 948236.1,6446347.0,1374.2 948226.1,6446342.8,1374.2 948226.3,6446341.7,1374.2 948218.6,6446339.8,1374.2</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.89</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.90">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948280.7,6446355.5,1370 948274.9,6446347.7,1370.5 948268.6,6446354.9,1371.7 948275.1,6446361.8,1371.5 948280.7,6446355.5,1370</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.90</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.91">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948254.8,6446327.1,1367.7 948253.7,6446329.4,1368.2 948251.8,6446328.3,1368 948244.9,6446340.7,1371.5 948257,6446347,1371.5 948263.7,6446334.7,1366.7 948254.8,6446327.1,1367.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.91</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.92">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941431.0,6448035.7,1814.5 941462.9,6448030.4,1814.5 941464.7,6448029.3,1814.5 941450.9,6448008.2,1810.7 941447.2,6448002.0,1810.5 941446.5,6448002.4,1810.5 941444.8,6447999.6,1808.5 941438.1,6448003.8,1808.8 941440.0,6448006.3,1810.5 941437.6,6448007.8,1810.4 941435.8,6448005.4,1808.5 941428.9,6448009.7,1808.5 941430.8,6448012.2,1810.8 941428.3,6448013.6,1810.7 941421.9,6448003.6,1810.7 941415.6,6448007.5,1810.7 941418.4,6448012.4,1810.5 941412.1,6448015.9,1809.5 941420.4,6448028.8,1809.2 941426.6,6448025.0,1810.3 941431.4,6448031.9,1811.9 941431.0,6448035.7,1814.5</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.92</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.93">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>941746.4,6447945.3,1788.9 941748.8,6447942.3,1791.3 941750.0,6447943.2,1791.4 941757.0,6447935.2,1794.2 941757.7,6447936.0,1793.7 941764.2,6447935.6,1792.8 941771.9,6447926.8,1790.7 941748.6,6447906.1,1790.5 941747.1,6447907.7,1790.4 941739.4,6447908.1,1789.5 941738.7,6447899.8,1787.8 941726.1,6447900.7,1788.5 941726.5,6447906.6,1789.3 941727.2,6447906.6,1789.3 941727.5,6447908.3,1790.2 941728.3,6447909.9,1790.3 941729.9,6447911.5,1790.3 941736.0,6447916.9,1792.5 941732.9,6447920.9,1792.3 941733.1,6447928.4,1791.2 941740.1,6447934.7,1791.2 941737.5,6447938.0,1789 941746.4,6447945.3,1788.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.93</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.94">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>935849.6,6434131.0,2357 935848.9,6434134.4,2357 935852.3,6434134.6,2356.9 935852.6,6434131.6,2356.7 935849.6,6434131.0,2357</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.94</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.95">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>946127.4,6439024.4,1666.7 946129.8,6439043.7,1666.7 946146.8,6439042.2,1666.7 946145.9,6439025.5,1666.7 946136.9,6439025.6,1666.7 946136.2,6439023.8,1666.7 946127.4,6439024.4,1666.7</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.95</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.96">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>947928.0,6443624.8,1286.1 947941.7,6443619.8,1286 947939.5,6443614.0,1286 947926.3,6443619.3,1286.5 947928.0,6443624.8,1286.1</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.96</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.97">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>943228.9,6441652.5,935.9 943246.0,6441648.7,934.8 943244.3,6441638.1,934.8 943226.6,6441640.7,937.5 943228.9,6441652.5,935.9</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.97</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.98">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>946288.0,6440256.8,1680.6 946297.1,6440261.4,1680.6 946301.5,6440253.0,1680.6 946292.3,6440248.4,1680.6 946288.0,6440256.8,1680.6</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.98</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+                <gml:featureMember>
+                    <ogr:gros_jeu fid="gros_jeu.99">
+                        <ogr:geometryProperty>
+                            <exterior>
+                                <gml:LinearRing>
+                                    <gml:coordinates>948773.7,6447667.2,1398.3 948766.7,6447657.4,1400.1 948755.7,6447665.2,1403 948752.4,6447667.4,1403 948751.7,6447668.3,1403.4 948756.1,6447673.4,1402.8 948759.7,6447676.1,1399.8 948773.7,6447667.2,1398.3</gml:coordinates>
+                                </gml:LinearRing>
+                            </exterior>
+                        </ogr:geometryProperty>
+                        <ogr:gml_id>test2.99</ogr:gml_id>
+                    </ogr:gros_jeu>
+                </gml:featureMember>
+            </rt:site>
+        </rt:indice>
+    </rt:sequenceIndice>
+</rt:hypothèse>
