@@ -154,8 +154,8 @@ class FuzzyfierMoreSpeeeeed(Fuzzyfier):
             # forme trapézoidale
             4: (self._inf_vals, self._fst_slp, self._cnt_flt, self._lst_slp, self._sup_vals)
         }
-        # Caneva de la fonction "fuzzy fun"
 
+        # Caneva de la fonction "fuzzy fun"
         def fuzzy_fun(raster):
             raster_copy = np.zeros_like(raster)
             try:

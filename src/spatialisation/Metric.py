@@ -19,25 +19,25 @@ class Metric:
     de Spatialisation.
     """
 
-    def __init__(self, context):
+    def __init__(self, context, *args, **kwargs):
         self.context = context
-        self.values = self.context.raster.values
+        #self.values = self.context.raster.values
 
-    def compute(self, *args):
+    def compute(self, values, *args):
         # params = self.paramsCalc()
-        self.values = self._compute(*args)
-        return FuzzyRaster(array=self.values, meta=self.context.raster.raster_meta)
+        values = self._compute(values, *args)
+        return FuzzyRaster(array=values, meta=self.context.context.raster.raster_meta)
 
-    def _compute(self, *args):
+    def _compute(self, values, *args):
         raise NotImplementedError
 
 
 class Nothing(Metric):
-    def __init__(self, context):
-        super().__init__(context)
+    def __init__(self, context, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
 
-    def _compute(self, *args):
-        return self.values
+    def _compute(self, values, *args):
+        return values
 
 
 class Cell_Distance(Metric):
@@ -50,18 +50,18 @@ class Cell_Distance(Metric):
 
     default_structure = scipy.ndimage.generate_binary_structure(3, 1)
 
-    def __init__(self, context, structure=None):
-        super().__init__(context)
+    def __init__(self, context, structure=None, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
         # Définition du voisinage
         if structure:
             self.structure = structure
         else:
             self.structure = self.default_structure
 
-    def _compute(self, *args):
+    def _compute(self, values, *args):
 
-        aa = np.zeros_like(self.values)
-        bb = self.values + aa
+        aa = np.zeros_like(values)
+        bb = values + aa
 
         while np.min(bb) == 0:
             scipy.ndimage.binary_dilation(
@@ -81,20 +81,20 @@ class Distance(Metric):
     distance à un point
     """
 
-    def __init__(self, context):
-        super().__init__(context)
+    def __init__(self, context, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
 
-    def _compute(self, *args):
+    def _compute(self, values, *args):
 
         #computeraster = np.empty_like(self.values)
 
-        shape = self.values.shape
-        notnullcells = np.argwhere(self.values != 0)
+        shape = values.shape
+        notnullcells = np.argwhere(values != 0)
 
         indices = np.indices(shape).transpose((1, 2, 3, 0))
         calc = notnullcells - indices[:, :, :, np.newaxis]
         calc_sqrt = np.square(calc).sum(4)
-        computeraster = np.sqrt(np.min(calc_sqrt, 3), dtype=self.values.dtype)
+        computeraster = np.sqrt(np.min(calc_sqrt, 3), dtype=values.dtype)
 
         return computeraster
 
@@ -106,14 +106,14 @@ class Angle(Metric):
     Hérite de la classe Metric. Destinée à calculer un angle.
     """
 
-    def __init__(self, context):
-        super().__init__(context)
+    def __init__(self, context, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
 
-    def _compute(self, angle=0, *args):
+    def _compute(self, values, angle=0, *args):
         # Calcule l'angle par rapport à la première coordonée
         # de l'objet. A refaire
-        notnullcells = np.argwhere(self.values != 0)[0]
-        shape = self.values.shape
+        notnullcells = np.argwhere(values != 0)[0]
+        shape = values.shape
         ang = angle - 90
 
         # Calcul [drow, dcol]
@@ -122,29 +122,44 @@ class Angle(Metric):
         _, x, y = np.split(notnullcells - indices, 3, axis=3)
         # Calcul atan
         calc_atan = np.squeeze(np.arctan2(
-            x, y, dtype=self.values.dtype), axis=3)
+            x, y, dtype=values.dtype), axis=3)
         # conversion degrés
         computeraster = (np.degrees(calc_atan) + ang) % 360
 
         return computeraster
 
 
-class DAlt(Metric):
+class DeltaVal(Metric):
+    """
+    Classe DeltaVal
+
+    Hérite de la classe Metric. Destinée à calculer une différence de valeur
+    """
+
+    def __init__(self, context, values_raster, *args, **kwargs):
+        self.values_raster = values_raster
+        super().__init__(context, *args, **kwargs)
+
+    def _compute(self, values, *args):
+        ref_value = self._compute_refValue(values)
+        computeraster = self.values_raster.values - ref_value
+        return computeraster
+
+    def _compute_refValue(self, values, *args):
+        raise NotImplementedError
+
+
+class DAlt(DeltaVal):
     """
     Classe DAlt
 
-    Hérite de la classe Metric. Destinée à calculer la 
-    différence d'altitude
+    Hérite de la classe DeltaVal. Destinée à calculer la 
+    difference d'altitude
     """
 
-    def __init__(self, context):
-        super().__init__(context)
+    def __init__(self, context, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
 
-    def _compute(self, *args):
-
-        computeraster = np.empty_like(self.values)
-        notnullcells = np.argwhere(self.values != 0)
-
-        # Todo
-
-        return computeraster
+    def _compute_refValue(self, values):
+        refVal = np.mean(self.values_raster.values[values == 1.0])
+        return refVal
