@@ -1,11 +1,12 @@
 # import rdflib
 # from ontologyTools import Ontology
 import os
-import rasterio
 from parser import Parser
-from spatialisation import Spatialisation
+
+import rasterio
 
 import config
+from spatialisation import Spatialisation
 
 
 def set_proxy(url, port):
@@ -33,16 +34,15 @@ if __name__ == "__main__":
     # Import paramètres
     set_proxy(**config.proxy)
 
-    parser = Parser("data/xml/exemple2.xml")
+    parser = Parser("data/xml/exemple4.xml")
     parameters = parser.values
 
     # Import données
-    #mnt = load_data(config.data)
+    mnt = load_data(config.data)
     #tt = rasterio.open("/home/mbunel/Bureau/tt.tif")
 
     t1 = rasterio.open("data/raster/test1.tif")
-    t2 = rasterio.open("data/raster/test2.tif")
-    t3 = rasterio.open("data/raster/test3.tif")
+
 
     if False:
         res = []
@@ -52,9 +52,9 @@ if __name__ == "__main__":
                 'zir': parameters['zir'],
                 'indice': indice
             }
-            res.append(Spatialisation(prm, t1, [t2, t3]))
+            res.append(Spatialisation(prm, t1))
 
-    test = Spatialisation(parameters, t1, [t2, t3])
+    test = Spatialisation(parameters, mnt)
     fuzz = test.compute()
 
     # # Test convolution
