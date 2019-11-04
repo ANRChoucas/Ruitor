@@ -75,17 +75,20 @@ class FuzzyRaster:
 
         :return: None	
         """
-        self.fuzzy_values = self.fuzzyfier.fuzzyfy(
-            self.crisp_values, parameters)
-        self.values = self.fuzzy_values
+        # self.fuzzy_values = self.fuzzyfier.fuzzyfy(
+        #     self.crisp_values, parameters)
+        # self.values = self.fuzzy_values
+        self.values = self.fuzzyfier.fuzzyfy(self.values, parameters)
 
     def _init_from_rasterio(self, raster, window=None):
         """
         Fonction d'initialisation à partir d'un raster rasterio	
         """
 
-        self.crisp_values = raster.read(window=window)
-        self.values = self.crisp_values  #[0]
+        # self.crisp_values = raster.read(window=window)
+        # self.values = self.crisp_values  #[0]
+
+        self.values = raster.read(window=window)
 
         if window:
 
@@ -106,8 +109,9 @@ class FuzzyRaster:
         Fonction d'initialisation à partir d'un array numpy	
         """
 
-        self.crisp_values = array
-        self.values = self.crisp_values
+        # self.crisp_values = array
+        # self.values = self.crisp_values
+        self.values = array
 
         if meta:
             self.raster_meta = meta
@@ -189,6 +193,8 @@ class FuzzyRaster:
 
         if not write_params:
             write_params = self.raster_meta
+
+        write_params['driver'] = 'GTiff'
 
         # Ecriture du raster avec les paramètres initaux
         with rasterio.open(path, 'w', **write_params) as dst:
