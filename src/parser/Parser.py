@@ -86,7 +86,7 @@ class Parser:
         return indice_dict
 
     def parse_cible(self, cible_xml):
-        return None
+        return "Nothing"
 
     def parse_site(self, site_xml, **kwargs):
 

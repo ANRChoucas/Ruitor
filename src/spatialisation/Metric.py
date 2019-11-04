@@ -119,7 +119,7 @@ class Angle(Metric):
         # Calcul [drow, dcol]
         # calc_delta =
         indices = np.indices(shape).transpose((1, 2, 3, 0))
-        _, x, y = np.split(notnullcells - indices, 3, axis=3)
+        *_, x, y = np.split(notnullcells - indices, 3, axis=3)
         # Calcul atan
         calc_atan = np.squeeze(np.arctan2(
             x, y, dtype=values.dtype), axis=3)

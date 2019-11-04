@@ -47,7 +47,7 @@ class SpatialisationElement:
         tmp = self.metric.compute(geom_raster)
         # Fuzzyfication
         self.selector.compute(tmp)
-
+        
         if config.log['verbosity'] >= 3:
             print("Element compute : %s " % self.metric.__class__)
 
