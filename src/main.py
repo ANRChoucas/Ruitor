@@ -1,5 +1,6 @@
 # import rdflib
 # from ontologyTools import Ontology
+import logging
 import os
 from parser import Parser
 
@@ -7,7 +8,14 @@ import rasterio
 
 import config
 from spatialisation import Spatialisation
-import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.StreamHandler())
+
+spatialisation_logger = logging.getLogger("spatialisation")
+spatialisation_logger.setLevel(logging.DEBUG)
+spatialisation_logger.addHandler(logging.StreamHandler())
 
 
 def set_proxy(url, port):
@@ -34,7 +42,7 @@ if __name__ == "__main__":
 
     # Import paramètres
     set_proxy(**config.proxy)
-    #logging.basicConfig(level=config.log['logging_level'])
+    # logging.basicConfig(level=config.log['logging_level'])
 
     parser = Parser("data/xml/exemple3.xml")
     parameters = parser.values
@@ -44,7 +52,6 @@ if __name__ == "__main__":
     #tt = rasterio.open("/home/mbunel/Bureau/tt.tif")
 
     t1 = rasterio.open("data/raster/test1.tif")
-
 
     if False:
         res = []
@@ -57,7 +64,8 @@ if __name__ == "__main__":
             res.append(Spatialisation(prm, t1))
 
     test = Spatialisation(parameters, mnt)
-    logging.info('Computation')
+
+    logger.info('Computation')
     fuzz = test.compute()
 
     # # Test convolution
@@ -72,4 +80,4 @@ if __name__ == "__main__":
     # g = rdflib.Graph()
     # result = g.parse("data/ontologies/relations_spatiales.owl")
     # aa = Ontology.Ontology(g)
-    logging.info('Done')
+    logger.info('Done')
