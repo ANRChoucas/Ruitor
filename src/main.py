@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # Import paramètres
     set_proxy(**config.proxy)
 
-    parser = Parser("data/xml/exemple4.xml")
+    parser = Parser("data/xml/exemple3.xml")
     parameters = parser.values
 
     # Import données
@@ -64,7 +64,6 @@ if __name__ == "__main__":
     # fuzz.values = ndimage.convolve(fuzz.values, k)
 
     # Export
-    fuzz.raster_meta['driver'] = 'GTiff'
     fuzz.write("_outTest/test.tif")
 
     # g = rdflib.Graph()
