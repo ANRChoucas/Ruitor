@@ -7,6 +7,7 @@ import rasterio
 
 import config
 from spatialisation import Spatialisation
+import logging
 
 
 def set_proxy(url, port):
@@ -33,6 +34,7 @@ if __name__ == "__main__":
 
     # Import paramètres
     set_proxy(**config.proxy)
+    #logging.basicConfig(level=config.log['logging_level'])
 
     parser = Parser("data/xml/exemple3.xml")
     parameters = parser.values
@@ -55,6 +57,7 @@ if __name__ == "__main__":
             res.append(Spatialisation(prm, t1))
 
     test = Spatialisation(parameters, mnt)
+    logging.info('Computation')
     fuzz = test.compute()
 
     # # Test convolution
@@ -69,4 +72,4 @@ if __name__ == "__main__":
     # g = rdflib.Graph()
     # result = g.parse("data/ontologies/relations_spatiales.owl")
     # aa = Ontology.Ontology(g)
-    print("ok")
+    logging.info('Done')

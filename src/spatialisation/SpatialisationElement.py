@@ -1,5 +1,7 @@
 
 
+import logging
+
 import numpy as np
 from rasterio import features
 
@@ -48,8 +50,7 @@ class SpatialisationElement:
         # Fuzzyfication
         self.selector.compute(tmp)
         
-        if config.log['verbosity'] >= 3:
-            print("Element compute : %s " % self.metric.__class__)
+        logging.debug("Element compute : %s " % self.metric.__class__)
 
         return tmp
 

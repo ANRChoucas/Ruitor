@@ -17,6 +17,6 @@ multiprocessing = {
 }
 
 log = {
-    'verbosity': 2,
+    'verbosity': 20,
     'int_files': True
 }

@@ -1,3 +1,5 @@
+
+import logging
 from functools import reduce
 from itertools import groupby
 from operator import itemgetter
@@ -5,6 +7,8 @@ from operator import itemgetter
 from pathos.multiprocessing import ProcessingPool as Pool
 
 import config
+
+logger = logging.getLogger(__name__)
 
 
 class AggregatorStrategy:
@@ -19,8 +23,7 @@ class AggregatorStrategy:
     def _agg_objects(self, agg):
         res = self._elem_reduce(lambda x, y: x | y, agg.values())
 
-        if config.log['verbosity'] >= 2:
-            print("agg_obj : Done")
+        logger.info("agg_obj : Done")
 
         return res
 
@@ -58,8 +61,7 @@ class FirstAggragator(AggregatorStrategy):
         with Pool(processes=self.pools) as t:
             cmp_res = t.map(self.context.element_compute, sp_list[1])
 
-        if config.log['verbosity'] >= 2:
-            print("Compute : Done")
+        logger.info("Compute : Done")
 
         cmp_dic = {k: v for k, v in zip(sp_list[0], cmp_res)}
         zou = self._agg_spa_rel(cmp_dic)
@@ -67,7 +69,7 @@ class FirstAggragator(AggregatorStrategy):
         zu = self._agg_objects(zi)
 
         if config.log['int_files']:
-            print("writing tempfiles")
+            logger.info("writing tempfiles")
             for k, v in cmp_dic.items():
                 f_name = "obj%s_part%s_rel%s" % k
                 v.write("./_outTest/%s.tif" % f_name)
@@ -93,8 +95,7 @@ class FirstAggragator(AggregatorStrategy):
             except TypeError:
                 res[gr[0]] = val
 
-        if config.log['verbosity'] >= 2:
-            print("agg_obj_part : Done")
+        logger.info("agg_obj_part : Done")
 
         return res
 
@@ -114,7 +115,6 @@ class FirstAggragator(AggregatorStrategy):
             except TypeError:
                 res[gr[0]] = val
 
-        if config.log['verbosity'] >= 2:
-            print("agg_spa_rel : Done")
+        logger.info("agg_spa_rel : Done")
 
         return res
