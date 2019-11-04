@@ -9,7 +9,6 @@ from pathos.multiprocessing import ProcessingPool as Pool
 import config
 
 logger = logging.getLogger(__name__)
-logger.setLevel(config.log['logging_level'])
 
 
 class AggregatorStrategy:

@@ -1,6 +1,7 @@
 # import rdflib
 # from ontologyTools import Ontology
 import logging
+import logging.config
 import os
 from parser import Parser
 
@@ -10,13 +11,6 @@ import config
 from spatialisation import Spatialisation
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.StreamHandler())
-
-spatialisation_logger = logging.getLogger("spatialisation")
-spatialisation_logger.setLevel(logging.DEBUG)
-spatialisation_logger.addHandler(logging.StreamHandler())
-
 
 def set_proxy(url, port):
     proxy = "%s:%s" % (url, port)
@@ -39,6 +33,8 @@ def load_data(params):
 
 
 if __name__ == "__main__":
+
+    logging.config.dictConfig(config.logging_configuration)
 
     # Import paramètres
     set_proxy(**config.proxy)

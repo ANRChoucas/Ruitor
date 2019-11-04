@@ -2,7 +2,7 @@ data = {
     'MNT': {
         #"path": "/home/mbunel/Données/RGEALTI/RGEALTI_2-0_5M_ASC_LAMB93-IGN69_D038_2017-05-20/",
         #"name": "RGEALTI_38_test.vrt",
-        "path": "/home/mbunel/Documents/Code/Ruitor/data/mnt/",
+        "path": "./data/mnt/",
         "name": "BR.tif"
     }
 }
@@ -17,6 +17,26 @@ multiprocessing = {
 }
 
 log = {
-    'logging_level': 20,
     'int_files': True
+}
+
+logging_configuration = {
+    'version' : 1,
+    'loggers' : {
+        'main' : {
+            'handlers' : ['console'],
+            'level' : 'DEBUG'
+        },
+        'spatialisation' : {
+            'handlers' : ['console'],
+            'level' : 'INFO'
+        }
+    },
+    'handlers' : {
+        'console' : {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG'
+        }
+    }
+
 }
