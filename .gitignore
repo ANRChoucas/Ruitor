@@ -9,3 +9,4 @@ data/raster/*
 data/mnt/*
 src/**/*~
 src**/#*
+**.log

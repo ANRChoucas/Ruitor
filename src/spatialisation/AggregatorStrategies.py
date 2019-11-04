@@ -71,7 +71,7 @@ class FirstAggragator(AggregatorStrategy):
 
         if config.log['int_files']:
 
-            logger.debug("Writing tempfiles : Begin")
+            logger.info("Writing tempfiles : Begin")
 
             logger.debug("Spatial relations writing: Begin")
 

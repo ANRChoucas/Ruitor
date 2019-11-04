@@ -24,18 +24,31 @@ logging_configuration = {
     'version' : 1,
     'loggers' : {
         'main' : {
-            'handlers' : ['console'],
+            'handlers' : ['console', 'file_debug'],
             'level' : 'DEBUG'
         },
         'spatialisation' : {
-            'handlers' : ['console'],
-            'level' : 'INFO'
+            'handlers' : ['console', 'file_debug'],
+            'level' : 'DEBUG'
         }
     },
     'handlers' : {
         'console' : {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG'
+            'class' : 'logging.StreamHandler',
+            'level' : 'INFO'
+        },
+        'file_debug' : {
+            'class' : 'logging.FileHandler',
+            'mode' : 'w',
+            'filename' : './execution-debug.log',
+            'level' : 'DEBUG',
+            'formatter' : 'file_formatter'
+        }
+    },
+    'formatters' : {
+        'file_formatter' : {
+            'format': '%(asctime)s %(levelname)-8s %(name)-15s %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
         }
     }
 
