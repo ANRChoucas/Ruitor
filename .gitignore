@@ -7,3 +7,5 @@ venv/*
 data/shp/*
 data/raster/*
 data/mnt/*
+src/**/*~
+src**/#*
