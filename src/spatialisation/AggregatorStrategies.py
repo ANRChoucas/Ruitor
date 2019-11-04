@@ -9,6 +9,7 @@ from pathos.multiprocessing import ProcessingPool as Pool
 import config
 
 logger = logging.getLogger(__name__)
+logger.setLevel(config.log['logging_level'])
 
 
 class AggregatorStrategy:
@@ -21,10 +22,9 @@ class AggregatorStrategy:
         return reduce(function, values)
 
     def _agg_objects(self, agg):
+        logger.debug("agg_obj : Begin")
         res = self._elem_reduce(lambda x, y: x | y, agg.values())
-
         logger.info("agg_obj : Done")
-
         return res
 
 
@@ -58,6 +58,8 @@ class FirstAggragator(AggregatorStrategy):
 
         # sp_list[1][0].compute()
 
+        logger.debug("Compute : Begin")
+
         with Pool(processes=self.pools) as t:
             cmp_res = t.map(self.context.element_compute, sp_list[1])
 
@@ -69,14 +71,28 @@ class FirstAggragator(AggregatorStrategy):
         zu = self._agg_objects(zi)
 
         if config.log['int_files']:
-            logger.info("writing tempfiles")
+
+            logger.debug("Writing tempfiles : Begin")
+
+            logger.debug("Spatial relations writing: Begin")
+
             for k, v in cmp_dic.items():
                 f_name = "obj%s_part%s_rel%s" % k
                 v.write("./_outTest/%s.tif" % f_name)
+                logger.debug("Spatial relation %s writing : Done", f_name)
+
+            logger.debug("Spatial relations writing : Done")
+
+            logger.debug("Objects Parts writing : Begin")
 
             for k, v in zou.items():
                 f_name = "obj%s_part%s" % k
                 v.write("./_outTest/%s.tif" % f_name)
+                logger.debug("Object part %s writing  : Done", f_name)
+
+            logger.debug("Objects Parts writing : Done")
+
+            logger.info("Writing tempfiles writing : Done")
 
         return zu
 

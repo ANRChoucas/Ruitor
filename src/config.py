@@ -1,9 +1,9 @@
 data = {
     'MNT': {
-        "path": "/home/mbunel/Données/RGEALTI/RGEALTI_2-0_5M_ASC_LAMB93-IGN69_D038_2017-05-20/",
-        "name": "RGEALTI_38_test.vrt",
-        # "path": "/home/mbunel/Documents/Code/Ruitor/data/mnt/",
-        # "name": "BR.tif"
+        #"path": "/home/mbunel/Données/RGEALTI/RGEALTI_2-0_5M_ASC_LAMB93-IGN69_D038_2017-05-20/",
+        #"name": "RGEALTI_38_test.vrt",
+        "path": "/home/mbunel/Documents/Code/Ruitor/data/mnt/",
+        "name": "BR.tif"
     }
 }
 
@@ -17,6 +17,6 @@ multiprocessing = {
 }
 
 log = {
-    'verbosity': 20,
+    'logging_level': 20,
     'int_files': True
 }
