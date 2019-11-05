@@ -13,17 +13,17 @@ data = {
             "filename": "HR.tif"
         },
         {
-            'name': "BR",
-            "precision": 50,
-            "path": "./data/mnt/",
-            "filename": "BR.tif"
-        },
-        {
             'name': 'MR',
             "precision": 25,
             "path": "./data/mnt/",
             "filename": "MR.tif"
         }
+        {
+            'name': "BR",
+            "precision": 50,
+            "path": "./data/mnt/",
+            "filename": "BR.tif"
+        },
     ]
 }
 

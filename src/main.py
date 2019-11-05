@@ -27,6 +27,7 @@ def load_mnt(params):
     file_folder = params['path']
     file_name = params['filename']
     file = os.path.join(file_folder, file_name)
+    
     return rasterio.open(file)
 
 
