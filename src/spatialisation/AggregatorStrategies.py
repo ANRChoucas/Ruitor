@@ -57,7 +57,7 @@ class FirstAggragator(AggregatorStrategy):
 
         # sp_list[1][0].compute()
 
-        logger.debug("Compute : Begin")
+        logger.info("Compute : Begin")
 
         with Pool(processes=self.pools) as t:
             cmp_res = t.map(self.context.element_compute, sp_list[1])
@@ -99,6 +99,9 @@ class FirstAggragator(AggregatorStrategy):
         """
         """
         res = {}
+
+        logger.info("agg_obj_part : Begin")
+        
         keysList = list(agg.keys())
         keysList.sort(key=itemgetter(0))
 
@@ -118,6 +121,8 @@ class FirstAggragator(AggregatorStrategy):
         """
         """
         res = {}
+
+        logger.info("agg_spa_rel : Begin")
 
         keysList = list(agg.keys())
         keysList.sort(key=itemgetter(0, 1))
