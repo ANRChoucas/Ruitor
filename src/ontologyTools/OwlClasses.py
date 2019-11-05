@@ -5,9 +5,7 @@ les normes owl et rdf
 
 
 class _RDFMeta(type):
-
     def __new__(cls, name, bases, dct):
-
         def __init__(cls, graph):
             super(bases[0], cls).__init__(graph)
 

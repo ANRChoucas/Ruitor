@@ -48,15 +48,13 @@ class GeometryParser:
     def parse_polygon(self, polygon_gml):
 
         # Calcul coordonées enveloppe
-        ext_coordinates = self.parse_coordinates(
-            polygon_gml.exterior.coordinates)
+        ext_coordinates = self.parse_coordinates(polygon_gml.exterior.coordinates)
 
         # Calcul coordonées interieur
         if polygon_gml.interior:
             int_coordinates = []
-            for inter in polygon_gml.find_all('interior'):
-                int_coordinates.append(
-                    self.parse_coordinates(inter.coordinates))
+            for inter in polygon_gml.find_all("interior"):
+                int_coordinates.append(self.parse_coordinates(inter.coordinates))
         else:
             int_coordinates = None
 

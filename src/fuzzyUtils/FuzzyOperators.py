@@ -119,8 +119,7 @@ class NilpotentOperators(FuzzyOperators):
         # 0 si a+b <= 0
         res_array[~test_arr] = 0
         # min(a,b) si a+b > 1
-        res_array[test_arr] = np.minimum(
-            self.context.values, other.values)[test_arr]
+        res_array[test_arr] = np.minimum(self.context.values, other.values)[test_arr]
 
         return res_array
 
@@ -132,8 +131,7 @@ class NilpotentOperators(FuzzyOperators):
         # 1 si a + b >= 1
         res_array[~test_arr] = 1
         # max(a,b) si a+b < 1
-        res_array[test_arr] = np.maximum(
-            self.context.values, other.values)[test_arr]
+        res_array[test_arr] = np.maximum(self.context.values, other.values)[test_arr]
 
         return res_array
 

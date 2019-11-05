@@ -1,5 +1,3 @@
-
-
 import logging
 
 import numpy as np
@@ -35,10 +33,12 @@ class SpatialisationElement:
         zi = np.zeros_like(self.context.raster.values)
 
         features.rasterize(
-            [self.geom], out=zi,
-            transform=self.context.raster.raster_meta['transform'],
+            [self.geom],
+            out=zi,
+            transform=self.context.raster.raster_meta["transform"],
             all_touched=True,
-            dtype=self.context.raster.raster_meta['dtype'])
+            dtype=self.context.raster.raster_meta["dtype"],
+        )
 
         # FuzzyRaster(array=zi, meta=self.context.raster.raster_meta)
         return zi
@@ -49,7 +49,7 @@ class SpatialisationElement:
         tmp = self.metric.compute(geom_raster)
         # Fuzzyfication
         self.selector.compute(tmp)
-        
+
         logging.debug("Element compute : %s " % self.metric.__class__)
 
         return tmp

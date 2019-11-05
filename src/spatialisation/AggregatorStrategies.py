@@ -1,4 +1,3 @@
-
 import logging
 from functools import reduce
 from itertools import groupby
@@ -12,10 +11,9 @@ logger = logging.getLogger(__name__)
 
 
 class AggregatorStrategy:
-
     def __init__(self, context):
         self.context = context
-        self.pools = config.multiprocessing['pools']
+        self.pools = config.multiprocessing["pools"]
 
     def _elem_reduce(self, function, values, pools=6, chuncks=12):
         return reduce(function, values)
@@ -69,7 +67,7 @@ class FirstAggragator(AggregatorStrategy):
         zi = self._agg_objects_part(zou)
         zu = self._agg_objects(zi)
 
-        if config.log['int_files']:
+        if config.log["int_files"]:
 
             logger.info("Writing tempfiles : Begin")
 
@@ -101,7 +99,7 @@ class FirstAggragator(AggregatorStrategy):
         res = {}
 
         logger.info("agg_obj_part : Begin")
-        
+
         keysList = list(agg.keys())
         keysList.sort(key=itemgetter(0))
 

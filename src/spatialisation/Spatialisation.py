@@ -12,8 +12,7 @@ from fuzzyUtils import FuzzyRaster
 
 from .Metric import Angle, Cell_Distance, DAlt, Distance, Metric, Nothing
 from .Selector import SelectorNull, SelectorX, SelectorX2, SelectorX3
-from .SpatialisationElement import (SpatialisationElement,
-                                    SpatialisationElementSequence)
+from .SpatialisationElement import SpatialisationElement, SpatialisationElementSequence
 
 
 class Spatialisation:
@@ -41,7 +40,7 @@ class Spatialisation:
         # Création du raster flou résultat
         self.raster = FuzzyRaster(raster=raster, window=self.zir)
 
-        self.indice_parsing(self.params['indices'])
+        self.indice_parsing(self.params["indices"])
 
     def _init_obj(self):
         pass
@@ -56,16 +55,19 @@ class Spatialisation:
 
         # tmpdir = mkdtemp()
 
-        for geom in indice['site']:
+        for geom in indice["site"]:
             # filename = path.join(tmpdir, 'obj_%s.dat' % site_counter)
             # zi = np.memmap(filename, mode='w+', dtype=self.raster.values.dtype, shape=self.raster.values.shape)
 
             self.spaElms[(site_counter, 0, 0)] = SpatialisationElement(
-                self, geom, metric=Angle, selector=SelectorX2)
+                self, geom, metric=Angle, selector=SelectorX2
+            )
             self.spaElms[(site_counter, 0, 1)] = SpatialisationElement(
-                self, geom, metric=Distance, selector=SelectorX)
+                self, geom, metric=Distance, selector=SelectorX
+            )
             self.spaElms[(site_counter, 0, 2)] = SpatialisationElement(
-                self, geom, metric=DAlt, selector=SelectorX3, values_raster=self.raster)
+                self, geom, metric=DAlt, selector=SelectorX3, values_raster=self.raster
+            )
 
             site_counter += 1
 
@@ -89,10 +91,10 @@ class Spatialisation:
         Possibilité de spécifier un padding
         """
         # Spécification du padding
-        if 'padding' in kwargs:
-            padding = kwargs['padding']
+        if "padding" in kwargs:
+            padding = kwargs["padding"]
         else:
-            padding = {'x': 10, 'y': 10}
+            padding = {"x": 10, "y": 10}
         # Calcul Zir
         # Calcul des numéros de ligne et de colonne correspondant aux
         # deux points de la bbox
@@ -100,7 +102,7 @@ class Spatialisation:
         # Extraction du numéro de ligne/colonne minimum
         row_min, col_min = min(row_ind), min(col_ind)
         # Calcul du nombre de lignes/colonnes
-        row_num = abs(max(row_ind) - row_min) + padding['x']
-        col_num = abs(max(col_ind) - col_min) + padding['y']
+        row_num = abs(max(row_ind) - row_min) + padding["x"]
+        col_num = abs(max(col_ind) - col_min) + padding["y"]
         # Définition de la fenêtre de travail
         return Window(col_min, row_min, col_num, row_num)

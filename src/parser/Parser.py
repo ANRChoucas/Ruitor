@@ -16,9 +16,9 @@ class Parser:
     default_validator_strategy = Validator
     default_geometryParser_strategy = GeometryParser
 
-    def __init__(self, file, schema=None,
-                 validator_strategy=None,
-                 geometryParser_strategy=None):
+    def __init__(
+        self, file, schema=None, validator_strategy=None, geometryParser_strategy=None
+    ):
         """
         Fonction d'initialisation
         """
@@ -47,10 +47,10 @@ class Parser:
 
         # Calcul Zir
         if self.xml.zir:
-            self._xml_dict['zir'] = self.parse_zir(self.xml.zir)
+            self._xml_dict["zir"] = self.parse_zir(self.xml.zir)
 
         # Parsage indices
-        self._xml_dict['indices'] = self.parse_indices(self.xml.sequenceIndice)
+        self._xml_dict["indices"] = self.parse_indices(self.xml.sequenceIndice)
 
     @property
     def values(self):
@@ -75,13 +75,13 @@ class Parser:
 
         indice_dict = {}
 
-        confiance = self.parse_confiance(indice_xml.attrs.get('confiance'))
+        confiance = self.parse_confiance(indice_xml.attrs.get("confiance"))
         cible = self.parse_cible(indice_xml.cible)
         site = self.parse_site(indice_xml.site)
 
-        indice_dict['confiance'] = confiance
-        indice_dict['cible'] = cible
-        indice_dict['site'] = site
+        indice_dict["confiance"] = confiance
+        indice_dict["cible"] = cible
+        indice_dict["site"] = site
 
         return indice_dict
 

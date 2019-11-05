@@ -1,12 +1,7 @@
 class FuzzyficationFunction(list):
 
-    ftypes = {
-        1: 'crisp',
-        2: 'linear',
-        3: 'triangular',
-        4: 'trapezoidal'
-    }
-    
+    ftypes = {1: "crisp", 2: "linear", 3: "triangular", 4: "trapezoidal"}
+
     def __init__(self, *args):
         super().__init__(*args)
         sorted(self, key=lambda x: x[0])

@@ -11,10 +11,9 @@ from .OwlClasses import OwlClass, OwlObjectProperties
 
 
 class RDFDic(dict):
-
     def __init__(self, *args, **kwargs):
 
-        graph = kwargs.get('graph')
+        graph = kwargs.get("graph")
 
         if graph:
             __dict__ = {}
@@ -60,16 +59,18 @@ class RDFDic(dict):
                 out[i] = {pred: sub}
         return RDFDic(**out)
 
-    def get_object(self, obj):              
-        return RDFDic(**{i: {j: [obj]} for i, v in self.items() for j, w in v.items() if obj in w})
+    def get_object(self, obj):
+        return RDFDic(
+            **{i: {j: [obj]} for i, v in self.items() for j, w in v.items() if obj in w}
+        )
 
     def show(self):
         for i, v in self.items():
             print("\n", type(i), i)
             for j, w in v.items():
-                print('\t', type(j), j)
+                print("\t", type(j), j)
                 for x in w:
-                    print('\t\t', type(x), x)
+                    print("\t\t", type(x), x)
 
 
 class OntologyConstructor:
@@ -89,14 +90,13 @@ class OntologyConstructor:
 
         swich = {
             rdflib.term.URIRef: lambda x: x.partition(uriDelimiter)[2],
-            rdflib.term.BNode: lambda x: x.toPython()
+            rdflib.term.BNode: lambda x: x.toPython(),
         }
 
         return swich.get(type(uri), None)(uri)
 
 
 class newOntologyConstructor(OntologyConstructor):
-    
     def __init__(self, context):
         super().__init__(context)
 
@@ -113,12 +113,12 @@ class BasicOntologyConstructor(OntologyConstructor):
 
         # Définition uri subClass
         rdf_subClassOf_uri = rdflib.term.URIRef(
-            'http://www.w3.org/2000/01/rdf-schema#subClassOf')
+            "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+        )
 
         # Extraction des objets qui sont des sous-classes de la
         # classe traitée
-        subclasses = self.context.graph.triples(
-            (uri, rdf_subClassOf_uri, None))
+        subclasses = self.context.graph.triples((uri, rdf_subClassOf_uri, None))
         subclasses_instances = []
 
         for subclass in subclasses:
@@ -134,8 +134,7 @@ class BasicOntologyConstructor(OntologyConstructor):
 
             # Ajout de la classe créée dans le dictionnaire des attribus
             if subclass_name not in subclasses_instances:
-                subclass_instance = self._ontologyclasses.get(
-                    subclass_name, None)
+                subclass_instance = self._ontologyclasses.get(subclass_name, None)
                 subclasses_instances.append(subclass_instance)
             else:
                 raise Exception("fuck")
@@ -183,7 +182,7 @@ class BasicOntologyConstructor(OntologyConstructor):
             "uri": uri,
             "label": "Je suis le label",
             "subClasses": [],
-            "supClasses": []
+            "supClasses": [],
         }
 
         # subclasses_instances = self._subClassConstructor(uri)
@@ -199,11 +198,12 @@ class BasicOntologyConstructor(OntologyConstructor):
         self._ontologyproperties = {}
 
         rdf_subPropertyOf_uri = rdflib.term.URIRef(
-            'http://www.w3.org/2000/01/rdf-schema#subPropertyOf')
+            "http://www.w3.org/2000/01/rdf-schema#subPropertyOf"
+        )
         rdf_domain_uri = rdflib.term.URIRef(
-            'http://www.w3.org/2000/01/rdf-schema#domain')
-        rdf_range_uri = rdflib.term.URIRef(
-            'http://www.w3.org/2000/01/rdf-schema#range')
+            "http://www.w3.org/2000/01/rdf-schema#domain"
+        )
+        rdf_range_uri = rdflib.term.URIRef("http://www.w3.org/2000/01/rdf-schema#range")
 
         def _propertyConstructor(uri):
 
@@ -214,39 +214,43 @@ class BasicOntologyConstructor(OntologyConstructor):
                 "subPropertyOf": set(),
                 "supPropertyOf": set(),
                 "domain": set(),
-                "range": set()
+                "range": set(),
             }
 
             # Range
             try:
                 property_range = list(
-                    zip(*self.context.context.graph.triples((uri, rdf_range_uri, None))))[-1]
+                    zip(*self.context.context.graph.triples((uri, rdf_range_uri, None)))
+                )[-1]
             except IndexError:
                 property_range = []
             property_range = {
-                self._ontologyclasses[self.uriToName(i)] for i in property_range}
+                self._ontologyclasses[self.uriToName(i)] for i in property_range
+            }
             dct["range"] = property_range
 
             # Domain
             try:
                 property_domain = list(
-                    zip(*self.context.graph.triples((uri, rdf_domain_uri, None))))[-1]
+                    zip(*self.context.graph.triples((uri, rdf_domain_uri, None)))
+                )[-1]
             except IndexError:
                 property_domain = []
             property_domain = {
-                self._ontologyclasses[self.uriToName(i)] for i in property_domain}
+                self._ontologyclasses[self.uriToName(i)] for i in property_domain
+            }
             dct["domain"] = property_domain
 
             # subProperty
             subproperties = self.context.graph.triples(
-                (uri, rdf_subPropertyOf_uri, None))
+                (uri, rdf_subPropertyOf_uri, None)
+            )
             for subproperty in subproperties:
                 subproperty_uri = subproperty[2]
                 subproperty_name = self.uriToName(subproperty_uri)
                 if not subproperty_name in self._ontologyproperties:
                     _propertyConstructor(subproperty_uri)
-                dct["subPropertyOf"].add(
-                    self._ontologyproperties[subproperty_name])
+                dct["subPropertyOf"].add(self._ontologyproperties[subproperty_name])
 
             # Class generation
             newproperty = type(name, (OwlObjectProperties,), dct)

@@ -23,7 +23,6 @@ class Selector:
 
 
 class SelectorNull(Selector):
-
     def __init__(self, context, *args, **kwargs):
         super().__init__(context, *args, **kwargs)
 
@@ -32,7 +31,6 @@ class SelectorNull(Selector):
 
 
 class SelectorX(Selector):
-
     def __init__(self, context, *args, **kwargs):
         super().__init__(context, *args, **kwargs)
 
@@ -41,7 +39,6 @@ class SelectorX(Selector):
 
 
 class SelectorX2(Selector):
-
     def __init__(self, context, *args, **kwargs):
         super().__init__(context, *args, **kwargs)
 
@@ -50,7 +47,6 @@ class SelectorX2(Selector):
 
 
 class SelectorX3(Selector):
-
     def __init__(self, context, *args, **kwargs):
         super().__init__(context, *args, **kwargs)
 

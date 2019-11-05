@@ -22,8 +22,9 @@ class FuzzyRaster:
     default_fuzzy_operators_strategy = FuzzyOperators.ZadehOperators
     default_fuzzyfier_strategy = Fuzzyfiers.FuzzyfierMoreSpeeeeed
 
-    def __init__(self, fuzzy_operators_strategy=None,
-                 fuzzyfier_strategy=None, **kwargs):
+    def __init__(
+        self, fuzzy_operators_strategy=None, fuzzyfier_strategy=None, **kwargs
+    ):
         """Initialisation de l'objet
 
         :param fuzzy_operators_strategy: Strategie d'opérateurs flous
@@ -45,22 +46,22 @@ class FuzzyRaster:
             self.fuzzyfier = self.default_fuzzyfier_strategy(self)
 
         # Construction raster flou
-        if 'raster' in kwargs:
-            raster = kwargs.get('raster')
-            window = kwargs.get('window', None)
+        if "raster" in kwargs:
+            raster = kwargs.get("raster")
+            window = kwargs.get("window", None)
             self._init_from_rasterio(raster, window=window)
-        elif 'array' in kwargs:
-            if 'window' in kwargs:
+        elif "array" in kwargs:
+            if "window" in kwargs:
                 raise Warning("Cannot use a window with a numpy array")
-            array = kwargs.get('array')
-            meta = kwargs.get('meta', None)
+            array = kwargs.get("array")
+            meta = kwargs.get("meta", None)
             self._init_from_numpy(array, meta)
         else:
             raise ValueError("Bad parameters")
 
         # Fuzzyfication
-        if 'fuzzyfication_parameters' in kwargs:
-            fuzzyfication_parameters = kwargs.get('fuzzyfication_parameters')
+        if "fuzzyfication_parameters" in kwargs:
+            fuzzyfication_parameters = kwargs.get("fuzzyfication_parameters")
             self.fuzzyfication(fuzzyfication_parameters)
 
     def fuzzyfication(self, parameters):
@@ -94,12 +95,16 @@ class FuzzyRaster:
 
             self.raster_meta = raster.meta.copy()
             nw_transform = rasterio.windows.transform(
-                window, self.raster_meta['transform'])
+                window, self.raster_meta["transform"]
+            )
 
-            self.raster_meta.update({
-                'height': window.height,
-                'width': window.width,
-                'transform': nw_transform})
+            self.raster_meta.update(
+                {
+                    "height": window.height,
+                    "width": window.width,
+                    "transform": nw_transform,
+                }
+            )
 
         else:
             self.raster_meta = raster.meta
@@ -122,14 +127,14 @@ class FuzzyRaster:
                 count = 1
 
             self.raster_meta = {
-                'count': count,
-                'crs': None,
-                'driver': 'GTiff',
-                'dtype': array.dtype,
-                'height': array.shape[0],
-                'width': array.shape[1],
-                'nodata': -99999.0,
-                'transform': None
+                "count": count,
+                "crs": None,
+                "driver": "GTiff",
+                "dtype": array.dtype,
+                "height": array.shape[0],
+                "width": array.shape[1],
+                "nodata": -99999.0,
+                "transform": None,
             }
 
     # @property
@@ -137,7 +142,7 @@ class FuzzyRaster:
     #   return self.values[self.values != self.raster_meta['nodata']]
 
     def plot(self):
-        pyplot.matshow(self.values, cmap='gray')
+        pyplot.matshow(self.values, cmap="gray")
 
     def summarize(self):
         rastmin = self.values.min()
@@ -152,7 +157,9 @@ class FuzzyRaster:
         {}
         -------------------------------
         {}
-        """.format(rastmin, rastmed, rastmax, self.fuzzy_operators, self.fuzzyfier)
+        """.format(
+            rastmin, rastmed, rastmax, self.fuzzy_operators, self.fuzzyfier
+        )
 
         print(description_string)
 
@@ -162,24 +169,32 @@ class FuzzyRaster:
         """
         # La gestion des opérations inter-raster est pas top à revoir
         # -> construire les paramètres du raster construit
-        return FuzzyRaster(array=self.fuzzy_operators.norm(other),
-                           meta=self.raster_meta,
-                           fuzzy_operators_strategy=self.fuzzy_operators.__class__)
+        return FuzzyRaster(
+            array=self.fuzzy_operators.norm(other),
+            meta=self.raster_meta,
+            fuzzy_operators_strategy=self.fuzzy_operators.__class__,
+        )
 
     def __or__(self, other):
-        return FuzzyRaster(array=self.fuzzy_operators.conorm(other),
-                           meta=self.raster_meta,
-                           fuzzy_operators_strategy=self.fuzzy_operators.__class__)
+        return FuzzyRaster(
+            array=self.fuzzy_operators.conorm(other),
+            meta=self.raster_meta,
+            fuzzy_operators_strategy=self.fuzzy_operators.__class__,
+        )
 
     def __invert__(self):
-        return FuzzyRaster(array=(1 - self.values),
-                           meta=self.raster_meta,
-                           fuzzy_operators_strategy=self.fuzzy_operators.__class__)
+        return FuzzyRaster(
+            array=(1 - self.values),
+            meta=self.raster_meta,
+            fuzzy_operators_strategy=self.fuzzy_operators.__class__,
+        )
 
     def __sub__(self, other):
-        return FuzzyRaster(array=(self.values - other.values),
-                           meta=self.raster_meta,
-                           fuzzy_operators_strategy=self.fuzzy_operators.__class__)
+        return FuzzyRaster(
+            array=(self.values - other.values),
+            meta=self.raster_meta,
+            fuzzy_operators_strategy=self.fuzzy_operators.__class__,
+        )
 
     def write(self, path, write_params=None, write_window=None):
         """
@@ -194,8 +209,8 @@ class FuzzyRaster:
         if not write_params:
             write_params = self.raster_meta
 
-        write_params['driver'] = 'GTiff'
+        write_params["driver"] = "GTiff"
 
         # Ecriture du raster avec les paramètres initaux
-        with rasterio.open(path, 'w', **write_params) as dst:
+        with rasterio.open(path, "w", **write_params) as dst:
             dst.write(self.values, window=write_window)

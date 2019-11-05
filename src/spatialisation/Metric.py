@@ -21,7 +21,7 @@ class Metric:
 
     def __init__(self, context, *args, **kwargs):
         self.context = context
-        #self.values = self.context.raster.values
+        # self.values = self.context.raster.values
 
     def compute(self, values, *args):
         # params = self.paramsCalc()
@@ -64,11 +64,10 @@ class Cell_Distance(Metric):
         bb = values + aa
 
         while np.min(bb) == 0:
-            scipy.ndimage.binary_dilation(
-                bb, structure=self.structure, output=aa)
+            scipy.ndimage.binary_dilation(bb, structure=self.structure, output=aa)
             bb = bb + aa
 
-        computeraster = (np.max(bb) - bb)
+        computeraster = np.max(bb) - bb
 
         return computeraster
 
@@ -86,7 +85,7 @@ class Distance(Metric):
 
     def _compute(self, values, *args):
 
-        #computeraster = np.empty_like(self.values)
+        # computeraster = np.empty_like(self.values)
 
         shape = values.shape
         notnullcells = np.argwhere(values != 0)
@@ -121,8 +120,7 @@ class Angle(Metric):
         indices = np.indices(shape).transpose((1, 2, 3, 0))
         *_, x, y = np.split(notnullcells - indices, 3, axis=3)
         # Calcul atan
-        calc_atan = np.squeeze(np.arctan2(
-            x, y, dtype=values.dtype), axis=3)
+        calc_atan = np.squeeze(np.arctan2(x, y, dtype=values.dtype), axis=3)
         # conversion degrés
         computeraster = (np.degrees(calc_atan) + ang) % 360
 
