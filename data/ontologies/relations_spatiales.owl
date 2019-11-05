@@ -5,13 +5,14 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:gums="https://web.archive.org/web/20171127035535/http://www.ontospace.uni-bremen.de/ontology/stable/GUM-3-space.owl#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:Ornitho="http://www.semanticweb.org/mbunel/ontologies/Ornitho#"
      xmlns:ontodebug="http://ainf.aau.at/ontodebug#">
     <owl:Ontology rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho">
         <rdfs:comment xml:lang="fr">Définition des relations spatiales</rdfs:comment>
         <rdfs:label xml:lang="fr">Ontologie des relations spatiales</rdfs:label>
-        <owl:versionInfo xml:lang="fr">0.2 (draft)</owl:versionInfo>
+        <owl:versionInfo xml:lang="fr">0.3 (draft)</owl:versionInfo>
     </owl:Ontology>
     
 
@@ -33,6 +34,12 @@
     
 
 
+    <!-- http://www.w3.org/2002/07/owl#sameAs -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2002/07/owl#sameAs"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -41,6 +48,16 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ComposedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ComposedBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#GeographicObject"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Groupe_objet_géographique"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_géographique"/>
+    </owl:ObjectProperty>
     
 
 
@@ -82,6 +99,23 @@
     
 
 
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMethod -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMethod">
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetrique -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetrique">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMethod"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Metrique"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasModifieur -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasModifieur">
@@ -117,6 +151,15 @@
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isRelationSpatialeAtomiqueOf"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMethod"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur"/>
     </owl:ObjectProperty>
     
 
@@ -204,11 +247,312 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#pythonObjectName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#pythonObjectName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Classes
     //
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ADistanceQuantitativeRelative -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ADistanceQuantitativeRelative">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est située à une certaine distance du site. Cette distance est quantitative et est exprimée par une métrique dépendant du site (eg. À un pâté de maisons). Il n’y a pas de contrainte sur la dimension de la distance, elle peut être planimétrique, altimétrique ou les deux .</rdfs:comment>
+        <rdfs:label xml:lang="fr">À distance qualitative relative</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ADistanceTemps -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ADistanceTemps">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est à une certaine distance du site. Cette distance est exprimée en temps de parcours. Il est par conséquent nécessaire de connaître le mode de déplacement ou la vitesse de déplacement.</rdfs:comment>
+        <rdfs:label xml:lang="fr">À distance temps</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ADroiteDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ADroiteDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est à droite de l’objet de référence. Ce concept nécessite de connaître l’orientation de la cible</rdfs:comment>
+        <rdfs:label xml:lang="fr">À droite de</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDeExterne -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDeExterne">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AExtremiteDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AExtremiteDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"/>
+        <rdfs:comment xml:lang="fr">La cible est située à l&apos;extrémité du site. Ce qui impose une relation de contenance</rdfs:comment>
+        <rdfs:label xml:lang="fr">À l&apos;extrémité de</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:Peripheral"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AGaucheDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AGaucheDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est à gauche de l’objet de référence. Ce concept nécessite de connaître l’orientation de la cible</rdfs:comment>
+        <rdfs:label xml:lang="fr">À la gauche de</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ALaMemeAltitudeQue -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ALaMemeAltitudeQue">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est située à la même altitude que le site. Le site peut être une altitude absolue (=&gt; donc plus ou moins une courbe de niveau ou un « plan de niveau »), ou un objet dont l’altitude sert donc de référence.</rdfs:comment>
+        <rdfs:label xml:lang="fr">À la même altitude que</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:HeightNonProjectionAxial"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ALaMemeAltitudeQue"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:HeightNonProjectionAxial"/>
+        <rdfs:comment>Pour nous, dans ce cas, l’altitude absolue est considérée comme le site (=&gt; d’altitude absolue tant), et a relation est une relation de similarité d’altitude, alors que dans Bateman pas sûr que ce soit exactement pareil.</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDeExterne -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDeExterne">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDe"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ApresJalonSurChemin -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ApresJalonSurChemin">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SitueSurItineraireOuReseauSupport"/>
+        <rdfs:comment xml:lang="fr">La cible est située sur un chemin ou un itinéraire et après un jalon.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Après un jalon sur chemin</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuDessusAltitude -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuDessusAltitude">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible a une altitude supérieure à celle du site. La distance entre le site est la cible n’est pas contraignante</rdfs:comment>
+        <rdfs:label xml:lang="fr">Au dessus altitude</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:AboveProjection"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuDessusAltitude"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:AboveProjection"/>
+        <rdfs:comment>Le concept AuDessusAltituce n’impose pas que la cible soit située à l’intérieur ou à l’extérieur du site, par conséquent le concept le plus proche dans l’ontologie de Bateman et le AboveProjection. Je ne suis pas sûr que le lien soit un seeAlso, peut-être que les concepts sont rigoureusement identiques, à vérifier.</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuDessusJalonSurChemin -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuDessusJalonSurChemin">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuDessusAltitude"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SitueSurItineraireOuReseauSupport"/>
+        <rdfs:comment xml:lang="fr">La cible est au dessus du site et sur un chemin menant au site</rdfs:comment>
+        <rdfs:label xml:lang="fr">Au dessus d&apos;un jalon sur un chemin</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:AboveProjectionExternal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuDessusProche -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuDessusProche">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"/>
+        <rdfs:comment xml:lang="fr">La cible est proche et a une altitude supérieure à celle du site.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Au dessus et proche de</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:AboveProjectionExternal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDeExterne -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDeExterne">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDeExterne -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDeExterne">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuxAlentoursDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuxAlentoursDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est suffisamment proche du site pour qu’on puisse considérer que le site reste un point de repère qui a un sens. La proximité qui pourrait s’en déduire est généralement dépendante d’un « rayonnement » qui pourrait êtrre affecté au site (lié à sa renommée, à sa taille typiquemnet pour un lieu habité, à sa saillance...). Il peut y avoir connexion topologique entre la cible et le site, ou pas. Exemple : « je suis dans le coin du mont-Blanc ».</rdfs:comment>
+        <rdfs:label xml:lang="fr">Aux alentours de</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:Proximal"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuxAlentoursDe"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:Proximal"/>
+        <rdfs:comment>Idée à creuser pour avoir une idée de l’échelle/distance du « rayonnement » du site : si plusieurs éléments de localisation sont données avec cette relation AuxAlentoursDe et avec plusieurs sites différents, les interdistances entre les différents sites peuvent peut-être donner un ordre de grandeur.</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieEstDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieEstDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieNordDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieNordDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieOuestDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieOuestDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDe"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieSudDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieSudDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DeAutreCoteDeParRapportA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DeAutreCoteDeParRapportA">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est de l&apos;autre côté du site par rapport à un objet utilisé comme point de référence</rdfs:comment>
+        <rdfs:label xml:lang="fr">De l&apos;autre côté de par rapport à</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceQuantitativePlanimetrique -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceQuantitativePlanimetrique">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est à telle distance du site, exprimée dans une unité de longueur (pas un temps de marche/accès). La distance considérée est planimétrique. Si relief en pente « pas trop forte », ça peut être le long de la pente, mais il ne s’agit pas d’un dénivelé.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Distance quantitative planimétrique</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:QuantitativeDistance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DuMemeCoteQueParRapportA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DuMemeCoteQueParRapportA">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible située du même côté que le site 1, par rapport au site 2. Cela suppose qu’on peut partitionner l’espace en deux zones appelées les deux « côtés » du site 2. Selon la forme et la nature du site 2 (et son contexte spatial) : soit le site le site 2 a intrinsèquement deux côtés (un col, une crète, une rivère, une ville située sur une rivière)… Soit, pour deux sites assimilables à des ponctuels et sans contexte spatial particulier, c’est le couple (site 1, site 2) qui permet de définir deux côtés au site 2 : un côté qui contient le site 1, et un côté qui ne le contient pas. Typiquement la limite est alors la perpendiculaire au segment joignant les site 1 au site 2, passant par le site 2. DuMemeCoteQueParRapportA est l’exact opposé de DeLAutreCoteDeParRapportA.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Du même côté que par rapport à</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:RelativeNonProjectionAxial"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DuMemeCoteQueParRapportA"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:RelativeNonProjectionAxial"/>
+        <rdfs:comment>RelativeNonProjectionAxial n&apos;est pas défini très clairement dans l’ontologie de Bateman (contradiction entre définition/exemples donnés dans le papier et dans l’ontologie elle-même.</rdfs:comment>
+    </owl:Axiom>
     
 
 
@@ -240,6 +584,29 @@
     
 
 
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Groupe_objet_géographique -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Groupe_objet_géographique">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_géographique"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ComposedBy"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_géographique"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Metrique -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Metrique">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Modifieur -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Modifieur">
@@ -261,6 +628,12 @@
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
     </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
     
 
 
@@ -310,6 +683,30 @@
     
 
 
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuxAlentoursDe"/>
+        <rdfs:comment xml:lang="fr">La cible est dans le site ou à proximité immédiate, qui peut être une proximité fonctionnelle (exemple de la personne qui fait la queue à la poste dans Bateman et al. 2010).</rdfs:comment>
+        <rdfs:label xml:lang="fr">Proximal</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:Parthood"/>
+        <rdfs:seeAlso rdf:resource="gums:Proximal"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:Parthood"/>
+        <rdfs:comment>Selon l’échelle considérée, et le « mode d’implantation conceptuel » du site associé (région ou assimilé ponctuel), cet indice pourrait être associé une relation « Parthood » plutôt que « Proximal » au sens de Bateman.</rdfs:comment>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:Proximal"/>
+        <rdfs:comment>Bateman et al. définissent seulement « proximal » et « distal », qu’ils opposent. Nous avons introduit en plus « AuxAlentoursDe » = trop loin pour être considéré come « très proche », mais suffisamment proche pour que le site ait quand même un sens. Du coup, petit doute sur le fait que le « Proximal » de Bateman et al. ne couvre pas une partie de notre « AuxAlentoursDe ».</rdfs:comment>
+    </owl:Axiom>
+    
+
+
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale">
@@ -353,10 +750,147 @@
                 <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetrique"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Metrique"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <Ornitho:abbreviation xml:lang="en">a.s.r.</Ornitho:abbreviation>
         <Ornitho:abbreviation xml:lang="fr">r.s.a.</Ornitho:abbreviation>
         <rdfs:label xml:lang="fr">Relation spatiale atomique</rdfs:label>
     </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SitueSurItineraireOuReseauSupport -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SitueSurItineraireOuReseauSupport">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible se situe sur un réseau ou un itinéraire. Le « sur » a ici un sens fonctionnel. Le site peut être un élément de réseau au sens large : réseau parcourable à pied, réseau de pistes de ski, voies d’escalade ou d’alpinisme, réseau hydro (par ex. en kayak ou canyoning), itinéraire de ski de rando… Aucun a priori n’est considéré sur la modélisation géométrique du réseau dans les données. Il n’y a pas nécessairement de connexion topologique entre la cible et le site : la cible peut se trouver de faite légèrement éloignée de l’élément de réseau (ex : cas d’une aire de pique-nique accesible depuis le réseau de randonnée pédestre).</rdfs:comment>
+        <rdfs:label xml:lang="fr">Situé sur itinéraire ou réseau support</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:PathRepresentingInternal"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SitueSurItineraireOuReseauSupport"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:PathRepresentingInternal"/>
+        <rdfs:comment>Différe un peu de PathRepresentingInternal de Bateman, car notre définition est fonctionelle : elle inclut le cas d&apos;un objet situé dans les alentours immédiats du réseau, mais lié fonctionnellement (ex: cas de l&apos;aire de pique-nique de la définition).</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousALAplombDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousALAplombDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible est sous le site et à l&apos;aplomb de ce dernier</rdfs:comment>
+        <rdfs:label xml:lang="fr">Sous à l&apos;aplomb de</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:BelowProjectionExternal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousAltitude -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousAltitude">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">La cible a une altitude inférieure à celle du site. Sa distance au site n’est pas contrainte.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Sous une altitude</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:BelowProjection"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousAltitude"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:BelowProjection"/>
+        <rdfs:comment>Pour nous, dans ce cas, l’altitude absolue est considérée comme le site (=&gt; d’altitude absolue tant), et a relation est une relation de similarité d’altitude, alors que dans Bateman pas sûr que ce soit exactement pareil.</rdfs:comment>
+    </owl:Axiom>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousJalonSurChemin -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousJalonSurChemin">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SitueSurItineraireOuReseauSupport"/>
+        <rdfs:comment xml:lang="fr">La cible est située sur un chemin menant au site et sous le site</rdfs:comment>
+        <rdfs:label xml:lang="fr">Sous jalon sur chemin</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:BelowProjectionExternal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousProcheDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousProcheDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"/>
+        <rdfs:comment xml:lang="fr">La cible est proche et a une altitude inférieure à celle du site.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Sous et proche de</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:BelowProjectionExternal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousRecouvertPar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousRecouvertPar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"/>
+        <rdfs:comment xml:lang="fr">La cible est sous le site et elle est recouverte par ce dernier (ex. &quot;je suis sous un pont&quot;)</rdfs:comment>
+        <rdfs:label xml:lang="fr">Sous recouvert par</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:BelowProjectionExternal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SurLeBasDe -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SurLeBasDe">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AExtremiteDe"/>
+        <rdfs:comment xml:lang="fr">La cible est située dans la partie basse du site. Ce concept est une spécialisation de ALExtremiteDe</rdfs:comment>
+        <rdfs:label xml:lang="fr">Sur le bas de</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#XVoitY -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#XVoitY">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">Le site Y est visible depuis la cible X.</rdfs:comment>
+        <rdfs:label xml:lang="fr">X voit Y</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#EntreX&amp;Y -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EntreX&amp;Y">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdfs:comment xml:lang="fr">Il faut DEUX sites ici (site1 et site2). La cible est située entre les deux. Le cadre de référence est particulièrement important ici. Il faudra le modéliser pour pouvoir spatialiser une relation comme celle-là. Par exemple, si les deux sites peuvent être considérés comme de faible extension spatiale (donc assimilables à des ponctuels), le cadre de référence peut inclure un ou plusieurs tracés à une dimension qui relient les deux sites : tracé d’un itinéraire, etc. (ou une ligne droite en l’absence d’information). Si l’extension spatiale est plus importante, on peut définir une zone « entre les deux » comme dans le modèle 5IM (Clementini et Billen 2006). Mais attention aux cas déictiques comme « je vois Z entre X et Y » ou « nagez entre les deux poteaux » de Bateman et al. 2010.</rdfs:comment>
+        <rdfs:label xml:lang="fr">Entre X et Y</rdfs:label>
+        <rdfs:seeAlso rdf:resource="gums:Distribution"/>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EntreX&amp;Y"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/>
+        <owl:annotatedTarget rdf:resource="gums:Distribution"/>
+        <rdfs:comment>« Distribution » semble s’appliquer au cas d’un seul objet de référence « collectif » (parmi la foule, entre les arbres). Le cas classique « entre X et Y » n’est pas traité de manière claire dans l’ontologie Gum-Space.</rdfs:comment>
+    </owl:Axiom>
     
 
 
@@ -368,6 +902,203 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- gums:East -->
+
+    <owl:NamedIndividual rdf:about="gums:East">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:EastExternal -->
+
+    <owl:NamedIndividual rdf:about="gums:EastExternal">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDeExterne"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:EastInternal -->
+
+    <owl:NamedIndividual rdf:about="gums:EastInternal">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieEstDe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:North -->
+
+    <owl:NamedIndividual rdf:about="gums:North">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:NorthExternal -->
+
+    <owl:NamedIndividual rdf:about="gums:NorthExternal">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDeExterne"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:NorthInternal -->
+
+    <owl:NamedIndividual rdf:about="gums:NorthInternal">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieNordDe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:Parthood -->
+
+    <owl:NamedIndividual rdf:about="gums:Parthood">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:South -->
+
+    <owl:NamedIndividual rdf:about="gums:South">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:SouthExternal -->
+
+    <owl:NamedIndividual rdf:about="gums:SouthExternal">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDeExterne"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:SouthInternal -->
+
+    <owl:NamedIndividual rdf:about="gums:SouthInternal">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieSudDe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:West -->
+
+    <owl:NamedIndividual rdf:about="gums:West">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:WestExternal -->
+
+    <owl:NamedIndividual rdf:about="gums:WestExternal">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDeExterne"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- gums:WestInternal -->
+
+    <owl:NamedIndividual rdf:about="gums:WestInternal">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieOuestDe"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDeExterne -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDeExterne"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDe"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDeExterne -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDeExterne"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDeExterne -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDeExterne"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDeExterne -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDeExterne"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieEstDe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieEstDe"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieNordDe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieNordDe"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieOuestDe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieOuestDe"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieSudDe -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieSudDe"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DeltAlt -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DeltAlt">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur"/>
+        <Ornitho:pythonObjectName>DeltAlt</Ornitho:pythonObjectName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#fnc_DistQuant -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#fnc_DistQuant"/>
     
 
 
@@ -980,6 +1711,69 @@
         <rdfs:comment xml:lang="fr">Il faut DEUX sites ici (site1 et site2). La cible est située entre les deux. Le cadre de référence est particulièrement important ici. Il faudra le modéliser pour pouvoir spatialiser une relation comme celle-là. Par exemple, si les deux sites peuvent être considérés comme de faible extension spatiale (donc assimilables à des ponctuels), le cadre de référence peut inclure un ou plusieurs tracés à une dimension qui relient les deux sites : tracé d’un itinéraire, etc. (ou une ligne droite en l’absence d’information). Si l’extension spatiale est plus importante, on peut définir une zone « entre les deux » comme dans le modèle 5IM (Clementini et Billen 2006). Mais attention aux cas déictiques comme « je vois Z entre X et Y » ou « nagez entre les deux poteaux » de Bateman et al. 2010.</rdfs:comment>
         <rdfs:label xml:lang="fr">Entre X et Y</rdfs:label>
     </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe">
+        <rdfs:label xml:lang="fr">À l&apos;est de</rdfs:label>
+        <rdfs:comment xml:lang="fr">La cible se situe globalement à l’est du site, sans préciser si elle est à dans la partie est du site ou disjointe du site et à l’est de lui.</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDeExterne">
+        <rdfs:comment xml:lang="fr">La cible se situe à l’extérieur et à l&apos;est du site</rdfs:comment>
+        <rdfs:label xml:lang="fr">À l&apos;est de (externe)</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDe">
+        <rdfs:comment xml:lang="fr">La cible se situe globalement à l’Ouest du site, sans préciser si elle est à dans la partie ouest du site ou disjointe du site et à l’ouest de lui.</rdfs:comment>
+        <rdfs:label xml:lang="fr">À l&apos;ouest de</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AOuestDeExterne">
+        <rdfs:label xml:lang="fr">À l&apos;ouest de (externe)</rdfs:label>
+        <rdfs:comment xml:lang="fr">La cible se situe à l’extérieur et à l&apos;ouest du site</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe">
+        <rdfs:label xml:lang="fr">Au nord de</rdfs:label>
+        <rdfs:comment xml:lang="fr">La cible est au nord du site</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDeExterne">
+        <rdfs:label xml:lang="fr">Au nord de (externe)</rdfs:label>
+        <rdfs:comment xml:lang="fr">La cible se situe à l’extérieur et au nord du site</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe">
+        <rdfs:comment xml:lang="fr">La cible est au sud du site</rdfs:comment>
+        <rdfs:label xml:lang="fr">Au sud de</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDeExterne">
+        <rdfs:label xml:lang="fr">Au sud de (externe)</rdfs:label>
+        <rdfs:comment xml:lang="fr">La cible se situe à l’extérieur et au sud du site</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieEstDe">
+        <rdfs:label xml:lang="fr">Dans la partie est de</rdfs:label>
+        <rdfs:comment xml:lang="fr">La cible est située dans la partie Est du site</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieNordDe">
+        <rdfs:comment xml:lang="fr">La cible est située dans la partie Nord du site</rdfs:comment>
+        <rdfs:label xml:lang="fr">Dans la partie Nord De</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieOuestDe">
+        <rdfs:label xml:lang="fr">Dans la partie ouest de</rdfs:label>
+        <rdfs:comment xml:lang="fr">La cible est située dans la partie Ouest du site</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieSudDe">
+        <rdfs:label xml:lang="fr">Dans la partie Sud de</rdfs:label>
+        <rdfs:comment xml:lang="fr">La cible est située dans la partie Sud du site</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique">
+        <rdfs:comment xml:lang="fr">La cible est située dans l’espace 2,5 D délimité par le site (qui est donc considéré comme délimitant une région sur la surface terrestre).</rdfs:comment>
+        <rdfs:label xml:lang="fr">Dans planimétrique</rdfs:label>
+    </rdf:Description>
     
 
 
