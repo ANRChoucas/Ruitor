@@ -14,15 +14,25 @@ logger = logging.getLogger(__name__)
 
 def set_proxy(url, port):
     proxy = "%s:%s" % (url, port)
+
     os.environ["http_proxy"] = proxy
     os.environ["HTTP_PROXY"] = proxy
     os.environ["https_proxy"] = proxy
     os.environ["HTTPS_PROXY"] = proxy
 
-    logger.debug("Used proxy : %s" % proxy)
+    logger.info("The proxy : %s is used" % proxy)
 
 
-def load_mnt(params):
+def load_mnt(params, precision):
+    rasters = [i for i in params["MNT"] if i["precision"] == precision]
+    mnt = load_data(rasters[0])
+
+    logger.debug("Used MNT : %s" % rasters[0]["name"])
+
+    return mnt
+
+
+def load_data(params):
     file_folder = params["path"]
     file_name = params["filename"]
     file = os.path.join(file_folder, file_name)
@@ -30,30 +40,27 @@ def load_mnt(params):
     return rasterio.open(file)
 
 
-def load_data(params, precision):
-    rasters = [i for i in params["MNT"] if i["precision"] == precision]
-    mnt = load_mnt(rasters[0])
+def configuration(configuration):
+    # Configuration logging
+    logging.config.dictConfig(configuration.logging_configuration)
 
-    logger.debug("Used MNT : %s" % rasters[0]["name"])
-
-    return mnt
+    # Définition proxy
+    try:
+        set_proxy(**configuration.proxy)
+    except AttributeError:
+        logger.debug("No proxy used")
 
 
 if __name__ == "__main__":
 
-    logging.config.dictConfig(config.logging_configuration)
-
     # Import paramètres
-    set_proxy(**config.proxy)
+    configuration(config)
 
     parser = Parser("data/xml/exemple3.xml")
     parameters = parser.values
 
     # Import données
-    mnt = load_data(config.data, 25)
-    # tt = rasterio.open("/home/mbunel/Bureau/tt.tif")
-
-    t1 = rasterio.open("data/raster/test1.tif")
+    mnt = load_mnt(config.data, 25)
 
     if False:
         res = []
