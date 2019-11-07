@@ -30,10 +30,30 @@
  <xs:element name="cible"></xs:element>
 
  <!-- -->
- <xs:element name="relationSpatiale"></xs:element>
+ <xs:element name="relationSpatiale">
+  <xs:complexType>
+   <xs:sequence minOccurs="0">
+    <xs:element ref="sequenceModifieur" />
+   </xs:sequence>
+   <xs:attribute
+     name="about"
+     use="required"
+     type="xs:anyURI" />
+  </xs:complexType>
+ </xs:element>
 
  <!-- -->
-  <xs:element
+ <xs:element name="modifieur">
+  <xs:complexType>
+   <xs:attribute
+     name="about"
+     use="required"
+     type="xs:anyURI" />
+  </xs:complexType>
+ </xs:element>
+
+ <!-- -->
+ <xs:element
    name="site"
    substitutionGroup="gml:FeatureCollection" />
 
@@ -48,6 +68,18 @@
      name="confiance"
      default="1.0"
      type="zeroOneFloat" />
+  </xs:complexType>
+ </xs:element>
+
+ <!-- -->
+ <xs:element name="sequenceModifieur">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element
+      ref="modifieur"
+      minOccurs="1"
+      maxOccurs="unbounded" />
+   </xs:sequence>
   </xs:complexType>
  </xs:element>
 

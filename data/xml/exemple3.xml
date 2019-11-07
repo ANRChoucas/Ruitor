@@ -14,8 +14,12 @@
  </rt:zir>
  <rt:sequenceIndice>
   <rt:indice>
-   <rt:cible></rt:cible>
-   <rt:relationSpatiale></rt:relationSpatiale>
+   <rt:cible />
+   <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#contact">
+    <rt:sequenceModifieur>
+     <rt:modifieur about="" />
+    </rt:sequenceModifieur>
+   </rt:relationSpatiale>
    <rt:site>
     <gml:featureMember>
      <ogr:gg3 fid="gg3.0">

@@ -147,16 +147,18 @@
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMethod -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMethod">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMethodOf"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetrique -->
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetrique">
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMethod"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMetricOf"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Metrique"/>
     </owl:ObjectProperty>
     
@@ -205,6 +207,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector">
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMethod"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isSelectorOf"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur"/>
     </owl:ObjectProperty>
     
@@ -250,6 +253,23 @@
     
 
 
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMethodOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMethodOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMetricOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMetricOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMethodOf"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#isPrepositionOf -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isPrepositionOf">
@@ -277,6 +297,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#isSelectorOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isSelectorOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMethodOf"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#isSiteOf -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isSiteOf">
@@ -287,6 +315,35 @@
             </rdf:Description>
         </rdfs:subPropertyOf>
     </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#pythonName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#pythonName">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                <owl:withRestrictions rdf:parseType="Collection">
+                    <rdf:Description>
+                        <xsd:pattern>[_a-zA-Z][_a-zA-Z0-9]*</xsd:pattern>
+                    </rdf:Description>
+                </owl:withRestrictions>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
     
 
 
@@ -506,9 +563,9 @@
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetrique"/>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceEuclidienne"/>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Distance"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -584,35 +641,10 @@
     
 
 
-    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceEuclidienne -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceEuclidienne">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Distance"/>
-        <Ornitho:pythonName>Distance</Ornitho:pythonName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceMahnattan -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceMahnattan">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Distance"/>
-        <Ornitho:pythonName>Cell_Distance</Ornitho:pythonName>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceQuantitative -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceQuantitative">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceEuclidienne"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
@@ -631,15 +663,6 @@
         <rdfs:comment xml:lang="fr">La cible est à telle distance du site, exprimée dans une unité de longueur (pas un temps de marche/accès). La distance considérée est planimétrique. Si relief en pente « pas trop forte », ça peut être le long de la pente, mais il ne s’agit pas d’un dénivelé.</rdfs:comment>
         <rdfs:label xml:lang="fr">Distance quantitative planimétrique</rdfs:label>
         <rdfs:seeAlso rdf:resource="gums:QuantitativeDistance"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceTchebychev -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceTchebychev">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Distance"/>
-        <Ornitho:pythonName>Cell_Distance</Ornitho:pythonName>
     </owl:Class>
     
 
@@ -665,7 +688,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EcartAltitude">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EcartValeur"/>
-        <Ornitho:pythonName>DAlt</Ornitho:pythonName>
     </owl:Class>
     
 
@@ -674,7 +696,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EcartValeur">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Metrique"/>
-        <Ornitho:pythonName>DeltaVal</Ornitho:pythonName>
     </owl:Class>
     
 
@@ -734,6 +755,12 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Metrique">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isMetricOf"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -764,7 +791,14 @@
 
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#pythonName"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
     
 
 
@@ -876,7 +910,7 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetrique"/>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
                 <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Metrique"/>
             </owl:Restriction>
@@ -899,6 +933,12 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#isSelectorOf"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <Ornitho:pythonName>Selector</Ornitho:pythonName>
     </owl:Class>
     
@@ -996,7 +1036,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Void">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur"/>
-        <Ornitho:pythonName>SelectorNull</Ornitho:pythonName>
+        <Ornitho:pythonName></Ornitho:pythonName>
     </owl:Class>
     
 
@@ -1087,6 +1127,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DAlt -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DAlt">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EcartAltitude"/>
+        <Ornitho:pythonName>DAlt</Ornitho:pythonName>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieEstDe -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansLaPartieEstDe"/>
@@ -1114,6 +1163,59 @@
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"/>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DeltaVal -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DeltaVal">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EcartValeur"/>
+        <Ornitho:pythonName>DeltaVal</Ornitho:pythonName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceEuclidienne -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceEuclidienne">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Distance"/>
+        <Ornitho:pythonName>Distance</Ornitho:pythonName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceMahnattan -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceMahnattan">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Distance"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceTchebychev -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceTchebychev">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Distance"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SelecteurNull -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SelecteurNull">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Selecteur"/>
+        <Ornitho:pythonName>SelectorNull</Ornitho:pythonName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#contact -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#contact">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Contact"/>
+        <Ornitho:hasMetric rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceEuclidienne"/>
+        <Ornitho:hasSelector rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SelecteurNull"/>
+    </owl:NamedIndividual>
     
 
 
