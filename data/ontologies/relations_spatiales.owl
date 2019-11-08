@@ -1713,6 +1713,7 @@
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#rs_Proximal -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#rs_Proximal">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
         <Ornitho:hasPreposition rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#prep_AuDessusDe"/>
         <Ornitho:hasPreposition rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#prep_Dans"/>
@@ -1722,6 +1723,7 @@
         <Ornitho:hasPreposition rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#prep_ProcheDe"/>
         <Ornitho:hasPreposition rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#prep_Sous"/>
         <Ornitho:hasPreposition rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#prep_Sur"/>
+        <Ornitho:hasRelationSpatialeAtomique rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#contact"/>
         <rdfs:comment xml:lang="fr">La cible est dans le site ou à proximité immédiate, qui peut être une proximité fonctionnelle (exemple de la personne qui fait la queue à la poste dans Bateman et al. 2010).</rdfs:comment>
         <rdfs:label xml:lang="fr">Proximal</rdfs:label>
     </owl:NamedIndividual>
@@ -1764,7 +1766,10 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#rs_SousProcheDe">
         <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousProcheDe"/>
         <Ornitho:hasPreposition rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#prep_Sous"/>
+        <Ornitho:hasRelationSpatialeAtomique rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#rsa_OrdreVerticalNegatif"/>
+        <Ornitho:hasRelationSpatialeAtomique rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#rsa_Proximité"/>
         <rdfs:comment xml:lang="fr">La cible est proche et a une altitude inférieure à celle du site.</rdfs:comment>
         <rdfs:label xml:lang="fr">Sous et proche de</rdfs:label>
     </owl:NamedIndividual>
@@ -1794,6 +1799,7 @@
     <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#rsa_Contact -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#rsa_Contact">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Contact"/>
         <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
         <rdfs:label xml:lang="fr">Contact</rdfs:label>
     </owl:NamedIndividual>
@@ -1813,6 +1819,8 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#rsa_OrdreVerticalNegatif">
         <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
+        <Ornitho:hasMetric rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DAlt"/>
+        <Ornitho:hasSelector rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SelecteurNull"/>
         <rdfs:label xml:lang="fr">Ordre vertical négatif</rdfs:label>
     </owl:NamedIndividual>
     
@@ -1823,6 +1831,16 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#rsa_OrdreVerticalPositif">
         <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
         <rdfs:label xml:lang="fr">Ordre vertical positif</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#rsa_Proximité -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#rsa_Proximité">
+        <rdf:type rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceQuantitative"/>
+        <Ornitho:hasMetric rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceEuclidienne"/>
+        <Ornitho:hasSelector rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SelecteurNull"/>
     </owl:NamedIndividual>
     
 
