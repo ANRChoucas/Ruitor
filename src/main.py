@@ -1,5 +1,5 @@
 # import rdflib
-# from ontologyTools import Ontology
+from ontologyTools import SROnto, ROOnto
 import logging
 import logging.config
 import os
@@ -25,19 +25,29 @@ def set_proxy(url, port):
 
 def load_mnt(params, precision):
     rasters = [i for i in params["MNT"] if i["precision"] == precision]
-    mnt = load_data(rasters[0])
+    mntfile = get_file(rasters[0])
 
     logger.debug("Used MNT : %s" % rasters[0]["name"])
 
-    return mnt
+    return rasterio.open(mntfile)
 
 
-def load_data(params):
+def get_file(params):
     file_folder = params["path"]
     file_name = params["filename"]
     file = os.path.join(file_folder, file_name)
 
-    return rasterio.open(file)
+    return file
+
+
+def load_ontology(params, type):
+    ontoDispacher = {"SRO": SROnto, "ROO": ROOnto}
+    ontology = [i for i in params if i["type"] == type]
+    ontologyFile = get_file(ontology[0])
+
+    logger.debug("Used ontology : %s" % ontology[0]["type"])
+
+    return ontoDispacher[type](ontologyFile)
 
 
 def configuration(configuration):
@@ -56,7 +66,16 @@ if __name__ == "__main__":
     # Import paramètres
     configuration(config)
 
-    parser = Parser("data/xml/exemple3.xml")
+    # Chargement ontologie
+    sro = load_ontology(config.ontology, "SRO")
+
+    temp = sro.get_from_iri(
+        "http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"
+    )
+    tt = sro.fun(temp)
+
+    # Parsing requête
+    parser = Parser("data/xml/exemple4.xml")
     parameters = parser.values
 
     # Import données

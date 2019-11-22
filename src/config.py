@@ -12,17 +12,27 @@ data = {
     ]
 }
 
+ontology = [
+    {
+        "type": "SRO",
+        "path": "./data/ontologies/",
+        "filename": "relations_spatiales.owl",
+    },
+    {"type": "ROO", "path": "./data/ontologies/", "filename": "todo",},
+]
+
 proxy = {"url": "http://proxy.ign.fr", "port": 3128}
 
 multiprocessing = {"pools": 6}
 
-log = {"int_files": True}
+log = {"int_files": False}
 
 logging_configuration = {
     "version": 1,
     "loggers": {
         "__main__": {"handlers": ["console", "file_debug"], "level": "DEBUG"},
         "spatialisation": {"handlers": ["console", "file_debug"], "level": "DEBUG"},
+        "ontologyTools": {"handlers": ["console", "file_debug"], "level": "DEBUG"},
     },
     "handlers": {
         "console": {"class": "logging.StreamHandler", "level": "INFO"},

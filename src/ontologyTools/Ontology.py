@@ -2,9 +2,11 @@
 Module contenant la classe principale du package, Ontology
 """
 
+import logging
+import ast
+from owlready2 import get_ontology
 
-import rdflib
-from . import OntologyConstructor
+logger = logging.getLogger(__name__)
 
 
 class Ontology:
@@ -12,20 +14,56 @@ class Ontology:
     Classe principale du package
     """
 
-    default_ont_constr_strategy = OntologyConstructor.BasicOntologyConstructor
+    def __init__(self, path):
+        self.ontho = get_ontology(path)
+        self.ontho.load()
+        logger.debug("ontology namespace: %s" % self.ontho.base_iri)
 
-    def __init__(self, graph: rdflib.Graph, ont_constr_strategy=None):
-        # Référence au graph rdflib
-        self.graph = graph
+    def get_from_iri(self, uri):
+        return self.ontho.search_one(iri=uri)
 
-        if ont_constr_strategy:
-            self.ontology_constructor = ont_constr_strategy(self)
-        else:
-            self.ontology_constructor = self.default_ont_constr_strategy(self)
+    def _pythonAnotationParsing(self, owlcls):
+        """
+        """
+        pythonName = owlcls.pythonName[0]
+        try:
+            pythonParameter = ast.literal_eval(owlcls.pythonParameter[0])
+        except IndexError:
+            pythonParameter = {}
+        outDic = {"name": pythonName, "kwargs": pythonParameter}
 
-        # Construction des classes
-        self._ontologyclasses = self.ontology_constructor.RdfClassesConstructor()
-        # self.ontology_constructor.propertyConstructor()
+        return outDic
 
-    def append(self):
-        pass
+
+class SROnto(Ontology):
+    def __init__(self, path):
+        logger.debug("SRO ontology made")
+        super().__init__(path)
+
+    def fun(self, spatial_relation):
+
+        outDic = {}
+
+        for rsa in self.get_atomic_spatial_relation(spatial_relation):
+            metric = self.get_metric(rsa)
+            selector = self.get_selector(rsa)
+            outDic[rsa.name] = {"metric": metric, "selector": selector}
+
+        return outDic
+
+    def get_atomic_spatial_relation(self, spatial_relation):
+        return spatial_relation.hasRelationSpatialeAtomique
+
+    def get_metric(self, atomic_spatial_relation):
+        metricList = atomic_spatial_relation.hasMetric[0]
+        return self._pythonAnotationParsing(metricList)
+
+    def get_selector(self, atomic_spatial_relation):
+        selectorList = atomic_spatial_relation.hasSelector[0]
+        return self._pythonAnotationParsing(selectorList)
+
+
+class ROOnto(Ontology):
+    def __init__(self, path):
+        logger.debug("ROO ontology made")
+        super().__init__(path)

@@ -76,10 +76,12 @@ class Parser:
         indice_dict = {}
 
         confiance = self.parse_confiance(indice_xml.attrs.get("confiance"))
+        relSpa = self.parse_relationSpatiale(indice_xml.relationSpatiale)
         cible = self.parse_cible(indice_xml.cible)
         site = self.parse_site(indice_xml.site)
 
         indice_dict["confiance"] = confiance
+        indice_dict["relationSpatiale"] = relSpa
         indice_dict["cible"] = cible
         indice_dict["site"] = site
 
@@ -88,22 +90,41 @@ class Parser:
     def parse_cible(self, cible_xml):
         return "Nothing"
 
+    def parse_relationSpatiale(self, relSpa_xml):
+        relSpaDic = {}
+        relSpaUri = relSpa_xml.attrs.get("about")
+
+        relSpaDic["uri"] = relSpaUri
+
+        modList = []
+
+        for child in relSpa_xml.children:
+            if child.name == "sequenceModifieur":
+                modList.append(self.parse_modifieur(child))
+
+        if modList:
+            relSpaDic["modifieurs"] = modList
+
+        return relSpaDic
+
+    def parse_modifieur(self, mod_xml):
+        return [i.attrs.get("about") for i in mod_xml if i.name == "modifieur"]
+
     def parse_site(self, site_xml, **kwargs):
 
         site_key = kwargs.get("site_key", "featureMember")
+
         geometry = []
 
         for child in site_xml.children:
             if child.name == site_key:
                 geometry.append(self.parse_geometry(child))
-
         return geometry
 
     def parse_geometry(self, geometry_gml):
         return self.geometryParser.parse_geometry(geometry_gml)
 
     def parse_confiance(self, confiance):
-
         if confiance:
             return float(confiance)
         else:
