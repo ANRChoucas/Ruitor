@@ -4,6 +4,7 @@ venv/*
 **/.vscode
 **/.ipynb_checkpoints
 **_outTest/
+**_dataOld/
 data/shp/*
 data/raster/*
 data/mnt/*
