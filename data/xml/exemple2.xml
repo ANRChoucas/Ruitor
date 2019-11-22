@@ -15,7 +15,7 @@
   <rt:sequenceIndice>
     <rt:indice>
       <rt:cible></rt:cible>
-      <rt:relationSpatiale></rt:relationSpatiale>
+      <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"></rt:relationSpatiale>
       <rt:site>
         <gml:featureMember>
           <ogr:sel_bati gml:id="sel_bati.0">

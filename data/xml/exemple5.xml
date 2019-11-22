@@ -15,10 +15,10 @@
  <rt:sequenceIndice>
   <rt:indice>
    <rt:cible />
-   <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#contact">
-    <rt:sequenceModifieur>
+   <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal">
+    <!-- <rt:sequenceModifieur>
      <rt:modifieur about="" />
-    </rt:sequenceModifieur>
+    </rt:sequenceModifieur> -->
    </rt:relationSpatiale>
    <rt:site>
     <gml:featureMember>
