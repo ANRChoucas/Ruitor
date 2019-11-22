@@ -9,6 +9,9 @@ from fuzzyUtils import FuzzyRaster
 from .AggregatorStrategies import FirstAggragator
 
 
+logger = logging.getLogger(__name__)
+
+
 class SpatialisationElement:
     """
     Classe spatialisationElement
@@ -50,7 +53,7 @@ class SpatialisationElement:
         # Fuzzyfication
         self.selector.compute(tmp)
 
-        logging.debug("Element compute : %s " % self.metric.__class__)
+        logger.debug("Element compute : %s " % self.metric.__class__)
 
         return tmp
 
