@@ -10,3 +10,6 @@ data/mnt/*
 src/**/*~
 src**/#*
 **.log
+src/pycallgraph.png
+deb.tif.aux.xml
+data/ontologies/catalog-v001.xml
