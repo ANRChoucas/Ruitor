@@ -114,12 +114,11 @@ class Parser:
 
         site_key = kwargs.get("site_key", "featureMember")
 
-        geometry = []
-
+        geom_counter = 0
         for child in site_xml.children:
             if child.name == site_key:
-                geometry.append(self.parse_geometry(child))
-        return geometry
+                yield (geom_counter, self.parse_geometry(child))
+                geom_counter += 1
 
     def parse_geometry(self, geometry_gml):
         return self.geometryParser.parse_geometry(geometry_gml)
