@@ -4,81 +4,43 @@ Spatialisation
 
 
 import numpy as np
+from itertools import product
 from more_itertools import chunked
 from rasterio import features
 from rasterio.windows import Window
 
 from fuzzyUtils import FuzzyRaster
 
-from .Metric import Angle, Cell_Distance, DAlt, Distance, Metric, Nothing
+from .Metric import Angle, Cell_Distance, DeltaVal, DAlt, Distance, Metric, Nothing
 from .Selector import SelectorNull, SelectorX, SelectorX2, SelectorX3
 from .SpatialisationElement import SpatialisationElement, SpatialisationElementSequence
 
 
-class Spatialisation:
+class SpatialisationFactory:
     """
-    Classe spatialisation
-
-    Destinée à modéliser UN élément de localisation
     """
 
-    def __init__(self, parameters, raster):
-        """
-        Fonction d'initialisation de la classe Spatialisation
-        """
+    def __init__(self, spaParms, raster, sro):
+        self.sro = sro
+        self.indices = spaParms["indices"]
+        self.raster = raster
 
-        # Récupération des paramètres
-        self.params = parameters
-        self.spaElms = SpatialisationElementSequence()
-
-        # Définition zone initiale de recherche
-        if "zir" in self.params:
-            self.zir = self.set_zir(raster, self.params["zir"])
+        if "zir" in spaParms:
+            self.zir = self.set_zir(self.raster, spaParms["zir"])
         else:
             self.zir = None
 
-        # Création du raster flou résultat
-        self.raster = FuzzyRaster(raster=raster, window=self.zir)
+    def make_Spatialisation(self):
 
-        self.indice_parsing(self.params["indices"])
+        for indice in self.indices:
 
-    def _init_obj(self):
-        pass
+            spatialRelationUri = indice["relationSpatiale"]["uri"]
+            spatialRelation = self.sro.get_from_iri(spatialRelationUri)
+            spatialRelationDecomp = self.sro.decompose_spatial_relation(spatialRelation)
 
-    def indice_parsing(self, indice, *args):
-        """
-        """
+            site = indice["site"]
 
-        indice = indice[0]
-
-        site_counter = 0
-
-        # tmpdir = mkdtemp()
-
-        for geom in indice["site"]:
-            # filename = path.join(tmpdir, 'obj_%s.dat' % site_counter)
-            # zi = np.memmap(filename, mode='w+', dtype=self.raster.values.dtype, shape=self.raster.values.shape)
-
-            self.spaElms[(site_counter, 0, 0)] = SpatialisationElement(
-                self, geom, metric=Angle, selector=SelectorX2
-            )
-            self.spaElms[(site_counter, 0, 1)] = SpatialisationElement(
-                self, geom, metric=Distance, selector=SelectorX
-            )
-            self.spaElms[(site_counter, 0, 2)] = SpatialisationElement(
-                self, geom, metric=DAlt, selector=SelectorX3, values_raster=self.raster
-            )
-
-            site_counter += 1
-
-    def site_parsing(self, site):
-        pass
-
-    def cible_parsing(self, cible):
-        pass
-
-    def compute(self, *args):
-        return self.spaElms.compute()
+            yield Spatialisation(spatialRelationDecomp, site, self.raster, self.zir)
 
     def set_zir(self, raster, zir, *args, **kwargs):
         """
@@ -106,3 +68,58 @@ class Spatialisation:
         col_num = abs(max(col_ind) - col_min) + padding["y"]
         # Définition de la fenêtre de travail
         return Window(col_min, row_min, col_num, row_num)
+
+    def _init_obj(self):
+        pass
+
+    def indice_parsing(self, indice, *args):
+        pass
+
+    def site_parsing(self, site):
+        pass
+
+    def cible_parsing(self, cible):
+        pass
+
+
+class Spatialisation:
+    """
+    Classe spatialisation
+
+    Destinée à modéliser UN élément de localisation
+    """
+
+    def __init__(self, relationSpatiale, site, raster, zir):
+        """
+        Fonction d'initialisation de la classe Spatialisation
+        """
+
+        # Récupération des paramètres
+        # Création du raster flou résultat
+        self.raster = FuzzyRaster(raster=raster, window=zir)
+        self.spaElms = self.SpatialisationElementSequence_init(relationSpatiale, site)
+
+    def SpatialisationElementSequence_init(self, dic, site):
+        spaSeq = SpatialisationElementSequence()
+
+        for geom, rsaDic in product(site, dic.items()):
+            gCounter, geometry = geom
+            rsaName, rsaDec = rsaDic
+
+            metric = globals()[rsaDec["metric"]["name"]]
+            selector = globals()[rsaDec["selector"]["name"]]
+
+            if issubclass(metric, DeltaVal):
+                values_raster = self.raster
+            else:
+                values_raster = None
+
+            spaSeq[(gCounter, 0, rsaName)] = SpatialisationElement(
+                self, geometry, metric, selector, values_raster
+            )
+
+        return spaSeq
+
+    def compute(self, *args):
+        return self.spaElms.compute()
+

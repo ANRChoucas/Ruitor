@@ -1,1 +1,1 @@
-from .Spatialisation import Spatialisation
+from .Spatialisation import SpatialisationFactory

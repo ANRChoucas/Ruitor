@@ -7,7 +7,7 @@ from parser import Parser
 
 import config
 import rasterio
-from spatialisation import Spatialisation
+from spatialisation import SpatialisationFactory
 
 logger = logging.getLogger(__name__)
 
@@ -69,17 +69,16 @@ if __name__ == "__main__":
     # Chargement ontologie
     sro = load_ontology(config.ontology, "SRO")
 
-    temp = sro.get_from_iri(
-        "http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"
-    )
-    tt = sro.fun(temp)
-
     # Parsing requête
-    parser = Parser("data/xml/exemple4.xml")
-    parameters = parser.values
+    parser = Parser("tests/xml/MPol.xml")
+    spatialisationParms = parser.values
 
     # Import données
     mnt = load_mnt(config.data, 25)
+
+    factor = SpatialisationFactory(spatialisationParms, mnt, sro)
+    test = list(factor.make_Spatialisation())
+    # import pdb; pdb.set_trace()
 
     if False:
         res = []
@@ -88,10 +87,10 @@ if __name__ == "__main__":
             prm = {"zir": parameters["zir"], "indices": indice}
             res.append(Spatialisation(prm, t1))
 
-    test = Spatialisation(parameters, mnt)
+    # test = Spatialisation(parameters, mnt)
 
     logger.info("Computation")
-    fuzz = test.compute()
+    fuzz = test[0].compute()
     logger.info("Computation : Done")
 
     # # Test convolution

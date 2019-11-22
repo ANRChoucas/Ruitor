@@ -20,7 +20,10 @@ class Ontology:
         logger.debug("ontology namespace: %s" % self.ontho.base_iri)
 
     def get_from_iri(self, uri):
-        return self.ontho.search_one(iri=uri)
+        try:
+            return self.ontho.search_one(iri=uri)
+        except:
+            logger.debug("%s unknown" % (uri,))
 
     def _pythonAnotationParsing(self, owlcls):
         """
@@ -40,7 +43,9 @@ class SROnto(Ontology):
         logger.debug("SRO ontology made")
         super().__init__(path)
 
-    def fun(self, spatial_relation):
+    def decompose_spatial_relation(self, spatial_relation):
+
+        logger.debug("%s extraction" % (spatial_relation,))
 
         outDic = {}
 
