@@ -24,6 +24,7 @@ class SpatialisationFactory:
     def __init__(self, spaParms, raster, sro):
         self.sro = sro
         self.indices = spaParms["indices"]
+
         self.raster = raster
 
         if "zir" in spaParms:
@@ -35,13 +36,15 @@ class SpatialisationFactory:
 
         for indice in self.indices:
 
-            spatialRelationUri = indice["relationSpatiale"]["uri"]
-            spatialRelation = self.sro.get_from_iri(spatialRelationUri)
-            spatialRelationDecomp = self.sro.decompose_spatial_relation(spatialRelation)
+            conf = indice.get("confiance", None)
+
+            spatialRelUri = indice["relationSpatiale"]["uri"]
+            spatialRel = self.sro.get_from_iri(spatialRelUri)
+            spatialRelDec = self.sro.decompose_spatial_relation(spatialRel)
 
             site = indice["site"]
 
-            yield Spatialisation(spatialRelationDecomp, site, self.raster, self.zir)
+            yield Spatialisation(spatialRelDec, site, self.raster, self.zir, conf)
 
     def set_zir(self, raster, zir, *args, **kwargs):
         """
@@ -90,7 +93,7 @@ class Spatialisation:
     Destinée à modéliser UN élément de localisation
     """
 
-    def __init__(self, relationSpatiale, site, raster, zir):
+    def __init__(self, relationSpatiale, site, raster, zir, confiance=None):
         """
         Fonction d'initialisation de la classe Spatialisation
         """
@@ -98,10 +101,12 @@ class Spatialisation:
         # Récupération des paramètres
         # Création du raster flou résultat
         self.raster = FuzzyRaster(raster=raster, window=zir)
-        self.spaElms = self.SpatialisationElementSequence_init(relationSpatiale, site)
+        self.spaElms = self.SpatialisationElementSequence_init(
+            relationSpatiale, site, confiance
+        )
 
-    def SpatialisationElementSequence_init(self, dic, site):
-        spaSeq = SpatialisationElementSequence()
+    def SpatialisationElementSequence_init(self, dic, site, confiance):
+        spaSeq = SpatialisationElementSequence(confiance=confiance)
 
         for geom, rsaDic in product(site, dic.items()):
             gCounter, geometry = geom

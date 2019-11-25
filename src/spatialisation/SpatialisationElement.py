@@ -6,7 +6,7 @@ from rasterio import features
 import config
 from fuzzyUtils import FuzzyRaster
 
-from .AggregatorStrategies import FirstAggragator
+from .AggregatorStrategies import FirstAggregator, ParallelAggregator
 
 
 logger = logging.getLogger(__name__)
@@ -59,14 +59,19 @@ class SpatialisationElement:
 
 class SpatialisationElementSequence(dict):
 
-    default_aggregator_strategy = FirstAggragator
+    default_aggregator_strategy = ParallelAggregator
 
-    def __init__(self, aggregator_strategy=None, *args, **kwargs):
+    def __init__(self, aggregator_strategy=None, confiance=None, *args, **kwargs):
 
         if aggregator_strategy:
-            self.aggregator_strategy = aggregator_strategy(self)
+            print(aggregator_strategy)
+            self.aggregator_strategy = aggregator_strategy(self, confiance)
         else:
-            self.aggregator_strategy = self.default_aggregator_strategy(self)
+            self.aggregator_strategy = self.default_aggregator_strategy(self, confiance)
+
+        logger.debug(
+            "Aggregator strategy : %s" % (self.aggregator_strategy.__class__.__name__,)
+        )
 
         super().__init__(*args, **kwargs)
 

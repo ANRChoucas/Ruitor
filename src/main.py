@@ -102,7 +102,7 @@ if __name__ == "__main__":
     # fuzz.values = ndimage.convolve(fuzz.values, k)
 
     # Export
-    fuzz.write("_outTest/test.tif")
+    fuzz.write("_outTest/spatialisationResult.tif")
 
     # g = rdflib.Graph()
     # result = g.parse("data/ontologies/relations_spatiales.owl")
