@@ -23,6 +23,9 @@ class Metric:
         self.context = context
         # self.values = self.context.raster.values
 
+    def __str__(self):
+        return self.__class__.__name__
+
     def compute(self, values, *args):
         # params = self.paramsCalc()
         values = self._compute(values, *args)

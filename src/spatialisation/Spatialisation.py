@@ -3,16 +3,17 @@ Spatialisation
 """
 
 
-import numpy as np
+import sys
 from itertools import product
-from more_itertools import chunked
-from rasterio import features
+
 from rasterio.windows import Window
 
 from fuzzyUtils import FuzzyRaster
 
-from .Metric import Angle, Cell_Distance, DeltaVal, DAlt, Distance, Metric, Nothing
-from .Selector import SelectorNull, SelectorX, SelectorX2, SelectorX3
+import spatialisation.Metric
+import spatialisation.Selector
+
+
 from .SpatialisationElement import SpatialisationElement, SpatialisationElementSequence
 
 
@@ -106,16 +107,23 @@ class Spatialisation:
             gCounter, geometry = geom
             rsaName, rsaDec = rsaDic
 
-            metric = globals()[rsaDec["metric"]["name"]]
-            selector = globals()[rsaDec["selector"]["name"]]
+            metric = getattr(
+                sys.modules["spatialisation.Metric"], rsaDec["metric"]["name"]
+            )
+            selector = getattr(
+                sys.modules["spatialisation.Selector"], rsaDec["selector"]["name"]
+            )
 
-            if issubclass(metric, DeltaVal):
-                values_raster = self.raster
-            else:
-                values_raster = None
+            prms = {
+                "metric_params": rsaDec["metric"]["kwargs"],
+                "selector_params": rsaDec["selector"]["kwargs"],
+            }
+
+            if issubclass(metric, spatialisation.Metric.DeltaVal):
+                prms["metric_params"]["values_raster"] = self.raster
 
             spaSeq[(gCounter, 0, rsaName)] = SpatialisationElement(
-                self, geometry, metric, selector, values_raster
+                self, geometry, metric, selector, **prms
             )
 
         return spaSeq

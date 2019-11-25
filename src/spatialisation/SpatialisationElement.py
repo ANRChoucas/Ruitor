@@ -20,10 +20,9 @@ class SpatialisationElement:
     def __init__(self, context, geom, metric, selector, *args, **kwargs):
         self.context = context
         self.geom = geom
-
         # Initialisation des objets Metric et Selector
-        self._init_metric(metric, *args, **kwargs)
-        self._init_selector(selector, *args, **kwargs)
+        self._init_metric(metric, **kwargs.get("metric_params"))
+        self._init_selector(selector, **kwargs.get("selector_params"))
 
     def _init_metric(self, metric, *args, **kwargs):
         self.metric = metric(self, *args, **kwargs)
@@ -53,7 +52,7 @@ class SpatialisationElement:
         # Fuzzyfication
         self.selector.compute(tmp)
 
-        logger.debug("Element compute : %s " % self.metric.__class__)
+        logger.debug("Element compute : %s " % self.metric)
 
         return tmp
 
