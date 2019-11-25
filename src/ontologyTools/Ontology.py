@@ -45,7 +45,7 @@ class SROnto(Ontology):
 
     def decompose_spatial_relation(self, spatial_relation):
 
-        logger.debug("%s extraction" % (spatial_relation,))
+        logger.debug("%s : extraction" % (spatial_relation,))
 
         outDic = {}
 
@@ -53,6 +53,9 @@ class SROnto(Ontology):
             metric = self.get_metric(rsa)
             selector = self.get_selector(rsa)
             outDic[rsa.name] = {"metric": metric, "selector": selector}
+
+            logger.debug("%s metric : %s" % (rsa, metric["name"]))
+            logger.debug("%s selector : %s" % (rsa, selector["name"]))
 
         return outDic
 

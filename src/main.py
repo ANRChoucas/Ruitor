@@ -27,7 +27,9 @@ def load_mnt(params, precision):
     rasters = [i for i in params["MNT"] if i["precision"] == precision]
     mntfile = get_file(rasters[0])
 
-    logger.debug("Used MNT : %s" % rasters[0]["name"])
+    logger.debug(
+        "Used MNT : %s (precision %s)" % (rasters[0]["name"], rasters[0]["precision"])
+    )
 
     return rasterio.open(mntfile)
 
@@ -70,11 +72,11 @@ if __name__ == "__main__":
     sro = load_ontology(config.ontology, "SRO")
 
     # Parsing requête
-    parser = Parser("tests/xml/MPol.xml")
+    parser = Parser("tests/xml/GPol.xml")
     spatialisationParms = parser.values
 
     # Import données
-    mnt = load_mnt(config.data, 25)
+    mnt = load_mnt(config.data, 50)
 
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
     test = list(factor.make_Spatialisation())
