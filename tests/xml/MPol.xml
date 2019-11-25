@@ -14,7 +14,7 @@
  <rt:sequenceIndice>
   <rt:indice confiance="1.0">
    <rt:cible></rt:cible>
-   <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal"></rt:relationSpatiale>
+   <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SousProcheDe"></rt:relationSpatiale>
    <rt:site>
     <gml:featureMember>
      <ogr:mPol fid="mPol.0">
