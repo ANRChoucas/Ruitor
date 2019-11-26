@@ -75,6 +75,13 @@ class Cell_Distance(Metric):
         return computeraster
 
 
+class Cell_DistanceT(Cell_Distance):
+    default_structure = scipy.ndimage.generate_binary_structure(3, 2)
+
+    def __init__(self, context, structure=None, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
+
+
 class Distance(Metric):
     """
     Classe Distance
