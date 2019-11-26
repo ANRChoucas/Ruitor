@@ -64,7 +64,6 @@ def configuration(configuration):
 
 
 if __name__ == "__main__":
-
     # Import paramètres
     configuration(config)
 
@@ -72,15 +71,14 @@ if __name__ == "__main__":
     sro = load_ontology(config.ontology, "SRO")
 
     # Parsing requête
-    parser = Parser("tests/xml/GPol.xml")
+    parser = Parser("tests/xml/PPol.xml")
     spatialisationParms = parser.values
 
     # Import données
-    mnt = load_mnt(config.data, 50)
+    mnt = load_mnt(config.data, 10)
 
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
     test = list(factor.make_Spatialisation())
-    # import pdb; pdb.set_trace()
 
     if False:
         res = []

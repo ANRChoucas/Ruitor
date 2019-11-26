@@ -25,7 +25,7 @@ proxy = {"url": "http://proxy.ign.fr", "port": 3128}
 
 multiprocessing = {"pools": 6}
 
-log = {"int_files": True}
+log = {"int_files": False}
 
 logging_configuration = {
     "version": 1,
