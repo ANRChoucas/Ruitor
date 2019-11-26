@@ -56,18 +56,22 @@ class SROnto(Ontology):
 
             logger.debug("%s metric : %s" % (rsa, metric["name"]))
             logger.debug("%s selector : %s" % (rsa, selector["name"]))
-
         return outDic
 
     def get_atomic_spatial_relation(self, spatial_relation):
-        return spatial_relation.hasRelationSpatialeAtomique
+        rsa = spatial_relation.hasRelationSpatialeAtomique
+        if not rsa:
+            raise ValueError(
+                "Nothing hasRelationSpatialeAtomique for %s" % (spatial_relation,)
+            )
+        return rsa
 
     def get_metric(self, atomic_spatial_relation):
-        metricList = atomic_spatial_relation.hasMetric[0]
+        metricList = atomic_spatial_relation.hasMetric
         return self._pythonAnotationParsing(metricList)
 
     def get_selector(self, atomic_spatial_relation):
-        selectorList = atomic_spatial_relation.hasSelector[0]
+        selectorList = atomic_spatial_relation.hasSelector
         return self._pythonAnotationParsing(selectorList)
 
 
