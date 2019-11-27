@@ -157,17 +157,55 @@ class DeltaVal(Metric):
         raise NotImplementedError
 
 
-class DAlt(DeltaVal):
+class DeltaMeanVal(DeltaVal):
     """
-    Classe DAlt
+    Classe DeltaMeanVal
 
-    Hérite de la classe DeltaVal. Destinée à calculer la 
-    difference d'altitude
+    Hérite de la classe DeltaVal. Calcule une différence de valeur à partir 
+    de la moyenne des valeurs == 1 sur le raster net
     """
 
     def __init__(self, context, *args, **kwargs):
         super().__init__(context, *args, **kwargs)
 
     def _compute_refValue(self, values):
-        refVal = np.mean(self.values_raster.values[values == 1.0])
+        # Metric Altitude moyenne
+        val = self.values_raster.values[values == 1.0]
+        refVal = np.mean(val)
+        return refVal
+
+
+class DeltaMaxVal(DeltaVal):
+    """
+    Classe DeltaMaxVal
+
+    Hérite de la classe DeltaVal. Calcule une différence de valeur à partir 
+    du maximum des valeurs == 1 sur le raster net
+    """
+
+    def __init__(self, context, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
+
+    def _compute_refValue(self, values):
+        # Metric Altitude moyenne
+        val = self.values_raster.values[values == 1.0]
+        refVal = np.max(val)
+        return refVal
+
+
+class DeltaMinVal(DeltaVal):
+    """
+    Classe DeltaMinVal
+
+    Hérite de la classe DeltaVal. Calcule une différence de valeur à partir 
+    du minimum des valeurs == 1 sur le raster net
+    """
+
+    def __init__(self, context, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
+
+    def _compute_refValue(self, values):
+        # Metric Altitude moyenne
+        val = self.values_raster.values[values == 1.0]
+        refVal = np.min(val)
         return refVal

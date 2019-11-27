@@ -71,7 +71,7 @@ if __name__ == "__main__":
     sro = load_ontology(config.ontology, "SRO")
 
     # Parsing requête
-    parser = Parser("tests/xml/PPol.xml")
+    parser = Parser("tests/xml/OnePol.xml")
     spatialisationParms = parser.values
 
     # Import données
