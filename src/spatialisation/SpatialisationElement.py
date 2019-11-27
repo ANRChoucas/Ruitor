@@ -34,6 +34,8 @@ class SpatialisationElement:
 
         zi = np.zeros_like(self.context.raster.values)
 
+        # Possibilité d'utiliser geom.exterior ou geom.centroid
+
         features.rasterize(
             [self.geom],
             out=zi,

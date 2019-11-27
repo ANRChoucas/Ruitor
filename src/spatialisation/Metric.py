@@ -187,7 +187,7 @@ class DeltaMaxVal(DeltaVal):
         super().__init__(context, *args, **kwargs)
 
     def _compute_refValue(self, values):
-        # Metric Altitude moyenne
+        # Metric Altitude max
         val = self.values_raster.values[values == 1.0]
         refVal = np.max(val)
         return refVal
@@ -205,7 +205,7 @@ class DeltaMinVal(DeltaVal):
         super().__init__(context, *args, **kwargs)
 
     def _compute_refValue(self, values):
-        # Metric Altitude moyenne
+        # Metric Altitude min
         val = self.values_raster.values[values == 1.0]
         refVal = np.min(val)
         return refVal

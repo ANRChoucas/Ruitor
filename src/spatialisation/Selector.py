@@ -72,7 +72,7 @@ class SelectorX(Selector):
         super().__init__(context, *args, **kwargs)
 
     def _compute_ff_params(self, *args):
-        return [(25, 1.0), (125, 0.0)]
+        return [(1, 1.0)]
 
 
 class SelectorX1(Selector):

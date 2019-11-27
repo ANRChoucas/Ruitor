@@ -17,7 +17,7 @@ class Ontology:
     def __init__(self, path):
         self.ontho = get_ontology(path)
         self.ontho.load()
-        logger.debug("ontology namespace: %s" % self.ontho.base_iri)
+        logger.info("ontology namespace: %s" % self.ontho.base_iri)
 
     def get_from_iri(self, uri):
         try:
@@ -45,7 +45,7 @@ class SROnto(Ontology):
 
     def decompose_spatial_relation(self, spatial_relation):
 
-        logger.debug("%s : extraction" % (spatial_relation,))
+        logger.info("%s : extraction" % (spatial_relation,))
 
         outDic = {}
 
