@@ -8,12 +8,17 @@ class Selector:
     Classe Selector
     """
 
-    def __init__(self, context, *args, **kwargs):
+    def __init__(self, context, modifiers, *args, **kwargs):
         self.context = context
+
+        self.modifiers = [mod(self) for mod in modifiers]
 
     def compute(self, raster):
         ff_params = self.compute_ff_params()
         raster.fuzzyfication(ff_params)
+
+        for mod in self.modifiers:
+            raster.values = mod.modifing(raster.values)
 
     def compute_ff_params(self, *args):
         return self._compute_ff_params(*args)
@@ -31,39 +36,39 @@ class SelectorNull(Selector):
 
 
 class CompareVal(Selector):
-    def __init__(self, context, value, *args, **kwargs):
+    def __init__(self, context, modifiers, value, *args, **kwargs):
         self.value = value
-        super().__init__(context, *args, **kwargs)
+        super().__init__(context, modifiers, *args, **kwargs)
 
     def _compute_ff_params(self, *args):
         raise NotImplementedError
 
 
 class InfVal(CompareVal):
-    def __init__(self, context, value, *args, **kwargs):
-        super().__init__(context, value, *args, **kwargs)
+    def __init__(self, context, modifiers, value, *args, **kwargs):
+        super().__init__(context, modifiers, value, *args, **kwargs)
 
     def _compute_ff_params(self, *args):
-        bsup = self.value + 10
+        bsup = self.value + 50
         return [(self.value, 1.0), (bsup, 0.0)]
 
 
 class SupVal(CompareVal):
-    def __init__(self, context, value, *args, **kwargs):
-        super().__init__(context, value, *args, **kwargs)
+    def __init__(self, context, modifiers, value, *args, **kwargs):
+        super().__init__(context, modifiers, value, *args, **kwargs)
 
     def _compute_ff_params(self, *args):
-        binf = self.value - 10
+        binf = self.value - 50
         return [(binf, 0.0), (self.value, 1.0)]
 
 
 class EqVal(CompareVal):
-    def __init__(self, context, value, *args, **kwargs):
-        super().__init__(context, value, *args, **kwargs)
+    def __init__(self, context, modifiers, value, *args, **kwargs):
+        super().__init__(context, modifiers, value, *args, **kwargs)
 
     def _compute_ff_params(self, *args):
-        binf = self.value - 10
-        bsup = self.value + 10
+        binf = self.value - 100
+        bsup = self.value + 100
         return [(binf, 0.0), (self.value, 1.0), (bsup, 0.0)]
 
 
@@ -72,7 +77,7 @@ class SelectorX(Selector):
         super().__init__(context, *args, **kwargs)
 
     def _compute_ff_params(self, *args):
-        return [(1, 1.0)]
+        return [(10, 1.0), (100, 0.0)]
 
 
 class SelectorX1(Selector):

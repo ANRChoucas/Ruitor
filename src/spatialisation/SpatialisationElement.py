@@ -22,13 +22,15 @@ class SpatialisationElement:
         self.geom = geom
         # Initialisation des objets Metric et Selector
         self._init_metric(metric, **kwargs.get("metric_params"))
-        self._init_selector(selector, **kwargs.get("selector_params"))
+        self._init_selector(
+            selector, kwargs.get("modifiers"), **kwargs.get("selector_params")
+        )
 
     def _init_metric(self, metric, *args, **kwargs):
         self.metric = metric(self, *args, **kwargs)
 
-    def _init_selector(self, selector, *args, **kwargs):
-        self.selector = selector(self, *args, **kwargs)
+    def _init_selector(self, selector, modifiers, *args, **kwargs):
+        self.selector = selector(self, modifiers, *args, **kwargs)
 
     def rasterise(self):
 

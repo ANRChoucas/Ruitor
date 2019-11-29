@@ -12,6 +12,7 @@ from fuzzyUtils import FuzzyRaster
 
 import spatialisation.Metric
 import spatialisation.Selector
+import spatialisation.Modificator
 
 
 from .SpatialisationElement import SpatialisationElement, SpatialisationElementSequence
@@ -36,12 +37,30 @@ class SpatialisationFactory:
 
         for indice in self.indices:
 
+            # confiance
             conf = indice.get("confiance", None)
 
+            # relations spatiales
             spatialRelUri = indice["relationSpatiale"]["uri"]
             spatialRel = self.sro.get_from_iri(spatialRelUri)
             spatialRelDec = self.sro.decompose_spatial_relation(spatialRel)
 
+            # Ajout des modifieurs
+            modifieurs = []
+            try:
+                modifieursUri = indice["relationSpatiale"]["modifieurs"]
+                for modUri in modifieursUri:
+                    mod = self.sro.get_from_iri(modUri)
+                    modDic = self.sro.get_modifier(mod)
+                    if not modDic in modifieurs:
+                        modifieurs.append(modDic)
+            except KeyError:
+                pass
+
+            for k, v in spatialRelDec.items():
+                v["selector"].update({"modifieurs": modifieurs})
+
+            # traitement du site
             site = indice["site"]
 
             yield Spatialisation(spatialRelDec, site, self.raster, self.zir, conf)
@@ -119,9 +138,15 @@ class Spatialisation:
                 sys.modules["spatialisation.Selector"], rsaDec["selector"]["name"]
             )
 
+            modifieurs = []
+            for mod in rsaDec["selector"]["modifieurs"]:
+                modObj = getattr(sys.modules["spatialisation.Modificator"], mod["name"])
+                modifieurs.append(modObj)
+
             prms = {
                 "metric_params": rsaDec["metric"]["kwargs"],
                 "selector_params": rsaDec["selector"]["kwargs"],
+                "modifiers": modifieurs,
             }
 
             if issubclass(metric, spatialisation.Metric.DeltaVal):

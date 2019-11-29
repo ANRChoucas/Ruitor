@@ -62,9 +62,12 @@ class SROnto(Ontology):
         rsa = spatial_relation.hasRelationSpatialeAtomique
         if not rsa:
             raise ValueError(
-                "Nothing hasRelationSpatialeAtomique for %s" % (spatial_relation,)
+                "No hasRelationSpatialeAtomique for %s" % (spatial_relation,)
             )
         return rsa
+
+    def get_modifier(self, modifier):
+        return self._pythonAnotationParsing(modifier)
 
     def get_metric(self, atomic_spatial_relation):
         metricList = atomic_spatial_relation.hasMetric

@@ -96,14 +96,9 @@ class Parser:
 
         relSpaDic["uri"] = relSpaUri
 
-        modList = []
-
         for child in relSpa_xml.children:
             if child.name == "sequenceModifieur":
-                modList.append(self.parse_modifieur(child))
-
-        if modList:
-            relSpaDic["modifieurs"] = modList
+                relSpaDic["modifieurs"] = self.parse_modifieur(child)
 
         return relSpaDic
 
