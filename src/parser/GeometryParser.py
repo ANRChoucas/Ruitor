@@ -24,7 +24,7 @@ class GeometryParser:
             geometry = self.parse_polygon(geometry_property)
         elif geometry_property.find("posList", recursive=False):
             geometry = self.parse_lineString(geometry_gml)
-        elif geometry_property.find("pos", recursive=False):
+        elif geometry_property.find("Point", recursive=False):
             geometry = self.parse_point(geometry_gml)
         else:
             raise ValueError("Unkwon type")
@@ -63,7 +63,10 @@ class GeometryParser:
         return out_polygon
 
     def parse_point(self, point_gml):
-        return None
+        coordinates = self.parse_coordinates(point_gml.coordinates)
+        out_point = Point(*coordinates)
+
+        return out_point
 
     def parse_lineString(self, lineString_gml):
         return None
