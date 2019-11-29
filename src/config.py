@@ -7,6 +7,7 @@ data = {
             "filename": "RGEALTI_38_test.vrt",
         },
         {"name": "HR", "precision": 10, "path": "./data/mnt/", "filename": "HR.tif"},
+        {"name": "HR_Veymont", "precision": 10, "path": "./data/mnt/", "filename": "HR_Veymont.tif"},
         {"name": "MR", "precision": 25, "path": "./data/mnt/", "filename": "MR.tif"},
         {"name": "BR", "precision": 50, "path": "./data/mnt/", "filename": "BR.tif"},
     ]
@@ -25,7 +26,7 @@ proxy = {"url": "http://proxy.ign.fr", "port": 3128}
 
 multiprocessing = {"pools": 6}
 
-log = {"int_files": False}
+log = {"int_files": True}
 
 logging_configuration = {
     "version": 1,

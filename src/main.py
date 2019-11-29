@@ -9,6 +9,8 @@ import config
 import rasterio
 from spatialisation import SpatialisationFactory
 
+from functools import reduce
+
 logger = logging.getLogger(__name__)
 
 
@@ -23,8 +25,13 @@ def set_proxy(url, port):
     logger.info("The proxy : %s is used" % proxy)
 
 
-def load_mnt(params, precision):
-    rasters = [i for i in params["MNT"] if i["precision"] == precision]
+def load_mnt(params, name=None, precision=None):
+    if name:
+        rasters = [i for i in params["MNT"] if i["name"] == name]
+    elif precision:
+        rasters = [i for i in params["MNT"] if i["precision"] == precision]
+    else:
+        raise ValueError("No Mnt corresponding")
     mntfile = get_file(rasters[0])
 
     logger.debug(
@@ -71,11 +78,11 @@ if __name__ == "__main__":
     sro = load_ontology(config.ontology, "SRO")
 
     # Parsing requête
-    parser = Parser("tests/xml/OnePol.xml")
+    parser = Parser("tests/xml/GrandVeymont.xml")
     spatialisationParms = parser.values
 
     # Import données
-    mnt = load_mnt(config.data, 10)
+    mnt = load_mnt(config.data, name="HR_Veymont")
 
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
     test = list(factor.make_Spatialisation())
@@ -89,8 +96,8 @@ if __name__ == "__main__":
 
     # test = Spatialisation(parameters, mnt)
 
-    logger.info("Computation")
-    fuzz = test[0].compute()
+    logger.info("Computation") 
+    fuzz = reduce(lambda x, y: x & y, (i.compute() for i in test))
     logger.info("Computation : Done")
 
     # # Test convolution
