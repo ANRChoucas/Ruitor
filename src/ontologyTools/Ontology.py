@@ -43,19 +43,24 @@ class SROnto(Ontology):
         logger.debug("SRO ontology made")
         super().__init__(path)
 
-    def decompose_spatial_relation(self, spatial_relation):
+    def treat_spatial_relation(self, spatial_relation):
 
         logger.info("%s : extraction" % (spatial_relation,))
 
         outDic = {}
 
-        for rsa in self.get_atomic_spatial_relation(spatial_relation):
+        try:
+            rsas = self.get_atomic_spatial_relation(spatial_relation)
+        except ValueError:
+            rsas = spatial_relation,
+
+        for rsa in rsas:
             metric = self.get_metric(rsa)
             selector = self.get_selector(rsa)
             outDic[rsa.name] = {"metric": metric, "selector": selector}
 
-            logger.debug("%s metric : %s" % (rsa, metric["name"]))
-            logger.debug("%s selector : %s" % (rsa, selector["name"]))
+            logger.debug("\n%s \n\t metric : %s\n\t selector : %s" % (rsa, metric["name"], selector["name"]))
+            #logger.debug("\t%s selector : %s" % (rsa, selector["name"]))
         return outDic
 
     def get_atomic_spatial_relation(self, spatial_relation):
