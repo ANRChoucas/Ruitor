@@ -43,7 +43,8 @@ class SpatialisationFactory:
             # relations spatiales
             spatialRelUri = indice["relationSpatiale"]["uri"]
             spatialRel = self.sro.get_from_iri(spatialRelUri)
-            spatialRelDec = self.sro.decompose_spatial_relation(spatialRel)
+            spatialRelDec = self.sro.treat_spatial_relation(spatialRel)
+            #self.sro.decompose_spatial_relation(spatialRel)
 
             # Ajout des modifieurs
             modifieurs = []
@@ -59,9 +60,13 @@ class SpatialisationFactory:
 
             for k, v in spatialRelDec.items():
                 v["selector"].update({"modifieurs": modifieurs})
+            
 
             # traitement du site
             site = indice["site"]
+
+            #print(indice)
+            #import pdb; pdb.set_trace()
 
             yield Spatialisation(spatialRelDec, site, self.raster, self.zir, conf)
 

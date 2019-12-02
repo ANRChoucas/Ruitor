@@ -96,7 +96,7 @@ if __name__ == "__main__":
 
     # test = Spatialisation(parameters, mnt)
 
-    logger.info("Computation") 
+    logger.info("Computation")
     fuzz = reduce(lambda x, y: x & y, (i.compute() for i in test))
     logger.info("Computation : Done")
 

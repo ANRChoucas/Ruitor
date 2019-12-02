@@ -37,7 +37,6 @@ class SpatialisationElement:
         zi = np.zeros_like(self.context.raster.values)
 
         # Possibilité d'utiliser geom.exterior ou geom.centroid
-
         features.rasterize(
             [self.geom],
             out=zi,
@@ -46,7 +45,7 @@ class SpatialisationElement:
             dtype=self.context.raster.raster_meta["dtype"],
         )
 
-        # FuzzyRaster(array=zi, meta=self.context.raster.raster_meta)
+        #FuzzyRaster(array=zi, meta=self.context.raster.raster_meta).write("./_outTest/xx.tif")
         return zi
 
     def compute(self, *args):
@@ -56,14 +55,14 @@ class SpatialisationElement:
         # Fuzzyfication
         self.selector.compute(tmp)
 
-        logger.debug("Element compute : %s " % self.metric)
+        logger.debug("Element computed : %s " % self.metric)
 
         return tmp
 
 
 class SpatialisationElementSequence(dict):
 
-    default_aggregator_strategy = ParallelAggregator
+    default_aggregator_strategy = FirstAggregator
 
     def __init__(self, aggregator_strategy=None, confiance=None, *args, **kwargs):
 

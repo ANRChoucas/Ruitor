@@ -158,11 +158,11 @@ class FirstAggregator(AggregatorStrategy):
 
         logger.info("Compute : Begin")
 
-        with Pool(processes=self.pools) as t:
-            cmp_res = t.map(self.context.element_compute, sp_list[1])
+        #with Pool(processes=self.pools) as t:
+        #    cmp_res = t.map(self.context.element_compute, sp_list[1])
 
         # Version debug
-        # cmp_res = map(self.context.element_compute, sp_list[1])
+        cmp_res = map(self.context.element_compute, sp_list[1])
 
         logger.info("Compute : Done")
 
