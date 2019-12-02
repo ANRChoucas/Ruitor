@@ -50,7 +50,7 @@ class Parser:
             self._xml_dict["zir"] = self.parse_zir(self.xml.zir)
 
         # Parsage indices
-        self._xml_dict["indices"] = self.parse_indices(self.xml.sequenceIndice)
+        self._xml_dict["indices"] = self.parse_indices(self.xml.indices)
 
     @property
     def values(self):
@@ -97,10 +97,23 @@ class Parser:
         relSpaDic["uri"] = relSpaUri
 
         for child in relSpa_xml.children:
-            if child.name == "sequenceModifieur":
+            if child.name == "modifieurs":
                 relSpaDic["modifieurs"] = self.parse_modifieur(child)
 
+        for child in relSpa_xml.children:
+            if child.name == "paramètres":
+                relSpaDic["paramètres"] = self.parse_parametres(child)
+
         return relSpaDic
+
+    def parse_parametres(self, params_xml):
+        outDic = {}
+        for i in params_xml:
+            if i.name == "paramètre":
+                attrs = i.attrs
+                outDic[attrs["key"]] = float(attrs["value"])
+
+        return outDic
 
     def parse_modifieur(self, mod_xml):
         return [i.attrs.get("about") for i in mod_xml if i.name == "modifieur"]

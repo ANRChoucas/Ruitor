@@ -1,107 +1,141 @@
 <?xml version="1.0" ?>
 
 <xs:schema
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:gml="http://www.opengis.net/gml/3.2"
-  xmlns:ogr="http://ogr.maptools.org/"
-  targetNamespace="urn:ruitorXSD"
-  xmlns="urn:ruitorXSD"
-  elementFormDefault="qualified">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:gml="http://www.opengis.net/gml/3.2"
+    xmlns:ogr="http://ogr.maptools.org/"
+    targetNamespace="urn:ruitorXSD"
+    xmlns="urn:ruitorXSD"
+    elementFormDefault="qualified">
 
- <xs:import
-   namespace="http://www.opengis.net/gml/3.2"
-   schemaLocation="http://schemas.opengis.net/gml/3.2.1/feature.xsd" />
+  <xs:import
+      namespace="http://www.opengis.net/gml/3.2"
+      schemaLocation="http://schemas.opengis.net/gml/3.2.1/feature.xsd" />
 
- <!-- Définition d'un type personalisé, un flotant [0,1] -->
- <xs:simpleType
-   name="zeroOneFloat"
-   id="zeroOneFloat">
-  <xs:restriction base="xs:float">
-   <xs:minInclusive value="0" />
-   <xs:maxInclusive value="1" />
-  </xs:restriction>
- </xs:simpleType>
+  <!-- Définition d'un type personalisé, un flotant [0,1] -->
+  <xs:simpleType
+      name="zeroOneFloat"
+      id="zeroOneFloat">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
 
- <xs:element
-   name="zir"
-   substitutionGroup="gml:boundedBy" />
+  <xs:element
+      name="zir"
+      substitutionGroup="gml:boundedBy" />
 
- <!-- -->
- <xs:element name="cible"></xs:element>
+  <!-- -->
+  <xs:element name="cible"></xs:element>
 
- <!-- -->
- <xs:element name="relationSpatiale">
-  <xs:complexType>
-   <xs:sequence minOccurs="0">
-    <xs:element ref="sequenceModifieur" />
-   </xs:sequence>
-   <xs:attribute
-     name="about"
-     use="required"
-     type="xs:anyURI" />
-  </xs:complexType>
- </xs:element>
+  <!-- -->
+  <xs:element name="relationSpatiale">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element
+            ref="modifieurs"
+            minOccurs="0"
+            maxOccurs="1" />
+        <xs:element
+            ref="paramètres"
+            minOccurs="0"
+            maxOccurs="1" />
+      </xs:sequence>
+      <xs:attribute
+          name="about"
+          use="required"
+          type="xs:anyURI" />
+    </xs:complexType>
+  </xs:element>
 
- <!-- -->
- <xs:element name="modifieur">
-  <xs:complexType>
-   <xs:attribute
-     name="about"
-     use="required"
-     type="xs:anyURI" />
-  </xs:complexType>
- </xs:element>
+  <!-- -->
+  <xs:element name="paramètre">
+    <xs:complexType>
+      <xs:attribute
+          name="key"
+          use="required"
+          type="xs:string" />
+      <xs:attribute
+          name="value"
+          use="required"
+          type="xs:string" />
+    </xs:complexType>
+  </xs:element>
 
- <!-- -->
- <xs:element
-   name="site"
-   substitutionGroup="gml:FeatureCollection" />
+  <!-- -->
+  <xs:element name="modifieur">
+    <xs:complexType>
+      <xs:attribute
+          name="about"
+          use="required"
+          type="xs:anyURI" />
+    </xs:complexType>
+  </xs:element>
 
- <xs:element name="indice">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element ref="cible" />
-    <xs:element ref="relationSpatiale" />
-    <xs:element ref="site" />
-   </xs:sequence>
-   <xs:attribute
-     name="confiance"
-     default="1.0"
-     type="zeroOneFloat" />
-  </xs:complexType>
- </xs:element>
+  <!-- -->
+  <xs:element
+      name="site"
+      substitutionGroup="gml:FeatureCollection" />
 
- <!-- -->
- <xs:element name="sequenceModifieur">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element
-      ref="modifieur"
-      minOccurs="1"
-      maxOccurs="unbounded" />
-   </xs:sequence>
-  </xs:complexType>
- </xs:element>
+  <xs:element name="indice">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cible" />
+        <xs:element ref="relationSpatiale" />
+        <xs:element ref="site" />
+      </xs:sequence>
+      <xs:attribute
+          name="confiance"
+          default="1.0"
+          type="zeroOneFloat" />
+    </xs:complexType>
+  </xs:element>
 
- <!-- -->
- <xs:element name="sequenceIndice">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element
-      ref="indice"
-      maxOccurs="unbounded" />
-   </xs:sequence>
-  </xs:complexType>
- </xs:element>
+  <!-- -->
+  <xs:element name="paramètres">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element
+            ref="paramètre"
+            minOccurs="1"
+            maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
- <!-- Définition de la racine -->
- <xs:element name="hypothèse">
-  <xs:complexType>
-   <xs:all>
-    <xs:element ref="zir" />
-    <xs:element ref="sequenceIndice" />
-   </xs:all>
-  </xs:complexType>
- </xs:element>
+  <!-- -->
+  <xs:element name="modifieurs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element
+            ref="modifieur"
+            minOccurs="1"
+            maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- -->
+  <xs:element name="indices">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element
+            ref="indice"
+            minOccurs="1"
+            maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Définition de la racine -->
+  <xs:element name="hypothèse">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="zir" />
+        <xs:element ref="indices" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
 
 </xs:schema>
