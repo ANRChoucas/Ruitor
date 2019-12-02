@@ -22,7 +22,7 @@ class GeometryParser:
 
         if geometry_property.find("exterior", recursive=False):
             geometry = self.parse_polygon(geometry_property)
-        elif geometry_property.find("posList", recursive=False):
+        elif geometry_property.find("LineString", recursive=False):
             geometry = self.parse_lineString(geometry_gml)
         elif geometry_property.find("Point", recursive=False):
             geometry = self.parse_point(geometry_gml)
@@ -69,4 +69,8 @@ class GeometryParser:
         return out_point
 
     def parse_lineString(self, lineString_gml):
-        return None
+        coordinates = self.parse_coordinates(lineString_gml.coordinates)
+        out_Line = LineString(coordinates)
+
+        return out_Line
+
