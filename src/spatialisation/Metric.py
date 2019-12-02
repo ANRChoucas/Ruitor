@@ -96,10 +96,9 @@ class Distance(Metric):
     def _compute(self, values, *args):
 
         # computeraster = np.empty_like(self.values)
-
+        
         shape = values.shape
-        notnullcells = np.argwhere(values != 0)
-
+        notnullcells = np.argwhere(values != 0)[:100]
         indices = np.indices(shape).transpose((1, 2, 3, 0))
         calc = notnullcells - indices[:, :, :, np.newaxis]
         calc_sqrt = np.square(calc).sum(4)
@@ -115,15 +114,17 @@ class Angle(Metric):
     Hérite de la classe Metric. Destinée à calculer un angle.
     """
 
-    def __init__(self, context, *args, **kwargs):
+    def __init__(self, context, angle=0, *args, **kwargs):
+        self.angle = angle
         super().__init__(context, *args, **kwargs)
 
-    def _compute(self, values, angle=0, *args):
+    def _compute(self, values, *args):
         # Calcule l'angle par rapport à la première coordonée
         # de l'objet. A refaire
+        angle = self.angle
         notnullcells = np.argwhere(values != 0)[0]
         shape = values.shape
-        ang = angle - 90
+        ang = angle + 90
 
         # Calcul [drow, dcol]
         # calc_delta =
@@ -132,9 +133,28 @@ class Angle(Metric):
         # Calcul atan
         calc_atan = np.squeeze(np.arctan2(x, y, dtype=values.dtype), axis=3)
         # conversion degrés
-        computeraster = (np.degrees(calc_atan) + ang) % 360
+        computeraster = (np.degrees(calc_atan) - ang) % 360
 
         return computeraster
+
+
+class EcartAngulaire(Angle):
+    """
+    Classe EcartAngulaire
+
+    Hérite de la classe Angle. Modifie le résultat de la classe
+    Angle pour obtenir une valeur entre -180 et 180 degrés, centrée
+    sur l'angle fourni en paramètre lors de la création de la classe.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _compute(self, values, *args):
+        ang = super()._compute(values, *args)
+        angUp = ang
+        angUp[angUp > 180] = angUp[angUp > 180] - 360
+        return angUp
 
 
 class DeltaVal(Metric):
