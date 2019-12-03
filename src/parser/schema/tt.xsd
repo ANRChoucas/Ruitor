@@ -12,6 +12,7 @@
       namespace="http://www.opengis.net/gml/3.2"
       schemaLocation="http://schemas.opengis.net/gml/3.2.1/feature.xsd" />
 
+
   <!-- Définition d'un type personalisé, un flotant [0,1] -->
   <xs:simpleType
       name="zeroOneFloat"
@@ -22,14 +23,54 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <!-- Définition d'un type personalisé, extension du type xs:string
+  avec un attribut about de type URI. 
+  Permet de lier un modifieur à l'ontologie -->
+  <xs:complexType name="modifieurType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute
+            name="about"
+            use="required"
+            type="xs:anyURI" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Définition de l'élément zir. L'élément est
+  défini comme un alias pour le type BBOX défini en GML.
+  Permet de définir une zone de calcul. La même zone 
+  intitiale de recherche s'applique à tous les indices -->
   <xs:element
       name="zir"
       substitutionGroup="gml:boundedBy" />
 
-  <!-- -->
+  <!-- Définition de l'élément cibre -->
   <xs:element name="cible"></xs:element>
 
-  <!-- -->
+  <!-- Définition de l'élément modifieur. 
+  Le type est une extension de xs:string, définie plus haut-->
+  <xs:element
+      name="modifieur"
+      type="modifieurType" />
+
+  <!-- Définition d'une séquence de modifieurs.
+  Contient au moins un modifieur -->
+  <xs:element name="modifieurs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element
+            ref="modifieur"
+            minOccurs="1"
+            maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Définition d'une relation spatiale.
+  Est composée d'une URI, obligatoire, pour 
+  lier la relation spatiale à l'ontologie et 
+  d'une séquence, optionelle de modifieurs -->
   <xs:element name="relationSpatiale">
     <xs:complexType>
       <xs:sequence minOccurs="0">
@@ -42,28 +83,12 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:complexType name="modifieurType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute
-            name="about"
-            use="required"
-            type="xs:anyURI" />
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-
-  <!-- -->
-  <xs:element
-      name="modifieur"
-      type="modifieurType" />
-
-
-  <!-- -->
+  <!-- Définition du site -->
   <xs:element
       name="site"
       substitutionGroup="gml:FeatureCollection" />
 
+  <!-- Définition d'un indice -->
   <xs:element name="indice">
     <xs:complexType>
       <xs:sequence>
@@ -78,20 +103,7 @@
     </xs:complexType>
   </xs:element>
 
-
-  <!-- -->
-  <xs:element name="modifieurs">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element
-            ref="modifieur"
-            minOccurs="1"
-            maxOccurs="unbounded" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <!-- -->
+  <!-- Définition d'une séquence d'indices -->
   <xs:element name="indices">
     <xs:complexType>
       <xs:sequence>
