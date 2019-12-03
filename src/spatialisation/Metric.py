@@ -6,6 +6,7 @@ from fuzzyUtils import FuzzyRaster
 
 import numpy as np
 import scipy.ndimage
+import scipy.spatial
 
 
 class Metric:
@@ -83,26 +84,32 @@ class Cell_DistanceT(Cell_Distance):
 
 
 class Distance(Metric):
-    """
-    Classe Distance
-
-    Hérite de la classe Metric. Destinée à calculer la 
-    distance à un point
-    """
-
     def __init__(self, context, *args, **kwargs):
         super().__init__(context, *args, **kwargs)
 
     def _compute(self, values, *args):
 
-        # computeraster = np.empty_like(self.values)
-        
         shape = values.shape
-        notnullcells = np.argwhere(values != 0)[:100]
-        indices = np.indices(shape).transpose((1, 2, 3, 0))
-        calc = notnullcells - indices[:, :, :, np.newaxis]
-        calc_sqrt = np.square(calc).sum(4)
-        computeraster = np.sqrt(np.min(calc_sqrt, 3), dtype=values.dtype)
+        notnullcells = np.argwhere(values != 0)
+
+        if len(notnullcells) > 5:
+            # version indexée, uniquement si le nombre
+            # de valeurs non nulles est important
+            z, y, x = np.indices(shape)
+            indices = list(zip(np.ravel(z), np.ravel(y), np.ravel(x)))
+            # Calcul de l'index
+            tree = scipy.spatial.cKDTree(notnullcells)
+            # Calcul de la distance
+            dist, index = tree.query(indices)
+            # Mise en forme du raster de sortie
+            computeraster = dist.reshape(shape).astype(values.dtype)
+        else:
+            # version bruteforce sinon
+            indices = np.indices(shape).transpose((1, 2, 3, 0))
+            calc = notnullcells - indices[:, :, :, np.newaxis]
+            calc_sqrt = np.square(calc).sum(4)
+            # Mise en forme du raster de sortie
+            computeraster = np.sqrt(np.min(calc_sqrt, 3), dtype=values.dtype)
 
         return computeraster
 
