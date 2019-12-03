@@ -33,14 +33,7 @@
   <xs:element name="relationSpatiale">
     <xs:complexType>
       <xs:sequence minOccurs="0">
-        <xs:element
-            ref="modifieurs"
-            minOccurs="0"
-            maxOccurs="1" />
-        <xs:element
-            ref="paramètres"
-            minOccurs="0"
-            maxOccurs="1" />
+        <xs:element ref="modifieurs" />
       </xs:sequence>
       <xs:attribute
           name="about"
@@ -49,29 +42,22 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- -->
-  <xs:element name="paramètre">
-    <xs:complexType>
-      <xs:attribute
-          name="key"
-          use="required"
-          type="xs:string" />
-      <xs:attribute
-          name="value"
-          use="required"
-          type="xs:string" />
-    </xs:complexType>
-  </xs:element>
+  <xs:complexType name="modifieurType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute
+            name="about"
+            use="required"
+            type="xs:anyURI" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
 
   <!-- -->
-  <xs:element name="modifieur">
-    <xs:complexType>
-      <xs:attribute
-          name="about"
-          use="required"
-          type="xs:anyURI" />
-    </xs:complexType>
-  </xs:element>
+  <xs:element
+      name="modifieur"
+      type="modifieurType" />
+
 
   <!-- -->
   <xs:element
@@ -92,17 +78,6 @@
     </xs:complexType>
   </xs:element>
 
-  <!-- -->
-  <xs:element name="paramètres">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element
-            ref="paramètre"
-            minOccurs="1"
-            maxOccurs="unbounded" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
 
   <!-- -->
   <xs:element name="modifieurs">

@@ -35,13 +35,7 @@
     <rt:indice>
       <!-- Je suis sous le grand Veymont-->
       <rt:cible></rt:cible>
-      <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#test_sous">
-        <rt:paramètres>
-          <rt:paramètre
-              key="distance"
-              value="800" />
-        </rt:paramètres>
-      </rt:relationSpatiale>
+      <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#test_sous"></rt:relationSpatiale>
       <rt:site>
         <gml:featureMember>
           <ogr:oro fid="oro.0">
@@ -58,11 +52,9 @@
       <!-- Je suis à 800m du pas de la ville -->
       <rt:cible></rt:cible>
       <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceQuantitativePlanimetrique">
-        <rt:paramètres>
-          <rt:paramètre
-              key="distance"
-              value="800" />
-        </rt:paramètres>
+        <rt:modifieurs>
+          <rt:modifieur about="">800</rt:modifieur>
+        </rt:modifieurs>
       </rt:relationSpatiale>
       <rt:site>
         <gml:featureMember>
@@ -92,7 +84,6 @@
         </gml:featureMember>
       </rt:site>
     </rt:indice>
-
     <rt:indice>
       <!-- Je suis pas dans une forêt -->
       <rt:cible></rt:cible>
@@ -1194,8 +1185,6 @@
         </gml:featureMember>
       </rt:site>
     </rt:indice>
-
-
   </rt:indices>
 </rt:hypothèse> <!-- 
       <rt:indice>
