@@ -51,9 +51,9 @@ class GeometryParser:
         ext_coordinates = self.parse_coordinates(polygon_gml.exterior.coordinates)
 
         # Calcul coordonées interieur
-        if polygon_gml.interior:
+        if polygon_gml.innerBoundaryIs:
             int_coordinates = []
-            for inter in polygon_gml.find_all("interior"):
+            for inter in polygon_gml.find_all("innerBoundaryIs"):
                 int_coordinates.append(self.parse_coordinates(inter.coordinates))
         else:
             int_coordinates = None
