@@ -100,20 +100,7 @@ class Parser:
             if child.name == "modifieurs":
                 relSpaDic["modifieurs"] = self.parse_modifieur(child)
 
-        for child in relSpa_xml.children:
-            if child.name == "paramètres":
-                relSpaDic["paramètres"] = self.parse_parametres(child)
-
         return relSpaDic
-
-    def parse_parametres(self, params_xml):
-        outDic = {}
-        for i in params_xml:
-            if i.name == "paramètre":
-                attrs = i.attrs
-                outDic[attrs["key"]] = float(attrs["value"])
-
-        return outDic
 
     def parse_modifieur(self, mod_xml):
         return [i.attrs.get("about") for i in mod_xml if i.name == "modifieur"]
