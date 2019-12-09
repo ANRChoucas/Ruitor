@@ -103,7 +103,13 @@ class Parser:
         return relSpaDic
 
     def parse_modifieur(self, mod_xml):
-        return [i.attrs.get("about") for i in mod_xml if i.name == "modifieur"]
+        outList = []
+        for i in mod_xml:
+            if i.name == "modifieur":
+                uri = i.attrs.get("about")
+                value = i.string
+                outList.append({"uri": uri, "value": value})
+        return outList
 
     def parse_site(self, site_xml, **kwargs):
 
@@ -127,7 +133,7 @@ class Parser:
     def parse_zir(self, zir_xml):
         """
         Zone initiale de recherche au format Bbox.
-        zir = [[ x1, y1], [x2, y2]] 
+        zir = [[x1, y1], [x2, y2]] 
         """
 
         zir_coords = zir_xml.Envelope

@@ -76,13 +76,45 @@ class SROnto(Ontology):
     def get_modifier(self, modifier):
         return self._pythonAnotationParsing(modifier)
 
+    def _add_parameter(self, obj, dic):
+        parametersDic = {**dic}
+
+        try:
+            metricParameter = self.get_parameter(obj)
+            parametersDic.update({"parameters": metricParameter})
+        except AttributeError:
+            pass
+
+        return parametersDic
+
     def get_metric(self, atomic_spatial_relation):
         metricList = atomic_spatial_relation.hasMetric
-        return self._pythonAnotationParsing(metricList)
+        metricDic = self._pythonAnotationParsing(metricList)
+        metricOutDic = self._add_parameter(metricList, metricDic)
+        return metricOutDic
 
     def get_selector(self, atomic_spatial_relation):
         selectorList = atomic_spatial_relation.hasSelector
-        return self._pythonAnotationParsing(selectorList)
+        selectorDic = self._pythonAnotationParsing(selectorList)
+        selectorOutrDic = self._add_parameter(selectorList, selectorDic)
+        return selectorOutrDic
+
+    def get_parameter(self, python_object):
+        prmList = python_object.hasParameter
+
+        outList = []
+        for i in prmList:
+            anot = self._pythonAnotationParsing(i)
+            uri = i.get_iri(i)
+
+            try:
+                tp = i.pythonType[0]
+            except IndexError:
+                tp = None
+
+            outList.append({"uri": uri, "type": tp, **anot})
+
+        return outList
 
 
 class ROOnto(Ontology):
