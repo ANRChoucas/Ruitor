@@ -106,9 +106,13 @@ class Parser:
         outList = []
         for i in mod_xml:
             if i.name == "modifieur":
+                dic = {}
                 uri = i.attrs.get("about")
-                value = i.string
-                outList.append({"uri": uri, "value": value})
+                dic["uri"] = uri
+                value = i.string 
+                if value:
+                    dic["value"] = value
+                outList.append(dic)
         return outList
 
     def parse_site(self, site_xml, **kwargs):
