@@ -19,5 +19,5 @@ class Not(Modifier):
         super().__init__(context)
 
     def _modifing(self, values):
-        return 1 - values
+        return ~values
 

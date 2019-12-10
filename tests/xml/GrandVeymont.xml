@@ -72,7 +72,11 @@
     <rt:indice>
       <!-- Je suis au nord du pas de la ville -->
       <rt:cible></rt:cible>
-      <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe"></rt:relationSpatiale>
+      <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe">
+        <rt:modifieurs>
+          <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Not" />
+        </rt:modifieurs>
+      </rt:relationSpatiale>
       <rt:site>
         <gml:featureMember>
           <ogr:oro fid="oro.0">
@@ -90,7 +94,7 @@
       <rt:cible></rt:cible>
       <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal">
         <rt:modifieurs>
-          <!-- <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Not" /> -->
+          <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Not" />
         </rt:modifieurs>
       </rt:relationSpatiale>
       <rt:site>
@@ -3242,7 +3246,7 @@
             </ogr:geometryProperty>
           </ogr:fo>
         </gml:featureMember>
-        </rt:site>
+      </rt:site>
     </rt:indice>
     <rt:indice>
       <!-- Je suis sur une route -->

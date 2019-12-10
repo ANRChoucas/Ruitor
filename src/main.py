@@ -78,7 +78,7 @@ if __name__ == "__main__":
     sro = load_ontology(config.ontology, "SRO")
 
     # Parsing requête
-    parser = Parser("tests/xml/GrandVeymont_entre.xml")
+    parser = Parser("tests/xml/GrandVeymont.xml")
     spatialisationParms = parser.values
 
     # Import données
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     # test = Spatialisation(parameters, mnt)
 
     logger.info("Computation")
-    fuzz = reduce(lambda x, y: x & y, (i.compute() for i in test))
+    fuzz = test[3].compute()#reduce(lambda x, y: x & y, (i.compute() for i in test))
     logger.info("Computation : Done")
 
     # # Test convolution

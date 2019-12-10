@@ -39,20 +39,33 @@ class SpatialisationFactory:
         else:
             self.zir = None
 
-    def make_modifieurs(self, xml_modifieurs, spatialRelDec):
+    def make_modifieurs(self, xml_modifieurs):
         # On vérifie si les modifieurs sont des modifieurs globaux
         # i.e. des sous-classes de "modifieur" dans l'ontologie ou
         # des paramètres
+
+        outDic = {}
+        ModList = []
+        ParamList = []
+
         for mod in xml_modifieurs:
+
             mod_uri = mod["uri"]
             mod_value = mod.get("value")
             modClass = self.sro.get_from_iri(mod_uri)
+
+            dic = {"uri": mod_uri}
+            if mod_value:
+                dic["value"] = mod_value
+
             # Si modifieur
             if self.sro.Modifieur in modClass.is_a:
-                self.make_global_modifieurs(modClass, mod_value)
+                ModList.append(dic)
+                # self.make_global_modifieurs(modClass, mod_value)
             # Si paramètre
             elif self.sro.Parametre in modClass.is_a:
-                self.make_parameters(modClass, mod_value)
+                ParamList.append(dic)
+                # self.make_parameters(modClass, mod_value)
             # Si ni l'un ni l'autre
             else:
                 raise ValueError(
@@ -60,6 +73,10 @@ class SpatialisationFactory:
                     % (modClass, modClass.is_a)
                 )
 
+        outDic["Modifiers"] = ModList
+        outDic["Parameters"] = ParamList
+
+        return outDic
         # metPrms = [v["metric"].get("parameters") for k, v in spatialRelDec.items()]
         # selPrms = [v["selector"].get("parameters") for k, v in spatialRelDec.items()]
 
@@ -67,37 +84,55 @@ class SpatialisationFactory:
 
         # Test
 
-    def make_global_modifieurs(self, ontology_class, mod_value):
-        
-        if ontology_class.hasParameter:
-            print(ontology_class, mod_value)
-        else:
-            pass
+    def add_parameters(self, spatialRelDec, xml_parameters):
 
-    def make_parameters(self, ontology_class, mod_value):
-        
-        if ontology_class.hasParameter:
-            print(ontology_class, mod_value)
-        else:
-            pass
+        for k_spa, v_spa in spatialRelDec.items():
+            for k_cmp, v_cmp in v_spa.items():
+                prms = v_cmp.get("parameters")
+                for prm in prms:
+                    xx = [i for i in xml_parameters if i.get("uri") == prm["uri"]]
+                    # import pdb; pdb.set_trace()
 
-    def make_spatial_relation(self, spatial_rel_uri):
+        # if ontology_class.hasParameter:
+        #     pass
+        #     # print(ontology_class, mod_value)
+        # else:
+        #     pass
+
+    def make_spatial_relation(self, spatial_rel_uri, xml_parameters=None):
         spatialRel = self.sro.get_from_iri(spatial_rel_uri)
         spatialRelDec = self.sro.treat_spatial_relation(spatialRel)
+        # spatialRelDec = self.add_parameters(spatialRelDec, xml_parameters)
         return spatialRelDec
 
     def make_indice(self, indice):
+
+        spatialisationParmsDic = {}
+
         # confiance
         conf = indice.get("confiance", None)
+
+        # Ajout modifieurs si présents dans le xml
+        xmlModList = indice["relationSpatiale"].get("modifieurs")
+        if xmlModList:
+            extractModList = self.make_modifieurs(xmlModList)
+            # Ajout modifieurs globaux
+            modifiersList = extractModList.get("Modifiers")
+            global_modifiers = []
+            for modifier in modifiersList:
+                modUri = modifier["uri"]
+                mod = self.sro.get_from_iri(modUri)
+                modDic = self.sro.get_modifier(mod)
+                global_modifiers.append(modDic)
+
+            spatialisationParmsDic["global_modifiers"] = global_modifiers
+        else:
+            extractModList = None
 
         # décomposition relations spatiales
         spatialRelUri = indice["relationSpatiale"]["uri"]
         spatialRelDec = self.make_spatial_relation(spatialRelUri)
-
-        # Ajout modifieurs
-        xmlModList = indice["relationSpatiale"].get("modifieurs")
-        if xmlModList:
-            self.make_modifieurs(xmlModList, spatialRelDec)
+        spatialisationParmsDic["rsa"] = spatialRelDec
 
         # Ajout des modifieurs
         # modifieurs = []
@@ -113,15 +148,13 @@ class SpatialisationFactory:
         # except KeyError:
         #     pass
 
-        for k, v in spatialRelDec.items():
+        for k, v in spatialisationParmsDic["rsa"].items():
             v["selector"].update({"modifieurs": []})
 
         # Ajout site
         site = indice["site"]
 
-        #import pdb; pdb.set_trace()
-
-        return Spatialisation(spatialRelDec, site, self.raster, self.zir, conf)
+        return Spatialisation(spatialisationParmsDic, site, self.raster, self.zir, conf)
 
     def make_Spatialisation(self):
         for indice in self.indices:
@@ -174,7 +207,7 @@ class Spatialisation:
     Destinée à modéliser UN élément de localisation
     """
 
-    def __init__(self, relationSpatiale, site, raster, zir, confiance=None):
+    def __init__(self, spatialisationParms, site, raster, zir, confiance=None):
         """
         Fonction d'initialisation de la classe Spatialisation
         """
@@ -182,14 +215,29 @@ class Spatialisation:
         # Récupération des paramètres
         # Création du raster flou résultat
         self.raster = FuzzyRaster(raster=raster, window=zir)
-        self.spaElms = self.SpatialisationElementSequence_init(
-            relationSpatiale, site, confiance
-        )
+
+        rsa = spatialisationParms["rsa"]
+        self.spaElms = self.SpatialisationElementSequence_init(rsa, site, confiance)
+
+        modifieurs = spatialisationParms.get("global_modifiers")
+        self.modifiers = self.modifiers_init(modifieurs)
+
+    def modifiers_init(self, modifiers):
+        mod = []
+
+        try:
+            for modifier in modifiers:
+                modCls = getattr(sys.modules["spatialisation.Modificator"], modifier["name"])
+                modKargs = modifier.get("kwargs", {})
+                modObj = modCls(self, **modKargs)
+                mod.append(modObj)
+        except TypeError:
+            pass
+
+        return mod
 
     def SpatialisationElementSequence_init(self, dic, site, confiance):
         spaSeq = SpatialisationElementSequence(confiance=confiance)
-        print(dic)
-        print(site)
 
         for geom, rsaDic in product(site, dic.items()):
             gCounter, geometry = geom
@@ -223,5 +271,10 @@ class Spatialisation:
         return spaSeq
 
     def compute(self, *args):
-        return self.spaElms.compute()
+        tempRes = self.spaElms.compute()
+
+        for mod in self.modifiers:
+            tempRes = mod.modifing(tempRes)
+            
+        return tempRes
 
