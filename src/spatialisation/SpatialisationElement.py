@@ -45,10 +45,10 @@ class SpatialisationElement:
             dtype=self.context.raster.raster_meta["dtype"],
         )
 
-        #FuzzyRaster(array=zi, meta=self.context.raster.raster_meta).write("./_outTest/xx.tif")
+        # FuzzyRaster(array=zi, meta=self.context.raster.raster_meta).write("./_outTest/xx.tif")
         return zi
 
-    def compute(self, *args):
+    def compute(self, *args, **kwargs):
         # Rasterisation
         geom_raster = self.rasterise()
         tmp = self.metric.compute(geom_raster)
@@ -58,6 +58,29 @@ class SpatialisationElement:
         logger.debug("Element computed : %s " % self.metric)
 
         return tmp
+
+class t_SpatialisationElementSequence(list):
+        default_aggregator_strategy = ParallelAggregator
+
+    def __init__(self, aggregator_strategy=None, confiance=None, *args, **kwargs):
+
+        if aggregator_strategy:
+            print(aggregator_strategy)
+            self.aggregator_strategy = aggregator_strategy(self, confiance)
+        else:
+            self.aggregator_strategy = self.default_aggregator_strategy(self, confiance)
+
+        logger.debug(
+            "Aggregator strategy : %s" % (self.aggregator_strategy.__class__.__name__,)
+        )
+
+        super().__init__(*args, **kwargs)
+
+    def element_compute(self, element):
+        return element.compute()
+
+    def compute(self):
+        return self.aggregator_strategy.compute()
 
 
 class SpatialisationElementSequence(dict):
