@@ -78,7 +78,7 @@ if __name__ == "__main__":
     sro = load_ontology(config.ontology, "SRO")
 
     # Parsing requête
-    parser = Parser("tests/xml/GrandVeymont.xml")
+    parser = Parser("tests/xml/GrandVeymont_entre.xml")
     spatialisationParms = parser.values
 
     # Import données

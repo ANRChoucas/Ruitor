@@ -19,6 +19,9 @@ class Ontology:
         self.ontho.load()
         logger.info("ontology namespace: %s" % self.ontho.base_iri)
 
+    def __getattr__(self, name):
+        return self.ontho.__getattr__(name)
+
     def get_from_iri(self, uri):
         try:
             return self.ontho.search_one(iri=uri)

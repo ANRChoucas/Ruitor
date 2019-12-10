@@ -18,6 +18,7 @@
       <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Proximal">
         <rt:modifieurs>
           <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Not" />
+          <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Value">32</rt:modifieur>
         </rt:modifieurs>
       </rt:relationSpatiale>
       <rt:site>

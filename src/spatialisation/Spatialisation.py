@@ -4,7 +4,7 @@ Spatialisation
 
 
 import sys
-from itertools import product
+from itertools import product, chain
 
 from rasterio.windows import Window
 
@@ -22,53 +22,110 @@ class SpatialisationFactory:
     """
     """
 
-    def __init__(self, spaParms, raster, sro):
+    def __init__(self, spaParms, raster, sro, roo=None):
+        # Lien vers les ontologies
         self.sro = sro
+        self.roo = roo
+
+        # extraction du xml pour les indices
         self.indices = spaParms["indices"]
 
+        # raster
         self.raster = raster
 
+        # Définition de la zir
         if "zir" in spaParms:
             self.zir = self.set_zir(self.raster, spaParms["zir"])
         else:
             self.zir = None
 
+    def make_modifieurs(self, xml_modifieurs, spatialRelDec):
+        # On vérifie si les modifieurs sont des modifieurs globaux
+        # i.e. des sous-classes de "modifieur" dans l'ontologie ou
+        # des paramètres
+        for mod in xml_modifieurs:
+            mod_uri = mod["uri"]
+            mod_value = mod.get("value")
+            modClass = self.sro.get_from_iri(mod_uri)
+            # Si modifieur
+            if self.sro.Modifieur in modClass.is_a:
+                self.make_global_modifieurs(modClass, mod_value)
+            # Si paramètre
+            elif self.sro.Parametre in modClass.is_a:
+                self.make_parameters(modClass, mod_value)
+            # Si ni l'un ni l'autre
+            else:
+                raise ValueError(
+                    "%s is a %s, not a Modifieur or a Parametre"
+                    % (modClass, modClass.is_a)
+                )
+
+        # metPrms = [v["metric"].get("parameters") for k, v in spatialRelDec.items()]
+        # selPrms = [v["selector"].get("parameters") for k, v in spatialRelDec.items()]
+
+        # ontoPrmsList = [i["uri"] for i in chain(metPrms, selPrms)]
+
+        # Test
+
+    def make_global_modifieurs(self, ontology_class, mod_value):
+        
+        if ontology_class.hasParameter:
+            print(ontology_class, mod_value)
+        else:
+            pass
+
+    def make_parameters(self, ontology_class, mod_value):
+        
+        if ontology_class.hasParameter:
+            print(ontology_class, mod_value)
+        else:
+            pass
+
+    def make_spatial_relation(self, spatial_rel_uri):
+        spatialRel = self.sro.get_from_iri(spatial_rel_uri)
+        spatialRelDec = self.sro.treat_spatial_relation(spatialRel)
+        return spatialRelDec
+
+    def make_indice(self, indice):
+        # confiance
+        conf = indice.get("confiance", None)
+
+        # décomposition relations spatiales
+        spatialRelUri = indice["relationSpatiale"]["uri"]
+        spatialRelDec = self.make_spatial_relation(spatialRelUri)
+
+        # Ajout modifieurs
+        xmlModList = indice["relationSpatiale"].get("modifieurs")
+        if xmlModList:
+            self.make_modifieurs(xmlModList, spatialRelDec)
+
+        # Ajout des modifieurs
+        # modifieurs = []
+        # try:
+        #     modifieurs = indice["relationSpatiale"]["modifieurs"]
+        #     for modif in modifieurs:
+        #         import pdb; pdb.set_trace()
+        #         modUri = modif['uri']
+        #         mod = self.sro.get_from_iri(modUri)
+        #         modDic = self.sro.get_modifier(mod)
+        #         if not modDic in modifieurs:
+        #             modifieurs.append(modDic)
+        # except KeyError:
+        #     pass
+
+        for k, v in spatialRelDec.items():
+            v["selector"].update({"modifieurs": []})
+
+        # Ajout site
+        site = indice["site"]
+
+        #import pdb; pdb.set_trace()
+
+        return Spatialisation(spatialRelDec, site, self.raster, self.zir, conf)
+
     def make_Spatialisation(self):
-
         for indice in self.indices:
-
-            # confiance
-            conf = indice.get("confiance", None)
-
-            # relations spatiales
-            spatialRelUri = indice["relationSpatiale"]["uri"]
-            spatialRel = self.sro.get_from_iri(spatialRelUri)
-            spatialRelDec = self.sro.treat_spatial_relation(spatialRel)
-            #self.sro.decompose_spatial_relation(spatialRel)
-
-            # Ajout des modifieurs
-            modifieurs = []
-            try:
-                modifieursUri = indice["relationSpatiale"]["modifieurs"]
-                for modUri in modifieursUri:
-                    mod = self.sro.get_from_iri(modUri)
-                    modDic = self.sro.get_modifier(mod)
-                    if not modDic in modifieurs:
-                        modifieurs.append(modDic)
-            except KeyError:
-                pass
-
-            for k, v in spatialRelDec.items():
-                v["selector"].update({"modifieurs": modifieurs})
-            
-
-            # traitement du site
-            site = indice["site"]
-
-            #print(indice)
-            #import pdb; pdb.set_trace()
-
-            yield Spatialisation(spatialRelDec, site, self.raster, self.zir, conf)
+            yield self.make_indice(indice)
 
     def set_zir(self, raster, zir, *args, **kwargs):
         """
@@ -131,6 +188,8 @@ class Spatialisation:
 
     def SpatialisationElementSequence_init(self, dic, site, confiance):
         spaSeq = SpatialisationElementSequence(confiance=confiance)
+        print(dic)
+        print(site)
 
         for geom, rsaDic in product(site, dic.items()):
             gCounter, geometry = geom

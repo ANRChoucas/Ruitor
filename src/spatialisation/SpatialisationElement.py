@@ -62,7 +62,7 @@ class SpatialisationElement:
 
 class SpatialisationElementSequence(dict):
 
-    default_aggregator_strategy = FirstAggregator
+    default_aggregator_strategy = ParallelAggregator
 
     def __init__(self, aggregator_strategy=None, confiance=None, *args, **kwargs):
 

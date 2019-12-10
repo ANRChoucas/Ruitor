@@ -67,8 +67,8 @@ class EqVal(CompareVal):
         super().__init__(context, modifiers, value, *args, **kwargs)
 
     def _compute_ff_params(self, *args):
-        binf = self.value - 100
-        bsup = self.value + 100
+        bsup = self.value + 60
+        binf = self.value - 60
         return [(binf, 0.0), (self.value, 1.0), (bsup, 0.0)]
 
 
@@ -77,7 +77,7 @@ class SelectorX(Selector):
         super().__init__(context, *args, **kwargs)
 
     def _compute_ff_params(self, *args):
-        return [(0, 1.0), (5, 0.0)]
+        return [(0, 1.0), (10, 0.0)]
 
 
 class SelectorX1(Selector):
