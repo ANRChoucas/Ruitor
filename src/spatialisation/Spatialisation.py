@@ -3,19 +3,18 @@ Spatialisation
 """
 
 
+import ast
 import sys
-from itertools import product, chain
-
-from rasterio.windows import Window
-
-from fuzzyUtils import FuzzyRaster
+from itertools import chain, product
 
 import spatialisation.Metric
-import spatialisation.Selector
 import spatialisation.Modificator
+import spatialisation.Selector
+from fuzzyUtils import FuzzyRaster
+from rasterio.windows import Window
 
-
-from .SpatialisationElement import SpatialisationElement, SpatialisationElementSequence
+from .SpatialisationElement import (SpatialisationElement,
+                                    SpatialisationElementSequence)
 
 
 class SpatialisationFactory:
@@ -123,11 +122,12 @@ class SpatialisationFactory:
                 modUri = modifier["uri"]
                 mod = self.sro.get_from_iri(modUri)
                 modDic = self.sro.get_modifier(mod)
+                modValue = modifier.get("value")
+                if modValue:
+                    modDic["kwargs"]["value"] = ast.literal_eval(modValue)
                 global_modifiers.append(modDic)
 
             spatialisationParmsDic["global_modifiers"] = global_modifiers
-        else:
-            extractModList = None
 
         # décomposition relations spatiales
         spatialRelUri = indice["relationSpatiale"]["uri"]
@@ -227,7 +227,9 @@ class Spatialisation:
 
         try:
             for modifier in modifiers:
-                modCls = getattr(sys.modules["spatialisation.Modificator"], modifier["name"])
+                modCls = getattr(
+                    sys.modules["spatialisation.Modificator"], modifier["name"]
+                )
                 modKargs = modifier.get("kwargs", {})
                 modObj = modCls(self, **modKargs)
                 mod.append(modObj)
@@ -275,6 +277,5 @@ class Spatialisation:
 
         for mod in self.modifiers:
             tempRes = mod.modifing(tempRes)
-            
-        return tempRes
 
+        return tempRes

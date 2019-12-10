@@ -21,3 +21,12 @@ class Not(Modifier):
     def _modifing(self, values):
         return ~values
 
+
+class Remapping(Modifier):
+    def __init__(self, context, *args, **kwargs):
+        self.function_parameters = kwargs.get("value")
+        super().__init__(context)
+
+    def _modifing(self, values):
+        values.fuzzyfication(self.function_parameters)
+        return values
