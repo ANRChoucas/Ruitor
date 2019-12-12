@@ -8,12 +8,14 @@ class Selector:
     Classe Selector
     """
 
-    def __init__(self, context, modifiers, *args, **kwargs):
+    def __init__(self, context, modifiers):
         self.context = context
-
         self.modifiers = [mod(self) for mod in modifiers]
 
     def compute(self, raster):
+        """
+        Todo
+        """
         ff_params = self.compute_ff_params()
         raster.fuzzyfication(ff_params)
 
@@ -21,6 +23,9 @@ class Selector:
             raster.values = mod.modifing(raster.values)
 
     def compute_ff_params(self, *args):
+        """
+        Todo
+        """
         return self._compute_ff_params(*args)
 
     def _compute_ff_params(self, *args):
@@ -28,14 +33,19 @@ class Selector:
 
 
 class SelectorNull(Selector):
-    def __init__(self, context, *args, **kwargs):
-        super().__init__(context, *args, **kwargs)
+    """
+    Todo
+    """
 
     def compute(self, raster):
         pass
 
 
 class CompareVal(Selector):
+    """
+    Todo
+    """
+
     def __init__(self, context, modifiers, value, *args, **kwargs):
         self.value = value
         super().__init__(context, modifiers, *args, **kwargs)
@@ -45,8 +55,9 @@ class CompareVal(Selector):
 
 
 class InfVal(CompareVal):
-    def __init__(self, context, modifiers, value, *args, **kwargs):
-        super().__init__(context, modifiers, value, *args, **kwargs)
+    """
+    Todo
+    """
 
     def _compute_ff_params(self, *args):
         bsup = self.value + 50
@@ -54,8 +65,9 @@ class InfVal(CompareVal):
 
 
 class SupVal(CompareVal):
-    def __init__(self, context, modifiers, value, *args, **kwargs):
-        super().__init__(context, modifiers, value, *args, **kwargs)
+    """
+    Todo
+    """
 
     def _compute_ff_params(self, *args):
         binf = self.value - 50
@@ -63,8 +75,9 @@ class SupVal(CompareVal):
 
 
 class EqVal(CompareVal):
-    def __init__(self, context, modifiers, value, *args, **kwargs):
-        super().__init__(context, modifiers, value, *args, **kwargs)
+    """
+    Todo
+    """
 
     def _compute_ff_params(self, *args):
         bsup = self.value + 60
@@ -73,32 +86,36 @@ class EqVal(CompareVal):
 
 
 class SelectorX(Selector):
-    def __init__(self, context, *args, **kwargs):
-        super().__init__(context, *args, **kwargs)
+    """
+    Todo
+    """
 
     def _compute_ff_params(self, *args):
         return [(0, 1.0), (10, 0.0)]
 
 
 class SelectorX1(Selector):
-    def __init__(self, context, *args, **kwargs):
-        super().__init__(context, *args, **kwargs)
+    """
+    Todo
+    """
 
     def _compute_ff_params(self, *args):
         return [(0, 0.0), (2, 1.0)]
 
 
 class SelectorX2(Selector):
-    def __init__(self, context, *args, **kwargs):
-        super().__init__(context, *args, **kwargs)
+    """
+    Todo
+    """
 
     def _compute_ff_params(self, *args):
         return [(0, 1.0), (2, 0.0)]
 
 
 class SelectorX3(Selector):
-    def __init__(self, context, *args, **kwargs):
-        super().__init__(context, *args, **kwargs)
+    """
+    Todo
+    """
 
     def _compute_ff_params(self, *args):
         return [(-5, 1.0), (5, 0.0)]
