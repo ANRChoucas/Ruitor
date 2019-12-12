@@ -3,9 +3,6 @@ import logging
 import numpy as np
 from rasterio import features
 
-import config
-from fuzzyUtils import FuzzyRaster
-
 from .AggregatorStrategies import FirstAggregator, ParallelAggregator
 
 
@@ -59,29 +56,6 @@ class SpatialisationElement:
 
         return tmp
 
-class t_SpatialisationElementSequence(list):
-        default_aggregator_strategy = ParallelAggregator
-
-    def __init__(self, aggregator_strategy=None, confiance=None, *args, **kwargs):
-
-        if aggregator_strategy:
-            print(aggregator_strategy)
-            self.aggregator_strategy = aggregator_strategy(self, confiance)
-        else:
-            self.aggregator_strategy = self.default_aggregator_strategy(self, confiance)
-
-        logger.debug(
-            "Aggregator strategy : %s" % (self.aggregator_strategy.__class__.__name__,)
-        )
-
-        super().__init__(*args, **kwargs)
-
-    def element_compute(self, element):
-        return element.compute()
-
-    def compute(self):
-        return self.aggregator_strategy.compute()
-
 
 class SpatialisationElementSequence(dict):
 
@@ -93,10 +67,12 @@ class SpatialisationElementSequence(dict):
             print(aggregator_strategy)
             self.aggregator_strategy = aggregator_strategy(self, confiance)
         else:
-            self.aggregator_strategy = self.default_aggregator_strategy(self, confiance)
+            self.aggregator_strategy = self.default_aggregator_strategy(
+                self, confiance)
 
         logger.debug(
-            "Aggregator strategy : %s" % (self.aggregator_strategy.__class__.__name__,)
+            "Aggregator strategy : %s" % (
+                self.aggregator_strategy.__class__.__name__,)
         )
 
         super().__init__(*args, **kwargs)
@@ -113,4 +89,30 @@ class SpatialisationElementSequence(dict):
         """
         Fonction pour l'initialisation du calcul
         """
+        return self.aggregator_strategy.compute()
+
+
+class t_SpatialisationElementSequence(list):
+    default_aggregator_strategy = ParallelAggregator
+
+    def __init__(self, aggregator_strategy=None, confiance=None, *args, **kwargs):
+
+        if aggregator_strategy:
+            print(aggregator_strategy)
+            self.aggregator_strategy = aggregator_strategy(self, confiance)
+        else:
+            self.aggregator_strategy = self.default_aggregator_strategy(
+                self, confiance)
+
+        logger.debug(
+            "Aggregator strategy : %s" % (
+                self.aggregator_strategy.__class__.__name__,)
+        )
+
+        super().__init__(*args, **kwargs)
+
+    def element_compute(self, element):
+        return element.compute()
+
+    def compute(self):
         return self.aggregator_strategy.compute()
