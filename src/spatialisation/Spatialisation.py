@@ -95,60 +95,68 @@ class SpatialisationFactory:
 
     def add_parameters(self, spatial_relation_decomposition, xml_parameters):
         """
+        Todo
         """
 
         spatial_relation = copy.deepcopy(spatial_relation_decomposition)
 
         for prm in self.get_prms(spatial_relation):
+            k_rsa, k_comp = prm[0]
+            prm_copy = prm[1].copy()
+            default_values = spatial_relation[k_rsa][k_comp]['kwargs'].get(
+                prm_copy["name"])
+
             try:
                 uri_correspondances = (
-                    i for i in xml_parameters if i.get("uri") == prm[1]["uri"]
+                    i for i in xml_parameters if i.get("uri") == prm_copy["uri"]
                 )
-            except TypeError:
-                # Message si xml_parameters est vide
-                # i.e. si les paramètres n'ont pas étés renseignés
-                LOGGER.error("Parameters needed")
-                raise TypeError
 
-            try:
                 xml_prm_value, *other_values = uri_correspondances
-            except ValueError:
+
+                # Traitement valeur:
+                try:
+                    casted_value = ast.literal_eval(xml_prm_value['value'])
+                except TypeError:
+                    casted_value = xml_prm_value
+
+                prm_values = {
+                    prm_copy['name']: casted_value,
+                    **prm_copy['kwargs']
+                }
+
+                spatial_relation[k_rsa][k_comp]['kwargs'].update(prm_values)
+
+                try:
+                    xml_parameters.remove(xml_prm_value)
+                except AttributeError:
+                    pass
+
+                if other_values:
+                    # Message si other_values n'est pas nul
+                    # i.e. s'il y a plus d'un paramètre possible
+                    LOGGER.warning(
+                        "Multiple values, I take the first: %s", xml_prm_value["value"])
+
+                if xml_parameters:
+                    # Message d'alerte si paramètres non utilisés
+                    LOGGER.warning("Unused parameters %s", xml_parameters)
+
+            except (TypeError, ValueError) as err:
                 # Message si uri_correspondances est vide
-                # i.e. qu'aucun paramètre ne correspond
-                LOGGER.error("Parameter %s for %s/%s unset",
-                             prm[1]["uri"], *prm[0])
-                raise ValueError
+                # ou si xml_parameters est vide
+                # i.e. qu'aucun paramètre ne correspond ou que
+                # les paramètres n'ont pas étés renseignés
 
-            if other_values:
-                # Message si other_values n'est pas nul
-                # i.e. s'il y a plus d'un paramètre possible
-                LOGGER.warning(
-                    "Multiple values, I take the first: %s", xml_prm_value["value"])
-
-            # Traitement valeur:
-            prm_copy = prm[1].copy()
-            casted_value = ast.literal_eval(xml_prm_value['value'])
-            k_rsa, k_comp = prm[0]
-            default_values = spatial_relation[k_rsa][k_comp]['kwargs']
-
-            if prm_copy['name'] in default_values:
-                # Message si une valeur avec la même clé
-                # est déjà dans les arguments par défaut
-                # i.e. que la valeur par défaut est surchargée
-                LOGGER.warning("Default value for '%s' (%s) is overloaded by (%s) value",
-                               prm_copy['name'], default_values[prm_copy['name']], casted_value)
-
-            prm_values = {
-                prm_copy['name']: casted_value,
-                **prm_copy['kwargs']
-            }
-
-            default_values.update(prm_values)
-            xml_parameters.remove(xml_prm_value)
-
-        if xml_parameters:
-            # Message d'alerte si paramètres non utilisés
-            LOGGER.warning("Unused parameters %s", xml_parameters)
+                if default_values:
+                    uri_correspondances = [default_values]
+                    LOGGER.info(
+                        "Parameter '%s' unset, I take the default value (%s)",
+                        prm_copy["name"],
+                        uri_correspondances[0])
+                else:
+                    LOGGER.critical("Parameter '%s'. No default value",
+                                    prm_copy["name"])
+                    raise err
 
         return spatial_relation
 
