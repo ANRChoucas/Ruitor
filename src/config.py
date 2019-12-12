@@ -7,7 +7,12 @@ data = {
             "filename": "RGEALTI_38_test.vrt",
         },
         {"name": "HR", "precision": 10, "path": "./data/mnt/", "filename": "HR.tif"},
-        {"name": "HR_Veymont", "precision": 10, "path": "./data/mnt/", "filename": "HR_Veymont.tif"},
+        {
+            "name": "HR_Veymont",
+            "precision": 5,
+            "path": "./data/mnt/",
+            "filename": "HR_Veymont.tif",
+        },
         {"name": "MR", "precision": 25, "path": "./data/mnt/", "filename": "MR.tif"},
         {"name": "BR", "precision": 50, "path": "./data/mnt/", "filename": "BR.tif"},
     ]
