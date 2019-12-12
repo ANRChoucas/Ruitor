@@ -1,8 +1,7 @@
 import logging
 
-import numpy as np
-from rasterio import features
 
+from .Rasterizer import GeometryRasterizer
 from .AggregatorStrategies import FirstAggregator, ParallelAggregator
 
 
@@ -14,7 +13,15 @@ class SpatialisationElement:
     Classe spatialisationElement
     """
 
-    def __init__(self, context, geom, metric, selector, *args, **kwargs):
+    default_rasterize_strategy = GeometryRasterizer
+
+    def __init__(self, context, geom, metric, selector, *args, rasterize_strategy=None, **kwargs):
+
+        if rasterize_strategy:
+            self.rasterise_strategy = rasterize_strategy(self)
+        else:
+            self.rasterise_strategy = self.default_rasterize_strategy(self)
+
         self.context = context
         self.geom = geom
         # Initialisation des objets Metric et Selector
@@ -30,20 +37,7 @@ class SpatialisationElement:
         self.selector = selector(self, modifiers, *args, **kwargs)
 
     def rasterise(self):
-
-        zi = np.zeros_like(self.context.raster.values)
-
-        # Possibilité d'utiliser geom.exterior ou geom.centroid
-        features.rasterize(
-            [self.geom],
-            out=zi,
-            transform=self.context.raster.raster_meta["transform"],
-            all_touched=True,
-            dtype=self.context.raster.raster_meta["dtype"],
-        )
-
-        # FuzzyRaster(array=zi, meta=self.context.raster.raster_meta).write("./_outTest/xx.tif")
-        return zi
+        return self.rasterise_strategy.rasterize()
 
     def compute(self, *args, **kwargs):
         # Rasterisation
