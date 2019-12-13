@@ -1,7 +1,6 @@
 import logging
 
 
-from .Rasterizer import GeometryRasterizer
 from .AggregatorStrategies import FirstAggregator, ParallelAggregator
 
 
@@ -13,14 +12,7 @@ class SpatialisationElement:
     Classe spatialisationElement
     """
 
-    default_rasterize_strategy = GeometryRasterizer
-
-    def __init__(self, context, geom, metric, selector, *args, rasterize_strategy=None, **kwargs):
-
-        if rasterize_strategy:
-            self.rasterise_strategy = rasterize_strategy(self)
-        else:
-            self.rasterise_strategy = self.default_rasterize_strategy(self)
+    def __init__(self, context, geom, metric, selector, rasterizer, *args, **kwargs):
 
         self.context = context
         self.geom = geom
@@ -29,6 +21,10 @@ class SpatialisationElement:
         self._init_selector(
             selector, kwargs.get("modifiers"), **kwargs.get("selector_params")
         )
+        self._init_rasterizer(rasterizer, **kwargs.get("rasterizer_params"))
+
+    def _init_rasterizer(self, rasteriser, *args, **kwargs):
+        self.rasteriser = rasteriser(self, *args, **kwargs)
 
     def _init_metric(self, metric, *args, **kwargs):
         self.metric = metric(self, *args, **kwargs)
@@ -37,7 +33,7 @@ class SpatialisationElement:
         self.selector = selector(self, modifiers, *args, **kwargs)
 
     def rasterise(self):
-        return self.rasterise_strategy.rasterize()
+        return self.rasteriser.rasterize()
 
     def compute(self, *args, **kwargs):
         # Rasterisation
@@ -45,9 +41,7 @@ class SpatialisationElement:
         tmp = self.metric.compute(geom_raster)
         # Fuzzyfication
         self.selector.compute(tmp)
-
         logger.debug("Element computed : %s " % self.metric)
-
         return tmp
 
 
@@ -61,12 +55,10 @@ class SpatialisationElementSequence(dict):
             print(aggregator_strategy)
             self.aggregator_strategy = aggregator_strategy(self, confiance)
         else:
-            self.aggregator_strategy = self.default_aggregator_strategy(
-                self, confiance)
+            self.aggregator_strategy = self.default_aggregator_strategy(self, confiance)
 
         logger.debug(
-            "Aggregator strategy : %s" % (
-                self.aggregator_strategy.__class__.__name__,)
+            "Aggregator strategy : %s" % (self.aggregator_strategy.__class__.__name__,)
         )
 
         super().__init__(*args, **kwargs)
@@ -95,12 +87,10 @@ class t_SpatialisationElementSequence(list):
             print(aggregator_strategy)
             self.aggregator_strategy = aggregator_strategy(self, confiance)
         else:
-            self.aggregator_strategy = self.default_aggregator_strategy(
-                self, confiance)
+            self.aggregator_strategy = self.default_aggregator_strategy(self, confiance)
 
         logger.debug(
-            "Aggregator strategy : %s" % (
-                self.aggregator_strategy.__class__.__name__,)
+            "Aggregator strategy : %s" % (self.aggregator_strategy.__class__.__name__,)
         )
 
         super().__init__(*args, **kwargs)

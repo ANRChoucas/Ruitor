@@ -68,10 +68,21 @@ class SROnto(Ontology):
         for rsa in rsas:
             metric = self.get_metric(rsa)
             selector = self.get_selector(rsa)
-            out_dic[rsa.name] = {"metric": metric, "selector": selector}
+            rasterizer = self.get_rasterizer(rsa)
+
+            out_dic[rsa.name] = {
+                "metric": metric,
+                "selector": selector,
+                "rasterizer": rasterizer,
+            }
 
             LOGGER.debug(
-                "%s, metric : %s, selector : %s", rsa, metric["name"], selector["name"])
+                "%s, metric: %s, selector: %s, rasterizer: %s",
+                rsa,
+                metric["name"],
+                selector["name"],
+                rasterizer["name"],
+            )
         return out_dic
 
     def get_atomic_spatial_relation(self, spatial_relation):
@@ -79,8 +90,7 @@ class SROnto(Ontology):
         """
         rsa = spatial_relation.hasRelationSpatialeAtomique
         if not rsa:
-            LOGGER.error("No hasRelationSpatialeAtomique for %s",
-                         spatial_relation)
+            LOGGER.error("No hasRelationSpatialeAtomique for %s", spatial_relation)
             raise ValueError
         return rsa
 
@@ -99,6 +109,12 @@ class SROnto(Ontology):
             pass
 
         return parameters_dic
+
+    def get_rasterizer(self, atomic_spatial_relation):
+        rasterizer = atomic_spatial_relation.hasRasterizer
+        rasterizer_dic = self._pythonAnotationParsing(rasterizer)
+        rasterizer_out_dic = self._add_parameter(rasterizer, rasterizer_dic)
+        return rasterizer_out_dic
 
     def get_metric(self, atomic_spatial_relation):
         """
