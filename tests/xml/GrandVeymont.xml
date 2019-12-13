@@ -52,9 +52,10 @@
       <!-- Je suis à 800m du pas de la ville -->
       <rt:cible></rt:cible>
       <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DistanceQuantitativePlanimetrique">
-        <rt:modifieurs>
-          <!-- <rt:modifieur about="dd">800</rt:modifieur> -->
-        </rt:modifieurs>
+      <rt:modifieurs>
+        <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Value">200</rt:modifieur>
+        <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Not"/>
+      </rt:modifieurs>
       </rt:relationSpatiale>
       <rt:site>
         <gml:featureMember>
@@ -71,12 +72,7 @@
     <rt:indice>
       <!-- Je suis au nord du pas de la ville -->
       <rt:cible></rt:cible>
-      <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe">
-        <rt:modifieurs>
-          <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Not" />
-          <rt:modifieur about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Remapping">((0,0),(0.5,1),(1,0.25))</rt:modifieur>
-        </rt:modifieurs>
-      </rt:relationSpatiale>
+      <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe"></rt:relationSpatiale>
       <rt:site>
         <gml:featureMember>
           <ogr:oro fid="oro.0">
