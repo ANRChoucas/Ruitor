@@ -13,6 +13,7 @@ from rasterio.windows import Window
 import spatialisation.Metric
 import spatialisation.Modificator
 import spatialisation.Selector
+import spatialisation.Rasterizer
 from fuzzyUtils import FuzzyRaster
 
 from .SpatialisationElement import SpatialisationElement, SpatialisationElementSequence
@@ -103,8 +104,9 @@ class SpatialisationFactory:
         for prm in self.get_prms(spatial_relation):
             k_rsa, k_comp = prm[0]
             prm_copy = prm[1].copy()
-            default_values = spatial_relation[k_rsa][k_comp]['kwargs'].get(
-                prm_copy["name"])
+            default_values = spatial_relation[k_rsa][k_comp]["kwargs"].get(
+                prm_copy["name"]
+            )
 
             try:
                 uri_correspondances = (
@@ -115,16 +117,13 @@ class SpatialisationFactory:
 
                 # Traitement valeur:
                 try:
-                    casted_value = ast.literal_eval(xml_prm_value['value'])
+                    casted_value = ast.literal_eval(xml_prm_value["value"])
                 except TypeError:
                     casted_value = xml_prm_value
 
-                prm_values = {
-                    prm_copy['name']: casted_value,
-                    **prm_copy['kwargs']
-                }
+                prm_values = {prm_copy["name"]: casted_value, **prm_copy["kwargs"]}
 
-                spatial_relation[k_rsa][k_comp]['kwargs'].update(prm_values)
+                spatial_relation[k_rsa][k_comp]["kwargs"].update(prm_values)
 
                 try:
                     xml_parameters.remove(xml_prm_value)
@@ -135,7 +134,8 @@ class SpatialisationFactory:
                     # Message si other_values n'est pas nul
                     # i.e. s'il y a plus d'un paramètre possible
                     LOGGER.warning(
-                        "Multiple values, I take the first: %s", xml_prm_value["value"])
+                        "Multiple values, I take the first: %s", xml_prm_value["value"]
+                    )
 
                 if xml_parameters:
                     # Message d'alerte si paramètres non utilisés
@@ -152,10 +152,12 @@ class SpatialisationFactory:
                     LOGGER.info(
                         "Parameter '%s' unset, I take the default value (%s)",
                         prm_copy["name"],
-                        uri_correspondances[0])
+                        uri_correspondances[0],
+                    )
                 else:
-                    LOGGER.critical("Parameter '%s'. No default value",
-                                    prm_copy["name"])
+                    LOGGER.critical(
+                        "Parameter '%s'. No default value", prm_copy["name"]
+                    )
                     raise err
 
         return spatial_relation
@@ -208,23 +210,8 @@ class SpatialisationFactory:
         # décomposition relations spatiales
         spatialRelUri = indice["relationSpatiale"]["uri"]
         rsa_parameters = extractModList.get("Parameters")
-        spatialRelDec = self.make_spatial_relation(
-            spatialRelUri, rsa_parameters)
+        spatialRelDec = self.make_spatial_relation(spatialRelUri, rsa_parameters)
         spatialisationParmsDic["rsa"] = spatialRelDec
-
-        # Ajout des modifieurs
-        # modifieurs = []
-        # try:
-        #     modifieurs = indice["relationSpatiale"]["modifieurs"]
-        #     for modif in modifieurs:
-        #         import pdb; pdb.set_trace()
-        #         modUri = modif['uri']
-        #         mod = self.sro.get_from_iri(modUri)
-        #         modDic = self.sro.get_modifier(mod)
-        #         if not modDic in modifieurs:
-        #             modifieurs.append(modDic)
-        # except KeyError:
-        #     pass
 
         for k, v in spatialisationParmsDic["rsa"].items():
             v["selector"].update({"modifieurs": []})
@@ -294,8 +281,7 @@ class Spatialisation:
         self.raster = FuzzyRaster(raster=raster, window=zir)
 
         rsa = spatialisationParms["rsa"]
-        self.spaElms = self.SpatialisationElementSequence_init(
-            rsa, site, confiance)
+        self.spaElms = self.SpatialisationElementSequence_init(rsa, site, confiance)
 
         modifieurs = spatialisationParms.get("global_modifiers")
         self.modifiers = self.modifiers_init(modifieurs)
@@ -329,16 +315,19 @@ class Spatialisation:
             selector = getattr(
                 sys.modules["spatialisation.Selector"], rsaDec["selector"]["name"]
             )
+            rasterizer = getattr(
+                sys.modules["spatialisation.Rasterizer"], rsaDec["rasterizer"]["name"]
+            )
 
             modifieurs = []
             for mod in rsaDec["selector"]["modifieurs"]:
-                modObj = getattr(
-                    sys.modules["spatialisation.Modificator"], mod["name"])
+                modObj = getattr(sys.modules["spatialisation.Modificator"], mod["name"])
                 modifieurs.append(modObj)
 
             prms = {
                 "metric_params": rsaDec["metric"]["kwargs"],
                 "selector_params": rsaDec["selector"]["kwargs"],
+                "rasterizer_params": rsaDec["rasterizer"]["kwargs"],
                 "modifiers": modifieurs,
             }
 
@@ -346,7 +335,7 @@ class Spatialisation:
                 prms["metric_params"]["values_raster"] = self.raster
 
             spaSeq[(gCounter, 0, rsaName)] = SpatialisationElement(
-                self, geometry, metric, selector, **prms
+                self, geometry, metric, selector, rasterizer, **prms
             )
 
         return spaSeq
