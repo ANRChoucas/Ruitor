@@ -5,6 +5,7 @@ fichier main.py
 import logging
 import logging.config
 import os
+import time
 from parser import Parser
 from functools import reduce
 import rasterio
@@ -90,9 +91,11 @@ if __name__ == "__main__":
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
     test = list(factor.make_Spatialisation())
 
+    tc1 = time.time()
     logger.info("Computation")
-    fuzz = reduce(lambda x, y: x & y, (i.compute() for i in test[:-2]))
+    fuzz = test[2].compute()#reduce(lambda x, y: x & y, (i.compute() for i in test))
     logger.info("Computation : Done")
+    tc2 = time.time()
 
     # # Test convolution
     # from scipy import ndimage
@@ -103,7 +106,5 @@ if __name__ == "__main__":
     # Export
     fuzz.write("_outTest/spatialisationResult.tif")
 
-    # g = rdflib.Graph()
-    # result = g.parse("data/ontologies/relations_spatiales.owl")
-    # aa = Ontology.Ontology(g)
-    logger.info("Done")
+    logger.info("Done in %s seconds", tc2-tc1)
+    os.system('notify-send Ruitor done')
