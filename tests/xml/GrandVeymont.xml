@@ -110,7 +110,7 @@
       </rt:site>
     </rt:indice>
     <rt:indice>
-      <!-- Je suis pas dans une forêt (6)-->
+      <!-- Je suis pas dans une forêt (4)-->
       <rt:cible></rt:cible>
       <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique">
         <rt:modifieurs>
@@ -3269,7 +3269,7 @@
       </rt:site>
     </rt:indice>
     <rt:indice>
-      <!-- Je suis sur une petite prairie(6)-->
+      <!-- Je suis sur une petite prairie(5)-->
       <rt:cible></rt:cible>
       <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DansPlanimetrique"></rt:relationSpatiale>
       <rt:site>
