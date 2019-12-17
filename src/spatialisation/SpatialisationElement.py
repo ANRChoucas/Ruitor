@@ -12,7 +12,7 @@ class SpatialisationElement:
     Classe spatialisationElement
     """
 
-    def __init__(self, context, geom, metric, selector, rasterizer, *args, **kwargs):
+    def __init__(self, context, geom, metric, selector, rasterizer, modifier, *args, **kwargs):
 
         self.context = context
         self.geom = geom
@@ -23,6 +23,11 @@ class SpatialisationElement:
         )
         self._init_rasterizer(rasterizer, **kwargs.get("rasterizer_params"))
 
+        if modifier:
+            self._init_modifier(modifier)
+        else:
+            self.modifier = None
+
     def _init_rasterizer(self, rasteriser, *args, **kwargs):
         self.rasteriser = rasteriser(self, *args, **kwargs)
 
@@ -32,17 +37,24 @@ class SpatialisationElement:
     def _init_selector(self, selector, modifiers, *args, **kwargs):
         self.selector = selector(self, modifiers, *args, **kwargs)
 
+    def _init_modifier(self, modifier, *args, **kwargs):
+        self.modifier = modifier(self)
+
     def rasterise(self):
         return self.rasteriser.rasterize()
 
     def compute(self, *args, **kwargs):
         # Rasterisation
         geom_raster = self.rasterise()
-        tmp = self.metric.compute(geom_raster)
+        tmp_res = self.metric.compute(geom_raster)
         # Fuzzyfication
-        self.selector.compute(tmp)
+        self.selector.compute(tmp_res)
+
+        if self.modifier:
+            tmp_res = self.modifier.modifing(tmp_res)
+
         logger.debug("Element computed : %s " % self.metric)
-        return tmp
+        return tmp_res
 
 
 class SpatialisationElementSequence(dict):
@@ -79,7 +91,7 @@ class SpatialisationElementSequence(dict):
 
 
 class t_SpatialisationElementSequence(list):
-    default_aggregator_strategy = ParallelAggregator
+    default_aggregator_strategy = FirstAggregator
 
     def __init__(self, aggregator_strategy=None, confiance=None, *args, **kwargs):
 

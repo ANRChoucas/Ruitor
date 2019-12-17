@@ -319,6 +319,14 @@ class Spatialisation:
                 sys.modules["spatialisation.Rasterizer"], rsaDec["rasterizer"]["name"]
             )
 
+            try:
+                modifier = getattr(
+                    sys.modules["spatialisation.Modificator"],
+                    rsaDec["modifieur"]["name"],
+                )
+            except KeyError:
+                modifier = []
+
             modifieurs = []
             for mod in rsaDec["selector"]["modifieurs"]:
                 modObj = getattr(sys.modules["spatialisation.Modificator"], mod["name"])
@@ -335,7 +343,7 @@ class Spatialisation:
                 prms["metric_params"]["values_raster"] = self.raster
 
             spaSeq[(gCounter, 0, rsaName)] = SpatialisationElement(
-                self, geometry, metric, selector, rasterizer, **prms
+                self, geometry, metric, selector, rasterizer, modifier, **prms
             )
 
         return spaSeq

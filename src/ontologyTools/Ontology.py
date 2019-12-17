@@ -58,34 +58,49 @@ class SROnto(Ontology):
 
         LOGGER.info("%s : extraction", spatial_relation)
 
-        out_dic = {}
-
         try:
-            rsas = self.get_atomic_spatial_relation(spatial_relation)
+            rsas = self.get_atomic_spatial_relations(spatial_relation)
         except ValueError:
             rsas = (spatial_relation,)
 
-        for rsa in rsas:
-            metric = self.get_metric(rsa)
-            selector = self.get_selector(rsa)
-            rasterizer = self.get_rasterizer(rsa)
-
-            out_dic[rsa.name] = {
-                "metric": metric,
-                "selector": selector,
-                "rasterizer": rasterizer,
-            }
-
-            LOGGER.debug(
-                "%s, metric: %s, selector: %s, rasterizer: %s",
-                rsa,
-                metric["name"],
-                selector["name"],
-                rasterizer["name"],
-            )
+        rsa_gen = (self.treat_rsa(rsa) for rsa in rsas)
+        out_dic = {k: v for k, v in rsa_gen}
         return out_dic
 
-    def get_atomic_spatial_relation(self, spatial_relation):
+    def treat_rsa(self, spatial_atomic_relation):
+
+        metric = self.get_metric(spatial_atomic_relation)
+        selector = self.get_selector(spatial_atomic_relation)
+        rasterizer = self.get_rasterizer(spatial_atomic_relation)
+        try:
+            modifier = self.get_modifier(spatial_atomic_relation.hasModifieur)
+        except AttributeError:
+            modifier = None
+
+        out_dic = {
+            "metric": metric,
+            "selector": selector,
+            "rasterizer": rasterizer,
+        }
+
+        if modifier:
+            out_dic["modifieur"] = modifier
+            name = modifier.get("name")
+        else:
+            name = "No modifier"
+
+        LOGGER.debug(
+            "%s, metric: %s, selector: %s, rasterizer: %s, modifiers: %s",
+            spatial_atomic_relation,
+            metric["name"],
+            selector["name"],
+            rasterizer["name"],
+            name,
+        )
+
+        return (spatial_atomic_relation.name, out_dic)
+
+    def get_atomic_spatial_relations(self, spatial_relation):
         """
         """
         rsa = spatial_relation.hasRelationSpatialeAtomique
@@ -97,8 +112,10 @@ class SROnto(Ontology):
     def get_modifier(self, modifier):
         """
         """
-        return self._pythonAnotationParsing(modifier)
-
+        modifier_dic = self._pythonAnotationParsing(modifier)
+        modifier_out_dic = self._add_parameter(modifier, modifier_dic)
+        return modifier_out_dic
+   
     def _add_parameter(self, obj, dic):
         parameters_dic = {**dic}
 
