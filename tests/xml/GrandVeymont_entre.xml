@@ -12,9 +12,9 @@
         </gml:Envelope>
     </rt:zir>
     <rt:indices>
-        <rt:indice>
+     <!--   <rt:indice>
             <rt:cible></rt:cible>
-            <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuNordDe"></rt:relationSpatiale>
+            <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#a"></rt:relationSpatiale>
             <rt:site>
                 <gml:featureMember>
                     <ogr:oro fid="oro.0">
@@ -29,7 +29,7 @@
         </rt:indice>
         <rt:indice>
             <rt:cible></rt:cible>
-            <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AuSudDe"></rt:relationSpatiale>
+            <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#b"></rt:relationSpatiale>
             <rt:site>
                 <gml:featureMember>
                     <ogr:oro fid="oro.0">
@@ -41,37 +41,7 @@
                     </ogr:oro>
                 </gml:featureMember>
             </rt:site>
-        </rt:indice>
-        <rt:indice>
-            <rt:cible></rt:cible>
-            <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#AEstDe"></rt:relationSpatiale>
-            <rt:site>
-                <gml:featureMember>
-                    <ogr:oro fid="oro.0">
-                        <ogr:geometryProperty>
-                            <gml:Point srsName="EPSG:2154">
-                                <gml:coordinates>901066,6423510.70</gml:coordinates>
-                            </gml:Point>
-                        </ogr:geometryProperty>
-                    </ogr:oro>
-                </gml:featureMember>
-            </rt:site>
-        </rt:indice>
-        <rt:indice>
-            <rt:cible></rt:cible>
-            <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#e"></rt:relationSpatiale>
-            <rt:site>
-                <gml:featureMember>
-                    <ogr:oro fid="oro.0">
-                        <ogr:geometryProperty>
-                            <gml:Point srsName="EPSG:2154">
-                                <gml:coordinates>899541.6,6422136.1</gml:coordinates>
-                            </gml:Point>
-                        </ogr:geometryProperty>
-                    </ogr:oro>
-                </gml:featureMember>
-            </rt:site>
-        </rt:indice>
+        </rt:indice> -->
         <rt:indice>
             <rt:cible></rt:cible>
             <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#c"></rt:relationSpatiale>
@@ -95,7 +65,7 @@
                     <ogr:oro fid="oro.0">
                         <ogr:geometryProperty>
                             <gml:Point srsName="EPSG:2154">
-                                <gml:coordinates>901066,6423510.70</gml:coordinates>
+                                <gml:coordinates>899260.6,6424315.5</gml:coordinates>
                             </gml:Point>
                         </ogr:geometryProperty>
                     </ogr:oro>

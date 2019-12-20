@@ -81,30 +81,45 @@ if __name__ == "__main__":
     # Chargement ontologie
     sro = load_ontology(config.ontology, "SRO")
 
-    # Parsing requête
-    parser = Parser("tests/xml/GrandVeymont.xml")
-    spatialisationParms = parser.values
-
     # Import données
     mnt = load_mnt(config.data, name="HR_Veymont")
 
+    # Parsing requête
+    parser = Parser("tests/xml/GrandVeymont.xml")
+    spatialisationParms = parser.values
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
     test = list(factor.make_Spatialisation())
 
+    parser2 = Parser("tests/xml/GrandVeymont_entre.xml")
+    spatialisationParms2 = parser2.values
+    factor2 = SpatialisationFactory(spatialisationParms2, mnt, sro)
+    test2 = list(factor2.make_Spatialisation())
+
+    parser3 = Parser("tests/xml/GrandVeymont_auDela.xml")
+    spatialisationParms3 = parser3.values
+    factor3 = SpatialisationFactory(spatialisationParms3, mnt, sro)
+    test3 = list(factor3.make_Spatialisation())
+
     tc1 = time.time()
     logger.info("Computation")
-    fuzz = test[2].compute()#reduce(lambda x, y: x & y, (i.compute() for i in test))
+
+    #fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test[:-2]))
+    fuzz2 = reduce(lambda x, y: x & y, (i.compute() for i in test2))
+    fuzz3 = reduce(lambda x, y: x & y, (i.compute() for i in test3))
+
+    fuzz = fuzz3#fuzz1 & fuzz2 & fuzz3 
+
     logger.info("Computation : Done")
     tc2 = time.time()
 
-    # # Test convolution
+    # Test convolution
     # from scipy import ndimage
     # import numpy as np
-    # k = np.array([[[1,1,1],[1,1,1],[1,1,1]]])
+    # k = np.array([[[0,1,0],[0,1,0],[0,1,0]]])
     # fuzz.values = ndimage.convolve(fuzz.values, k)
 
     # Export
     fuzz.write("_outTest/spatialisationResult.tif")
 
-    logger.info("Done in %s seconds", tc2-tc1)
-    os.system('notify-send Ruitor done')
+    logger.info("Done in %s seconds", tc2 - tc1)
+    os.system("notify-send Ruitor done")
