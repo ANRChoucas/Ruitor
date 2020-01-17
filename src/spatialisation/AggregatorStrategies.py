@@ -66,7 +66,9 @@ class ParallelAggregator(AggregatorStrategy):
         tmp = {}
         # calc
         for i in input:
-            tmp[i] = self.context[i].compute()
+            v = self.context[i].compute()
+            v.write("./_outTest/%s-%s-%s.tif" % i)
+            tmp[i] = v
 
         logger.debug("agg_spa_rel : Begin")
         keysList = list(tmp.keys())
