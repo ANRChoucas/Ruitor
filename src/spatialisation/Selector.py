@@ -60,7 +60,7 @@ class InfVal(CompareVal):
     """
 
     def _compute_ff_params(self, *args):
-        bsup = self.value + 50
+        bsup = self.value + 25
         return [(self.value, 1.0), (bsup, 0.0)]
 
 
@@ -70,7 +70,7 @@ class SupVal(CompareVal):
     """
 
     def _compute_ff_params(self, *args):
-        binf = self.value - 50
+        binf = self.value - 25
         return [(binf, 0.0), (self.value, 1.0)]
 
 
@@ -79,9 +79,14 @@ class EqVal(CompareVal):
     Todo
     """
 
-    def _compute_ff_params(self, *args):
-        bsup = self.value + 60
-        binf = self.value - 60
+    def __init__(self, *args, **kwargs):
+        self.step = kwargs.pop("step", 10)
+        super().__init__(*args, **kwargs)
+
+
+    def _compute_ff_params(self, *args, **kwargs):   
+        bsup = self.value + self.step
+        binf = self.value - self.step
         return [(binf, 0.0), (self.value, 1.0), (bsup, 0.0)]
 
 
@@ -91,7 +96,7 @@ class SelectorX(Selector):
     """
 
     def _compute_ff_params(self, *args):
-        return [(0, 1.0), (10, 0.0)]
+        return [(0, 1.0), (4, 0.0)]
 
 
 class SelectorX1(Selector):
