@@ -7,6 +7,7 @@ from fuzzyUtils import FuzzyRaster
 import numpy as np
 import scipy.ndimage
 import scipy.spatial
+import scipy.interpolate
 
 
 class Metric:
@@ -236,3 +237,28 @@ class DeltaMinVal(DeltaVal):
         val = self.values_raster.values[values == 1.0]
         refVal = np.min(val)
         return refVal
+
+
+class DeltaNearestVal(DeltaVal):
+    """
+    Classe DeltaNearestVal
+    """
+
+    def __init__(self, context, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
+
+    def _compute_refValue(self, values):
+
+        shape = values.shape
+        notnullcells = np.argwhere(values != 0)
+        z, y, x = np.indices(shape)
+
+        notnullcells_val = self.values_raster.values.take(
+            np.ravel_multi_index(notnullcells.T, shape)
+        )
+        computeraster = scipy.interpolate.griddata(
+            notnullcells, notnullcells_val, (z, y, x), method="nearest"
+        )
+
+        return computeraster
+
