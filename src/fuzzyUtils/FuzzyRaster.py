@@ -14,6 +14,9 @@ import matplotlib.pyplot as pyplot
 import rasterio
 from rasterio.windows import get_data_window
 
+from shapely import affinity
+from shapely.geometry import LineString
+
 
 class FuzzyRaster:
     """Classe FuzzyRaster
@@ -143,6 +146,26 @@ class FuzzyRaster:
 
     def plot(self):
         pyplot.matshow(self.values, cmap="gray")
+
+    def contour(self, by=0.1):
+        cs = pyplot.contour(self.values[0], np.arange(0, 1, by))
+
+        a, b, xoff, d, e, yoff = tuple(self.raster_meta["transform"])[:-3]
+        affine = a, b, d, e, xoff, yoff
+
+        lines = []
+
+        for col in cs.collections:
+            try:
+                p = col.get_paths()[0]
+            except IndexError:
+                break
+            v = p.vertices
+            x, y = v[:, 0], v[:, 1]
+            line = LineString([(j[0], j[1]) for j in zip(x, y)])
+            line = affinity.affine_transform(line, affine)
+            lines.append(line)
+        return lines
 
     def summarize(self):
         rastmin = self.values.min()

@@ -9,6 +9,7 @@ import time
 from parser import Parser
 from functools import reduce
 import rasterio
+import csv
 
 import config
 from ontologyTools import SROnto, ROOnto
@@ -82,7 +83,7 @@ if __name__ == "__main__":
     sro = load_ontology(config.ontology, "SRO")
 
     # Import données
-    mnt = load_mnt(config.data, name="MR")
+    mnt = load_mnt(config.data, name="BR")
 
     # Parsing requête
     parser = Parser("tests/xml/FilRouge.xml")
@@ -103,12 +104,14 @@ if __name__ == "__main__":
     tc1 = time.time()
     logger.info("Computation")
 
-    #fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test[:-2]))
-    #fuzz2 = reduce(lambda x, y: x & y, (i.compute() for i in test2))
-    #fuzz3 = reduce(lambda x, y: x & y, (i.compute() for i in test3))
+    # fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test[:-2]))
+    # fuzz2 = reduce(lambda x, y: x & y, (i.compute() for i in test2))
+    # fuzz3 = reduce(lambda x, y: x & y, (i.compute() for i in test3))
 
-    #fuzz = fuzz3#fuzz1 & fuzz2 & fuzz3 
+    # fuzz = fuzz3#fuzz1 & fuzz2 & fuzz3
     fuzz = reduce(lambda x, y: x & y, (i.compute() for i in test))
+
+    
 
     logger.info("Computation : Done")
     tc2 = time.time()
@@ -121,6 +124,14 @@ if __name__ == "__main__":
 
     # Export
     fuzz.write("_outTest/spatialisationResult.tif")
+
+    if False: 
+        fuzzCnt = fuzz.contour()
+        with open("_outTest/spatialisationResultIso.csv", "w") as csvfile:
+            fieldnames = ["isoline", "value"]
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            for row in fuzzCnt:
+                writer.writerow({"isoline": row.wkt, "value": 0})
 
     logger.info("Done in %s seconds", tc2 - tc1)
     os.system("notify-send Ruitor done")
