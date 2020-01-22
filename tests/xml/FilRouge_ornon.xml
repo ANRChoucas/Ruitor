@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rt:hypothèse
+        xmlns:rt="urn:ruitorXSD"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:gml="http://www.opengis.net/gml/3.2"
+        xmlns:ogr="http://ogr.maptools.org/"
+        xsi:schemaLocation="urn:ruitorXSD ../../src/parser/schema/tt.xsd http://ogr.maptools.org/ ../../src/parser/schema/sel_bati.xsd">
+    <rt:zir>
+        <gml:Envelope>
+            <gml:lowerCorner>954100 6456555</gml:lowerCorner>
+            <gml:upperCorner>925925 6431000 </gml:upperCorner>
+        </gml:Envelope>
+    </rt:zir>
+    <rt:indices>
+        <rt:indice>
+            <rt:cible></rt:cible>
+            <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ornon"></rt:relationSpatiale>
+            <rt:site>
+                <gml:featureMember>
+                    <ogr:oro fid="oro.0">
+                        <ogr:geometryProperty>
+                            <gml:Point srsName="EPSG:2154">
+                                <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                            </gml:Point>
+                        </ogr:geometryProperty>
+                    </ogr:oro>
+                </gml:featureMember>
+            </rt:site>
+        </rt:indice>
+    </rt:indices>
+</rt:hypothèse>

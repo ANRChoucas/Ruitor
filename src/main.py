@@ -10,6 +10,7 @@ from parser import Parser
 from functools import reduce
 import rasterio
 import csv
+import glob
 
 import config
 from ontologyTools import SROnto, ROOnto
@@ -91,6 +92,12 @@ if __name__ == "__main__":
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
     test = list(factor.make_Spatialisation())
 
+    # Magouille "dans la direction d'une station de ski"
+    # import pdb; pdb.set_trace()
+    station_parser = [Parser(i) for i in glob.glob("tests/xml/FilRouge_*.xml")]
+    station_factory = [SpatialisationFactory(i.values, mnt, sro) for i in station_parser]
+    station_spatialisation = [j for i in station_factory for j in i.make_Spatialisation()]
+
     # parser2 = Parser("tests/xml/GrandVeymont_entre.xml")
     # spatialisationParms2 = parser2.values
     # factor2 = SpatialisationFactory(spatialisationParms2, mnt, sro)
@@ -109,7 +116,9 @@ if __name__ == "__main__":
     # fuzz3 = reduce(lambda x, y: x & y, (i.compute() for i in test3))
 
     # fuzz = fuzz3#fuzz1 & fuzz2 & fuzz3
-    fuzz = test[-1].compute() #reduce(lambda x, y: x & y, (i.compute() for i in test[-1]))
+    fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test))
+    fuzz2 = reduce(lambda x, y: x | y, (i.compute() for i in station_spatialisation))
+    fuzz = fuzz1 & fuzz2
 
     
 
@@ -125,8 +134,7 @@ if __name__ == "__main__":
     # Export
     fuzz.write("_outTest/spatialisationResult.tif")
 
-    if True:
-        #import pdb; pdb.set_trace() 
+    if False:
         fuzzCnt = fuzz.contour()
         with open("_outTest/spatialisationResultIso.csv", "w") as csvfile:
             fieldnames = ["isoline", "value"]

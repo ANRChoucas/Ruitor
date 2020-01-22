@@ -2114,6 +2114,13 @@
 	<rdfs:seeAlso rdf:resource="gums:BelowProjectionExternal"/>
 </rdf:Description>
 <!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Tests"/>
+</rdf:Description>
+<!--  -->
 <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#SupVal -->
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SupVal">
@@ -2220,11 +2227,11 @@
 	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Eq_0"/>
 </rdf:Description>
 <!--  -->
-<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#altEq -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#alpeHuez -->
 
-<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#altEq">
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#alpeHuez">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
 	<rdfs:subClassOf rdf:nodeID="genid110"/>
 </rdf:Description>
 
@@ -2232,18 +2239,92 @@
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DeltaMeanVal"/>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt9"/>
 </rdf:Description>
 
-<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#altEq">
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#alpeHuez">
 	<rdfs:subClassOf rdf:nodeID="genid111"/>
 </rdf:Description>
 
 <rdf:Description rdf:nodeID="genid111">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#alpeHuez">
+	<rdfs:subClassOf rdf:nodeID="genid112"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid112">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#altEq -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#altEq">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
+	<rdfs:subClassOf rdf:nodeID="genid113"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid113">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#DeltaMeanVal"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#altEq">
+	<rdfs:subClassOf rdf:nodeID="genid114"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid114">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
 	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Eq_0"/>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#auris -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#auris">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
+	<rdfs:subClassOf rdf:nodeID="genid115"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid115">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt17"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#auris">
+	<rdfs:subClassOf rdf:nodeID="genid116"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid116">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#auris">
+	<rdfs:subClassOf rdf:nodeID="genid117"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid117">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
 </rdf:Description>
 <!--  -->
 <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#b -->
@@ -2251,10 +2332,10 @@
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#b">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Tests"/>
-	<rdfs:subClassOf rdf:nodeID="genid112"/>
+	<rdfs:subClassOf rdf:nodeID="genid118"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid112">
+<rdf:Description rdf:nodeID="genid118">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2262,10 +2343,10 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#b">
-	<rdfs:subClassOf rdf:nodeID="genid113"/>
+	<rdfs:subClassOf rdf:nodeID="genid119"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid113">
+<rdf:Description rdf:nodeID="genid119">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2273,10 +2354,10 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#b">
-	<rdfs:subClassOf rdf:nodeID="genid114"/>
+	<rdfs:subClassOf rdf:nodeID="genid120"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid114">
+<rdf:Description rdf:nodeID="genid120">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2288,10 +2369,10 @@
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#c">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Tests"/>
-	<rdfs:subClassOf rdf:nodeID="genid115"/>
+	<rdfs:subClassOf rdf:nodeID="genid121"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid115">
+<rdf:Description rdf:nodeID="genid121">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2299,10 +2380,10 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#c">
-	<rdfs:subClassOf rdf:nodeID="genid116"/>
+	<rdfs:subClassOf rdf:nodeID="genid122"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid116">
+<rdf:Description rdf:nodeID="genid122">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2310,14 +2391,51 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#c">
-	<rdfs:subClassOf rdf:nodeID="genid117"/>
+	<rdfs:subClassOf rdf:nodeID="genid123"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid117">
+<rdf:Description rdf:nodeID="genid123">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
 	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Eq_0"/>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#chamrousse -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#chamrousse">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
+	<rdfs:subClassOf rdf:nodeID="genid124"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid124">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt13"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#chamrousse">
+	<rdfs:subClassOf rdf:nodeID="genid125"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid125">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#chamrousse">
+	<rdfs:subClassOf rdf:nodeID="genid126"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid126">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
 </rdf:Description>
 <!--  -->
 <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#d -->
@@ -2325,10 +2443,10 @@
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#d">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Tests"/>
-	<rdfs:subClassOf rdf:nodeID="genid118"/>
+	<rdfs:subClassOf rdf:nodeID="genid127"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid118">
+<rdf:Description rdf:nodeID="genid127">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2336,10 +2454,10 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#d">
-	<rdfs:subClassOf rdf:nodeID="genid119"/>
+	<rdfs:subClassOf rdf:nodeID="genid128"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid119">
+<rdf:Description rdf:nodeID="genid128">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2347,10 +2465,10 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#d">
-	<rdfs:subClassOf rdf:nodeID="genid120"/>
+	<rdfs:subClassOf rdf:nodeID="genid129"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid120">
+<rdf:Description rdf:nodeID="genid129">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2362,10 +2480,10 @@
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#e">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Tests"/>
-	<rdfs:subClassOf rdf:nodeID="genid121"/>
+	<rdfs:subClassOf rdf:nodeID="genid130"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid121">
+<rdf:Description rdf:nodeID="genid130">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2373,10 +2491,10 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#e">
-	<rdfs:subClassOf rdf:nodeID="genid122"/>
+	<rdfs:subClassOf rdf:nodeID="genid131"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid122">
+<rdf:Description rdf:nodeID="genid131">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2384,14 +2502,162 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#e">
-	<rdfs:subClassOf rdf:nodeID="genid123"/>
+	<rdfs:subClassOf rdf:nodeID="genid132"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid123">
+<rdf:Description rdf:nodeID="genid132">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
 	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#SelecteurX2"/>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#grandserre -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#grandserre">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
+	<rdfs:subClassOf rdf:nodeID="genid133"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid133">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt14"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#grandserre">
+	<rdfs:subClassOf rdf:nodeID="genid134"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid134">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#grandserre">
+	<rdfs:subClassOf rdf:nodeID="genid135"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid135">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ornon -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ornon">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
+	<rdfs:subClassOf rdf:nodeID="genid136"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid136">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt15"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ornon">
+	<rdfs:subClassOf rdf:nodeID="genid137"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid137">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ornon">
+	<rdfs:subClassOf rdf:nodeID="genid138"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid138">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#oz -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#oz">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
+	<rdfs:subClassOf rdf:nodeID="genid139"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid139">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt10"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#oz">
+	<rdfs:subClassOf rdf:nodeID="genid140"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid140">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#oz">
+	<rdfs:subClassOf rdf:nodeID="genid141"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid141">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#reculas -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#reculas">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
+	<rdfs:subClassOf rdf:nodeID="genid142"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid142">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt12"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#reculas">
+	<rdfs:subClassOf rdf:nodeID="genid143"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid143">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#reculas">
+	<rdfs:subClassOf rdf:nodeID="genid144"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid144">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
 </rdf:Description>
 <!--  -->
 <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#temp -->
@@ -2405,10 +2671,10 @@
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#test_Frontière">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Tests"/>
-	<rdfs:subClassOf rdf:nodeID="genid124"/>
+	<rdfs:subClassOf rdf:nodeID="genid145"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid124">
+<rdf:Description rdf:nodeID="genid145">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRelationSpatialeAtomique"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2416,10 +2682,10 @@
 </rdf:Description>
 
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#test_Frontière">
-	<rdfs:subClassOf rdf:nodeID="genid125"/>
+	<rdfs:subClassOf rdf:nodeID="genid146"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid125">
+<rdf:Description rdf:nodeID="genid146">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRelationSpatialeAtomique"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2438,10 +2704,10 @@
 <rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#test_sur">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Tests"/>
-	<rdfs:subClassOf rdf:nodeID="genid126"/>
+	<rdfs:subClassOf rdf:nodeID="genid147"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid126">
+<rdf:Description rdf:nodeID="genid147">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
 	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRelationSpatialeAtomique"/>
 	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
@@ -2455,6 +2721,78 @@
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
 	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
 	<Ornitho:pythonParameter>{'angle':0}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt10 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt10">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':19}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt11 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt11">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':16.5}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt12 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt12">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':358.75}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt13 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt13">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':302}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt14 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt14">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':254}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt15 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt15">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':228}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt16 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt16">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':119}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt17 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt17">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>DansLaDirectionDe</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':81}</Ornitho:pythonParameter>
 </rdf:Description>
 <!--  -->
 <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt2 -->
@@ -2518,6 +2856,89 @@
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
 	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
 	<Ornitho:pythonParameter>{'angle': 90}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt9 -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt9">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#MesureAngulaire"/>
+	<Ornitho:pythonName>EcartAngulaire</Ornitho:pythonName>
+	<Ornitho:pythonParameter>{'angle':30}</Ornitho:pythonParameter>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#vaujany -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#vaujany">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
+	<rdfs:subClassOf rdf:nodeID="genid148"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid148">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt11"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#vaujany">
+	<rdfs:subClassOf rdf:nodeID="genid149"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid149">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#vaujany">
+	<rdfs:subClassOf rdf:nodeID="genid150"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid150">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
+</rdf:Description>
+<!--  -->
+<!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#2alpes -->
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#2alpes">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Stations"/>
+	<rdfs:subClassOf rdf:nodeID="genid151"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid151">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasMetric"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#ttt16"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#2alpes">
+	<rdfs:subClassOf rdf:nodeID="genid152"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid152">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasRasterizer"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Geometrie"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#2alpes">
+	<rdfs:subClassOf rdf:nodeID="genid153"/>
+</rdf:Description>
+
+<rdf:Description rdf:nodeID="genid153">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+	<owl:onProperty rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#hasSelector"/>
+	<owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+	<owl:onClass rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqAngle_0"/>
 </rdf:Description>
 <!--  -->
 <!--  -->
@@ -3203,84 +3624,84 @@
 <!--  -->
 <!--  -->
 
-<rdf:Description rdf:nodeID="genid127">
+<rdf:Description rdf:nodeID="genid154">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-	<owl:members rdf:nodeID="genid132"/>
+	<owl:members rdf:nodeID="genid159"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid132">
+<rdf:Description rdf:nodeID="genid159">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Element_de_localisation"/>
-	<rdf:rest rdf:nodeID="genid131"/>
+	<rdf:rest rdf:nodeID="genid158"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid131">
+<rdf:Description rdf:nodeID="genid158">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Mot"/>
-	<rdf:rest rdf:nodeID="genid130"/>
+	<rdf:rest rdf:nodeID="genid157"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid130">
+<rdf:Description rdf:nodeID="genid157">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_Python"/>
-	<rdf:rest rdf:nodeID="genid129"/>
+	<rdf:rest rdf:nodeID="genid156"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid129">
+<rdf:Description rdf:nodeID="genid156">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_géographique"/>
-	<rdf:rest rdf:nodeID="genid128"/>
+	<rdf:rest rdf:nodeID="genid155"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid128">
+<rdf:Description rdf:nodeID="genid155">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
 	<rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
 </rdf:Description>
 <!--  -->
 
-<rdf:Description rdf:nodeID="genid133">
+<rdf:Description rdf:nodeID="genid160">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-	<owl:members rdf:nodeID="genid136"/>
+	<owl:members rdf:nodeID="genid163"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid136">
+<rdf:Description rdf:nodeID="genid163">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Mot"/>
-	<rdf:rest rdf:nodeID="genid135"/>
+	<rdf:rest rdf:nodeID="genid162"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid135">
+<rdf:Description rdf:nodeID="genid162">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_géographique"/>
-	<rdf:rest rdf:nodeID="genid134"/>
+	<rdf:rest rdf:nodeID="genid161"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid134">
+<rdf:Description rdf:nodeID="genid161">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale"/>
 	<rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
 </rdf:Description>
 <!--  -->
 
-<rdf:Description rdf:nodeID="genid137">
+<rdf:Description rdf:nodeID="genid164">
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-	<owl:members rdf:nodeID="genid140"/>
+	<owl:members rdf:nodeID="genid167"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid140">
+<rdf:Description rdf:nodeID="genid167">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Mot"/>
-	<rdf:rest rdf:nodeID="genid139"/>
+	<rdf:rest rdf:nodeID="genid166"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid139">
+<rdf:Description rdf:nodeID="genid166">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Objet_géographique"/>
-	<rdf:rest rdf:nodeID="genid138"/>
+	<rdf:rest rdf:nodeID="genid165"/>
 </rdf:Description>
 
-<rdf:Description rdf:nodeID="genid138">
+<rdf:Description rdf:nodeID="genid165">
 	<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
 	<rdf:first rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#Relation_spatiale_atomique"/>
 	<rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
