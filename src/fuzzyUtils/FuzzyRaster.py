@@ -156,15 +156,13 @@ class FuzzyRaster:
         lines = []
 
         for col in cs.collections:
-            try:
-                p = col.get_paths()[0]
-            except IndexError:
-                break
-            v = p.vertices
-            x, y = v[:, 0], v[:, 1]
-            line = LineString([(j[0], j[1]) for j in zip(x, y)])
-            line = affinity.affine_transform(line, affine)
-            lines.append(line)
+            for path in col.get_paths():
+                if len(path) > 1:
+                    v = path.vertices
+                    x, y = v[:, 0], v[:, 1]
+                    line = LineString([(j[0], j[1]) for j in zip(x, y)])
+                    line = affinity.affine_transform(line, affine)
+                    lines.append(line)
         return lines
 
     def summarize(self):

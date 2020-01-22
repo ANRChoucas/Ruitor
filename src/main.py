@@ -109,7 +109,7 @@ if __name__ == "__main__":
     # fuzz3 = reduce(lambda x, y: x & y, (i.compute() for i in test3))
 
     # fuzz = fuzz3#fuzz1 & fuzz2 & fuzz3
-    fuzz = reduce(lambda x, y: x & y, (i.compute() for i in test))
+    fuzz = test[-1].compute() #reduce(lambda x, y: x & y, (i.compute() for i in test[-1]))
 
     
 
@@ -125,7 +125,8 @@ if __name__ == "__main__":
     # Export
     fuzz.write("_outTest/spatialisationResult.tif")
 
-    if False: 
+    if True:
+        #import pdb; pdb.set_trace() 
         fuzzCnt = fuzz.contour()
         with open("_outTest/spatialisationResultIso.csv", "w") as csvfile:
             fieldnames = ["isoline", "value"]
