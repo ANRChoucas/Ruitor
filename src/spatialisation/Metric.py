@@ -8,6 +8,8 @@ import numpy as np
 import scipy.ndimage
 import scipy.spatial
 import scipy.interpolate
+from skimage.util.shape import view_as_windows
+from skimage.graph import MCP_Geometric
 
 
 class Metric:
@@ -21,9 +23,8 @@ class Metric:
     de Spatialisation.
     """
 
-    def __init__(self, context, *args, **kwargs):
+    def __init__(self, context):
         self.context = context
-        # self.values = self.context.raster.values
 
     def __str__(self):
         return self.__class__.__name__
@@ -34,6 +35,18 @@ class Metric:
         return FuzzyRaster(array=values, meta=self.context.context.raster.raster_meta)
 
     def _compute(self, values, *args):
+        raise NotImplementedError
+
+
+class MultipleValues(Metric):
+    def __init__(self, context, values_raster, *args, **kwargs):
+        self.values_raster = values_raster
+        super().__init__(context, *args, **kwargs)
+
+    def _compute(self, values, *args):
+        raise NotImplementedError
+
+    def _compute_refValue(self, values, *args):
         raise NotImplementedError
 
 
@@ -101,7 +114,7 @@ class Distance(Metric):
             # Calcul de l'index
             tree = scipy.spatial.cKDTree(notnullcells)
             # Calcul de la distance
-            dist, index = tree.query(indices)
+            dist, _ = tree.query(indices)
             # Mise en forme du raster de sortie
             computeraster = dist.reshape(shape).astype(values.dtype)
         else:
@@ -111,6 +124,72 @@ class Distance(Metric):
             calc_sqrt = np.square(calc).sum(4)
             # Mise en forme du raster de sortie
             computeraster = np.sqrt(np.min(calc_sqrt, 3), dtype=values.dtype)
+
+        return computeraster
+
+
+class Pente(MultipleValues):
+
+    # Matrices des coefficients de pondération pour le calcul
+    # de la pente avec la méthode de Horn
+    wg_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
+    wg_y = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])
+
+    def _compute(self, values, *args, window_shape=(1, 3, 3)):
+        # Récupération de la taille des pixels pour pondérer la somme
+        # Attention res_y est négatif
+        res_x, res_y = self.values_raster.raster_meta["transform"][:-1:4]
+        # Définition de la fenêtre glissante.
+        windowed = view_as_windows(self.values_raster.values, window_shape)
+        # Pour chaque fenêtre (3*3) pondération des valeurs en fonction
+        # des matrices de mondération
+        wg_vals_x = windowed * Pente.wg_x
+        wg_vals_y = windowed * Pente.wg_y
+        # Somme de toutes les valeurs pondérées
+        # La somme est divisiée par 8 (moyenne pondéerée)
+        # fois le pas (comme res_y est négatif '-' devant)
+        sum_x = np.sum(wg_vals_x, axis=(4, 5)) / (8 * res_x)
+        sum_y = np.sum(wg_vals_y, axis=(4, 5)) / (8 * -res_y)
+        # On aggrége la variation en X et en Y en prennant la
+        # racine du carré de la somme
+        val = np.sqrt(np.square(sum_x) + np.square(sum_y))
+        # Calcul de l'ange et conversion en degrés
+        val_deg = np.degrees(np.arctan(val, dtype=values.dtype))
+        # Suppression de l'axe 3, supperflus
+        squeezed_val_deg = np.squeeze(val_deg, axis=3)
+        # todo
+        computeraster = np.pad(squeezed_val_deg, ((0,), (1,), (1,)), constant_values=0)
+
+        return computeraster
+
+
+class TempsMarche(Pente):
+    def walk_model(self, slope):
+        # Calcul du modèle de marche (tobler)
+        # Définition d'une durée de parcours en fct de la pente
+        pace = 0.6 * np.exp(3.5 * np.abs(np.tan(np.radians(slope)) + 0.05))
+        # Multiplication des couts par la taille de la cellule
+        pace_cellized = pace * np.max(
+            self.values_raster.raster_meta["transform"][:-1:4]
+        )
+        return pace_cellized
+
+    def _compute(self, values, *args):
+        # Construction du raster de pente
+        pente = super()._compute(values, *args)
+        # Récupération des cellules non nulles (objet rasterifié)
+        notnullcells = np.argwhere(values != 0)
+        # Temps de parcours d'une cellule (en secondes)
+        pace = self.walk_model(pente)
+        # Définition de l'objet de calcul des couts
+        # Le raster 'pace' est utilisé comme matrice de
+        # pondération
+        mcp = MCP_Geometric(pace)
+        # Calcul de la plus courte distance à
+        # partir de chaque point de l'objet rasterifié
+        cost, _ = mcp.find_costs(notnullcells)
+        # Conversion des types (utilisation du type du rasterI)
+        computeraster = cost.astype(values.dtype)
 
         return computeraster
 
@@ -165,7 +244,13 @@ class EcartAngulaire(Angle):
         return angUp
 
 
-class DeltaVal(Metric):
+class DansLaDirectionDe(EcartAngulaire):
+    def _compute(self, values, values2=None, *args):
+        # Todo
+        return super()._compute(values, *args)
+
+
+class DeltaVal(MultipleValues):
     """
     Classe DeltaVal
 
@@ -189,7 +274,7 @@ class DeltaMeanVal(DeltaVal):
     """
     Classe DeltaMeanVal
 
-    Hérite de la classe DeltaVal. Calcule une différence de valeur à partir 
+    Hérite de la classe DeltaVal. Calcule une différence de valeur à partir
     de la moyenne des valeurs == 1 sur le raster net
     """
 
@@ -207,7 +292,7 @@ class DeltaMaxVal(DeltaVal):
     """
     Classe DeltaMaxVal
 
-    Hérite de la classe DeltaVal. Calcule une différence de valeur à partir 
+    Hérite de la classe DeltaVal. Calcule une différence de valeur à partir
     du maximum des valeurs == 1 sur le raster net
     """
 

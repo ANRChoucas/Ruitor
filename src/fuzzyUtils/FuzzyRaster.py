@@ -147,8 +147,8 @@ class FuzzyRaster:
     def plot(self):
         pyplot.matshow(self.values, cmap="gray")
 
-    def contour(self, by=0.1):
-        cs = pyplot.contour(self.values[0], np.arange(0, 1, by))
+    def contour(self, max_val=1, by=0.1):
+        cs = pyplot.contour(self.values[0], np.arange(0, max_val, by))
 
         a, b, xoff, d, e, yoff = tuple(self.raster_meta["transform"])[:-3]
         affine = a, b, d, e, xoff, yoff
