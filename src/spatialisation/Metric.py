@@ -190,7 +190,7 @@ class TempsMarche(Pente):
         # Calcul de la plus courte distance à
         # partir de chaque point de l'objet rasterifié
         cost, _ = mcp.find_costs(notnullcells)
-        # Ajout 'nodata' en périphérue
+        # Ajout 'nodata' en périphérie
         cost[pente == nodata] = nodata
         # Conversion des types (utilisation du type du rasterI)
         computeraster = cost.astype(values.dtype)

@@ -50,6 +50,9 @@ class Fuzzyfier:
         # Calcul des valeurs
         fuzzyfied_raster = self.fuzzyfication_function(raster)
         self.set_uncertainty(fuzzyfied_raster, self.certainty_parameters)
+        # Ajout 'nodata'
+        nodata = self.context.raster_meta["nodata"]
+        fuzzyfied_raster[raster == nodata] = nodata
 
         return fuzzyfied_raster
 
