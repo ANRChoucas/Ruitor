@@ -148,6 +148,9 @@ class FuzzyRaster:
         pyplot.matshow(self.values, cmap="gray")
 
     def contour(self, max_val=1, by=0.1):
+        """
+        Génère les isolignes du raster
+        """
         cs = pyplot.contour(self.values[0], np.arange(0, max_val, by))
 
         a, b, xoff, d, e, yoff = tuple(self.raster_meta["transform"])[:-3]
@@ -155,14 +158,14 @@ class FuzzyRaster:
 
         lines = []
 
-        for col in cs.collections:
+        for col, val in zip(cs.collections, cs.cvalues):
             for path in col.get_paths():
                 if len(path) > 1:
                     v = path.vertices
                     x, y = v[:, 0], v[:, 1]
                     line = LineString([(j[0], j[1]) for j in zip(x, y)])
                     line = affinity.affine_transform(line, affine)
-                    lines.append(line)
+                    lines.append((line, val))
         return lines
 
     def summarize(self):
