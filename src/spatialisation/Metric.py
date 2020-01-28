@@ -24,7 +24,13 @@ class Metric:
     """
 
     def __init__(self, context):
+        # Définition du contexte
         self.context = context
+        # Liens vers les paramètres du raster
+        self.raster_meta = self.context.context.raster.raster_meta
+        # Résolution raster
+        self.res_x = self.raster_meta["transform"][0]
+        self.res_y = -self.raster_meta["transform"][4]
 
     def __str__(self):
         return self.__class__.__name__
@@ -32,7 +38,7 @@ class Metric:
     def compute(self, values, *args):
         # params = self.paramsCalc()
         values = self._compute(values, *args)
-        return FuzzyRaster(array=values, meta=self.context.context.raster.raster_meta)
+        return FuzzyRaster(array=values, meta=self.raster_meta)
 
     def _compute(self, values, *args):
         raise NotImplementedError
@@ -51,9 +57,6 @@ class MultipleValues(Metric):
 
 
 class Nothing(Metric):
-    def __init__(self, context, *args, **kwargs):
-        super().__init__(context, *args, **kwargs)
-
     def _compute(self, values, *args):
         return values
 
@@ -86,6 +89,9 @@ class Cell_Distance(Metric):
             bb = bb + aa
 
         computeraster = np.max(bb) - bb
+        
+        # Pondération distance par la maille du raster
+        computeraster = computeraster * ((self.res_x + self.res_y) / 2)
 
         return computeraster
 
@@ -98,9 +104,6 @@ class Cell_DistanceT(Cell_Distance):
 
 
 class Distance(Metric):
-    def __init__(self, context, *args, **kwargs):
-        super().__init__(context, *args, **kwargs)
-
     def _compute(self, values, *args):
 
         shape = values.shape
@@ -125,6 +128,9 @@ class Distance(Metric):
             # Mise en forme du raster de sortie
             computeraster = np.sqrt(np.min(calc_sqrt, 3), dtype=values.dtype)
 
+        # Pondération distance par la maille du raster
+        computeraster = computeraster * ((self.res_x + self.res_y) / 2)
+
         return computeraster
 
 
@@ -136,9 +142,6 @@ class Pente(MultipleValues):
     wg_y = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])
 
     def _compute(self, values, *args, window_shape=(1, 3, 3)):
-        # Récupération de la taille des pixels pour pondérer la somme
-        # Attention res_y est négatif
-        res_x, res_y = self.values_raster.raster_meta["transform"][:-1:4]
         # Récupération de la valeur 'nodata'
         nodata = self.values_raster.raster_meta["nodata"]
         # Définition de la fenêtre glissante.
@@ -150,8 +153,8 @@ class Pente(MultipleValues):
         # Somme de toutes les valeurs pondérées
         # La somme est divisiée par 8 (moyenne pondéerée)
         # fois le pas (comme res_y est négatif '-' devant)
-        sum_x = np.sum(wg_vals_x, axis=(4, 5)) / (8 * res_x)
-        sum_y = np.sum(wg_vals_y, axis=(4, 5)) / (8 * -res_y)
+        sum_x = np.sum(wg_vals_x, axis=(4, 5)) / (8 * self.res_x)
+        sum_y = np.sum(wg_vals_y, axis=(4, 5)) / (8 * self.res_y)
         # On aggrége la variation en X et en Y en prennant la
         # racine du carré de la somme
         val = np.sqrt(np.square(sum_x) + np.square(sum_y))
