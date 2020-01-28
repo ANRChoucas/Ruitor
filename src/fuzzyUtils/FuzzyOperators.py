@@ -29,7 +29,17 @@ class FuzzyOperators:
         """
 
         self._check_operators(other)
-        return self._norm(other)
+        # Récupération des valeurs 'nodata'
+        nodata_self = self.context.raster_meta["nodata"]
+        notada_other = other.raster_meta["nodata"]
+        # Calcul de la norme
+        norm = self._norm(other)
+        # Ajout des 'nodata' dans le cas ou il manque des valeurs
+        nodata_vals = np.logical_or(
+            self.context.values == nodata_self, other.values == notada_other
+        )
+        norm[nodata_vals] = nodata_self
+        return norm
 
     def conorm(self, other):
         """
@@ -37,7 +47,17 @@ class FuzzyOperators:
         """
 
         self._check_operators(other)
-        return self._conorm(other)
+        # Récupération des valeurs 'nodata'
+        nodata_self = self.context.raster_meta["nodata"]
+        notada_other = other.raster_meta["nodata"]
+        # Calcul de la conorme
+        conorm = self._conorm(other)
+        # Ajout des 'nodata' dans le cas ou il manque des valeurs
+        nodata_vals = np.logical_or(
+            self.context.values == nodata_self, other.values == notada_other
+        )
+        conorm[nodata_vals] = nodata_self
+        return conorm
 
     def _norm(self, other):
         raise NotImplementedError("No t-norm defined")
