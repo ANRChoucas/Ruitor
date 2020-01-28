@@ -198,16 +198,16 @@ class TempsMarche(Pente):
         return computeraster
 
 
-class Angle(Metric):
+class Angle(MultipleValues):
     """
     Classe Angle
 
     Hérite de la classe Metric. Destinée à calculer un angle.
     """
 
-    def __init__(self, context, angle=0, *args, **kwargs):
+    def __init__(self, context, values_raster, angle=0, *args, **kwargs):
         self.angle = angle
-        super().__init__(context, *args, **kwargs)
+        super().__init__(context, values_raster, *args, **kwargs)
 
     def _compute(self, values, *args):
         # Calcule l'angle par rapport à la première coordonée
@@ -260,10 +260,6 @@ class DeltaVal(MultipleValues):
 
     Hérite de la classe Metric. Destinée à calculer une différence de valeur
     """
-
-    def __init__(self, context, values_raster, *args, **kwargs):
-        self.values_raster = values_raster
-        super().__init__(context, *args, **kwargs)
 
     def _compute(self, values, *args):
         ref_value = self._compute_refValue(values)
