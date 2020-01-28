@@ -139,6 +139,8 @@ class Pente(MultipleValues):
         # Récupération de la taille des pixels pour pondérer la somme
         # Attention res_y est négatif
         res_x, res_y = self.values_raster.raster_meta["transform"][:-1:4]
+        # Récupération de la valeur 'nodata'
+        nodata = self.values_raster.raster_meta["nodata"]
         # Définition de la fenêtre glissante.
         windowed = view_as_windows(self.values_raster.values, window_shape)
         # Pour chaque fenêtre (3*3) pondération des valeurs en fonction
@@ -153,12 +155,10 @@ class Pente(MultipleValues):
         # On aggrége la variation en X et en Y en prennant la
         # racine du carré de la somme
         val = np.sqrt(np.square(sum_x) + np.square(sum_y))
-        # Calcul de l'ange et conversion en degrés
-        val_deg = np.degrees(np.arctan(val, dtype=values.dtype))
-        # Suppression de l'axe 3, supperflus
-        squeezed_val_deg = np.squeeze(val_deg, axis=3)
-        # todo
-        computeraster = np.pad(squeezed_val_deg, ((0,), (1,), (1,)), constant_values=0)
+        # Calcul de l'ange et conversion en degrés + Suppression de l'axe 3, superflu
+        val_deg = np.squeeze(np.degrees(np.arctan(val, dtype=values.dtype)), axis=3)
+        # Ajout valeurs 'nodata' pour les pixels périphériques
+        computeraster = np.pad(val_deg, ((0,), (1,), (1,)), constant_values=nodata)
 
         return computeraster
 
