@@ -67,6 +67,7 @@ class ParallelAggregator(AggregatorStrategy):
         # calc
         for i in input:
             v = self.context[i].compute()
+            # Écriture des rasters objets
             v.write("./_outTest/%s-%s-%s.tif" % i)
             tmp[i] = v
 

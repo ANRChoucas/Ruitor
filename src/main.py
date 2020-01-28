@@ -12,9 +12,12 @@ import rasterio
 import csv
 import glob
 
+
 import config
 from ontologyTools import SROnto, ROOnto
 from spatialisation import SpatialisationFactory
+
+import messager
 
 
 logger = logging.getLogger(__name__)
@@ -95,13 +98,17 @@ if __name__ == "__main__":
     # Magouille "dans la direction d'une station de ski"
     # import pdb; pdb.set_trace()
     station_parser = [Parser(i) for i in glob.glob("tests/xml/FilRouge_*.xml")]
-    station_factory = [SpatialisationFactory(i.values, mnt, sro) for i in station_parser]
-    station_spatialisation = [j for i in station_factory for j in i.make_Spatialisation()]
+    station_factory = [
+        SpatialisationFactory(i.values, mnt, sro) for i in station_parser
+    ]
+    station_spatialisation = [
+        j for i in station_factory for j in i.make_Spatialisation()
+    ]
 
-    # parser2 = Parser("tests/xml/GrandVeymont_entre.xml")
-    # spatialisationParms2 = parser2.values
-    # factor2 = SpatialisationFactory(spatialisationParms2, mnt, sro)
-    # test2 = list(factor2.make_Spatialisation())
+    parser2 = Parser("tests/xml/Debug.xml")
+    spatialisationParms2 = parser2.values
+    factor2 = SpatialisationFactory(spatialisationParms2, mnt, sro)
+    test2 = list(factor2.make_Spatialisation())
 
     # parser3 = Parser("tests/xml/GrandVeymont_auDela.xml")
     # spatialisationParms3 = parser3.values
@@ -111,16 +118,12 @@ if __name__ == "__main__":
     tc1 = time.time()
     logger.info("Computation")
 
-    # fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test[:-2]))
-    # fuzz2 = reduce(lambda x, y: x & y, (i.compute() for i in test2))
-    # fuzz3 = reduce(lambda x, y: x & y, (i.compute() for i in test3))
-
-    # fuzz = fuzz3#fuzz1 & fuzz2 & fuzz3
     fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test))
     fuzz2 = reduce(lambda x, y: x | y, (i.compute() for i in station_spatialisation))
-    fuzz = fuzz1 & fuzz2
+    fuzz3 = test2[0].compute()
 
-    
+    fuzz = fuzz1 & fuzz3# & fuzz3
+    fuzz.summarize()
 
     logger.info("Computation : Done")
     tc2 = time.time()
@@ -134,13 +137,19 @@ if __name__ == "__main__":
     # Export
     fuzz.write("_outTest/spatialisationResult.tif")
 
-    if False:
+    if True:
         fuzzCnt = fuzz.contour()
         with open("_outTest/spatialisationResultIso.csv", "w") as csvfile:
             fieldnames = ["isoline", "value"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             for row in fuzzCnt:
-                writer.writerow({"isoline": row.wkt, "value": 0})
+                writer.writerow({"isoline": row[0].wkt, "value": row[1]})
 
-    logger.info("Done in %s seconds", tc2 - tc1)
+    time = tc2 - tc1
+
+    logger.info("Done in %s seconds", time)
     os.system("notify-send Ruitor done")
+
+    if time > 120:
+        messager.send_sms("Ruitor done in %.2f" % time)
+
