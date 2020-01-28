@@ -338,8 +338,8 @@ class Spatialisation:
                 "rasterizer_params": rsaDec["rasterizer"]["kwargs"],
                 "modifiers": modifieurs,
             }
-
-            if issubclass(metric, spatialisation.Metric.DeltaVal):
+            
+            if issubclass(metric, spatialisation.Metric.MultipleValues):
                 prms["metric_params"]["values_raster"] = self.raster
 
             spaSeq[(gCounter, 0, rsaName)] = SpatialisationElement(
