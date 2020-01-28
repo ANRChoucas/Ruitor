@@ -166,20 +166,37 @@ class FuzzyRaster:
         return lines
 
     def summarize(self):
-        rastmin = self.values.min()
-        rastmed = np.median(self.values)
-        rastmax = self.values.max()
+
+        nodata = self.raster_meta["nodata"]
+        nodata_ind = self.values == nodata
+        nodata_c = np.count_nonzero(nodata_ind)
+        count = np.size(self.values)
+        nodata_p = (nodata_c / count) * 100
+
+        rastmin = self.values[~nodata_ind].min()
+        rastmed = np.median(self.values[~nodata_ind])
+        rastmax = self.values[~nodata_ind].max()
 
         description_string = """
-        min    : {}
-        median : {}
-        max    : {}        
+        min    : {:.4f}
+        median : {:.4f}
+        max    : {:.4f}
+        -------------------------------
+        nodata : {} ({:.2f} %)
+        cells  : {}
         -------------------------------
         {}
         -------------------------------
         {}
         """.format(
-            rastmin, rastmed, rastmax, self.fuzzy_operators, self.fuzzyfier
+            rastmin,
+            rastmed,
+            rastmax,
+            nodata_c,
+            nodata_p,
+            count,
+            self.fuzzy_operators,
+            self.fuzzyfier,
         )
 
         print(description_string)
