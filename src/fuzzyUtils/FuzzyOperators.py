@@ -10,7 +10,7 @@ import numpy as np
 
 class FuzzyOperators:
     """
-    Classe d'opérateurs flous générique 
+    Classe d'opérateurs flous générique
     """
 
     def __init__(self, context):
@@ -169,28 +169,26 @@ class DrasticOperators(FuzzyOperators):
 
     def _norm(self, other):
         # Définirion de l'array a renvoyer
-        res_array = np.empty_like(self.context.values)
+        # 0 si a != 1 ou b != 1 i.e. tous les autres cas
+        res_array = np.zeros_like(self.context.values)
         # Construction des arrays test, a == 1 & b == 1
         test_arr_self = self.context.values == 1
         test_arr_other = other.values == 1
         # b si a == 1 b & a si b == 1
         res_array[test_arr_self] = other.values[test_arr_self]
         res_array[test_arr_other] = self.context.values[test_arr_other]
-        # 0 si a != 1 ou b != 1 i.e. tous les autres cas
-        res_array[~(test_arr_self | test_arr_other)] = 0
 
         return res_array
 
     def _conorm(self, other):
         # Définirion de l'array a renvoyer
-        res_array = np.empty_like(self.context.values)
+        # 1 si a != 0 ou b != 0 i.e. tous les autres cas
+        res_array = np.ones_like(self.context.values)
         # Construction des arrays test, a == 0 & b == 0
         test_arr_self = self.context.values == 0
         test_arr_other = other.values == 0
         # b si a == 0 b & a si b == 0
         res_array[test_arr_self] = other.values[test_arr_self]
         res_array[test_arr_other] = self.context.values[test_arr_other]
-        # 1 si a != 0 ou b != 0 i.e. tous les autres cas
-        res_array[~(test_arr_self | test_arr_other)] = 1
 
         return res_array
