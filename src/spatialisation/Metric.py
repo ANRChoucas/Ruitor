@@ -175,6 +175,8 @@ class TempsMarche(Pente):
         return pace_cellized
 
     def _compute(self, values, *args):
+        # Identification valeur 'nodata'
+        nodata = self.values_raster.raster_meta["nodata"]
         # Construction du raster de pente
         pente = super()._compute(values, *args)
         # Récupération des cellules non nulles (objet rasterifié)
@@ -188,6 +190,8 @@ class TempsMarche(Pente):
         # Calcul de la plus courte distance à
         # partir de chaque point de l'objet rasterifié
         cost, _ = mcp.find_costs(notnullcells)
+        # Ajout 'nodata' en périphérue
+        cost[pente == nodata] = nodata
         # Conversion des types (utilisation du type du rasterI)
         computeraster = cost.astype(values.dtype)
 
