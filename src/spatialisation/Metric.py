@@ -9,7 +9,8 @@ import scipy.ndimage
 import scipy.spatial
 import scipy.interpolate
 from skimage.util.shape import view_as_windows
-from skimage.graph import MCP_Geometric
+from skimage.graph import MCP_Geometric, MCP
+from skimage.draw import ellipse
 
 
 class Metric:
@@ -89,7 +90,7 @@ class Cell_Distance(Metric):
             bb = bb + aa
 
         computeraster = np.max(bb) - bb
-        
+
         # Pondération distance par la maille du raster
         computeraster = computeraster * ((self.res_x + self.res_y) / 2)
 
@@ -332,9 +333,6 @@ class DeltaNearestVal(DeltaVal):
     Classe DeltaNearestVal
     """
 
-    def __init__(self, context, *args, **kwargs):
-        super().__init__(context, *args, **kwargs)
-
     def _compute_refValue(self, values):
 
         shape = values.shape
@@ -349,4 +347,74 @@ class DeltaNearestVal(DeltaVal):
         )
 
         return computeraster
+
+
+class DirectionDe_Test(Angle):
+    def _compute(self, values, *args):
+        angle_raster = super()._compute(values, *args)
+        # dist_raster = Distance._compute(values, *args)
+
+        values2 = np.zeros_like(values)
+        values2[0, 2000, 2000] = 1
+
+        xx = (np.argwhere(values2 == 1)[0] - np.argwhere(values == 1)[0])[1:]
+        tan = np.arctan2(*xx)
+        tt = (np.degrees(tan) - 90) % 360
+
+        delta_ang = np.abs(((tt - angle_raster - 90) % 360) - 180)
+
+        shape = values.shape
+        notnullcells = np.argwhere(values != 0)
+
+        # version indexée, uniquement si le nombre
+        # de valeurs non nulles est important
+        z, y, x = np.indices(shape)
+        indices = list(zip(np.ravel(z), np.ravel(y), np.ravel(x)))
+        # Calcul de l'index
+        tree = scipy.spatial.cKDTree(notnullcells)
+        # Calcul de la distance
+        dist, _ = tree.query(indices)
+        # Mise en forme du raster de sortie
+        dist_shape = dist.reshape(shape).astype(values.dtype)
+
+        cost_raster = delta_ang  # *  dist_shape
+
+        mcp = MCP(cost_raster)
+        cost, _ = mcp.find_costs(np.argwhere(values != 0))
+        nc = cost / cost[values2 == 1]
+
+        return nc.astype(values.dtype)
+
+
+class DirectionDe_Test2(Distance):
+    def _make_ellipse(self, obj1, obj2, r_ga, r_dga, shape):
+
+        # import ipdb; ipdb.set_trace()
+
+        obj1 = obj1[0]
+        obj2 = obj2[0]
+
+        _, cx, cy = (obj1 + obj2) / 2
+        ga = np.sqrt(np.sum(np.square(obj1 - obj2))) / r_ga
+        dga = ga / r_dga
+        rot = np.arctan(np.divide(*np.flip(obj1 - obj2)[:-1]))
+
+        return ellipse(cx, cy, ga, dga, shape=shape, rotation=rot)
+
+    def _compute(self, values, *args):
+
+        ell_raster = np.zeros_like(values)
+        notnullcells = np.argwhere(values != 0)
+
+        # Points temp ()
+        values2 = np.zeros_like(values)
+        values2[0, 150, 310] = 1
+        values2 = np.argwhere(values2 != 0)
+
+        # Ellipse
+        ell = self._make_ellipse(notnullcells, values2, 2.5, 4, ell_raster.shape[1:])
+        ell_raster[0, ell[0], ell[1]] = 1
+
+        # Calcul de la distance à l'ellipse
+        return super()._compute(ell_raster)
 
