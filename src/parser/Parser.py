@@ -109,7 +109,7 @@ class Parser:
                 dic = {}
                 uri = i.attrs.get("about")
                 dic["uri"] = uri
-                value = i.string 
+                value = i.string
                 if value:
                     dic["value"] = value
                 outList.append(dic)
@@ -118,10 +118,18 @@ class Parser:
     def parse_site(self, site_xml, **kwargs):
 
         site_key = kwargs.get("site_key", "featureMember")
+        temp_key = kwargs.get("temp_key", "trouverNom")
 
         geom_counter = 0
         for child in site_xml.children:
-            if child.name == site_key:
+            if child.name == temp_key:
+                geoms = []
+                for subchild in child.children:
+                    if subchild.name == site_key:
+                        geoms.append(self.parse_geometry(subchild))
+                yield (geom_counter, geoms)
+                geom_counter += 1
+            elif child.name == site_key:
                 yield (geom_counter, self.parse_geometry(child))
                 geom_counter += 1
 

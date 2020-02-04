@@ -26,8 +26,16 @@ class Rasterizer:
         Destinée à être appelée par une instance de spatialisation Element
         pour construire un fuzzy raster
         """
-        geom = self._treat_geom(self.context.geom)
-        return self._rasterize(geom)
+        try:
+            geom = self._treat_geom(self.context.geom)
+            out_raster = self._rasterize(geom)
+        except TypeError:
+            out_raster = []
+            for g in self.context.geom:
+                geom = self._treat_geom(g)
+                out_raster.append(self._rasterize(geom))
+
+        return out_raster
 
     def _treat_geom(self, geom):
         raise NotImplementedError

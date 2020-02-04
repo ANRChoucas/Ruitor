@@ -37,6 +37,17 @@
     </xs:simpleContent>
   </xs:complexType>
 
+<xs:complexType name="featureMemberTyped">
+  <xs:complexContent>
+    <xs:extension base="gml:AbstractFeatureMemberType">
+      <xs:attribute
+      name="about"
+      use="required"
+      type="xs:anyURI" />
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
   <!-- Définition de l'élément zir. L'élément est
   défini comme un alias pour le type BBOX défini en GML.
   Permet de définir une zone de calcul. La même zone 
@@ -84,9 +95,25 @@
   </xs:element>
 
   <!-- Définition du site -->
-  <xs:element
-      name="site"
-      substitutionGroup="gml:FeatureCollection" />
+  <xs:element name="site">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+          <xs:element ref="gml:featureMember" />
+        </xs:sequence>
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+          <xs:element name="trouverNom">
+            <xs:complexType>
+              <xs:sequence minOccurs="2" maxOccurs="2">
+                <xs:element ref="gml:featureMember" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
 
   <!-- Définition d'un indice -->
   <xs:element name="indice">

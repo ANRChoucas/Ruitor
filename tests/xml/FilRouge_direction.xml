@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rt:hypothèse
+        xmlns:rt="urn:ruitorXSD"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:gml="http://www.opengis.net/gml/3.2"
+        xmlns:ogr="http://ogr.maptools.org/"
+        xsi:schemaLocation="urn:ruitorXSD ../../src/parser/schema/tt.xsd http://ogr.maptools.org/ ../../src/parser/schema/sel_bati.xsd">
+    <rt:zir>
+        <gml:Envelope>
+            <gml:lowerCorner>954100 6456555</gml:lowerCorner>
+            <gml:upperCorner>925925 6431000 </gml:upperCorner>
+        </gml:Envelope>
+    </rt:zir>
+    <rt:indices>
+        <rt:indice>
+            <rt:cible></rt:cible>
+            <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#test_direction  -->
+            <rt:relationSpatiale about="http://www.semanticweb.org/mbunel/ontologies/Ornitho#test_direction"></rt:relationSpatiale>
+            <rt:site>
+                <rt:trouverNom>
+                    <!-- 2 alpes -->
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>946083.95,6439519.86</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                </rt:trouverNom>
+                <rt:trouverNom>
+                    <!-- auris -->
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>942182.41,6444381.35</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                </rt:trouverNom>
+                <rt:trouverNom>
+                    <!-- oron -->
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>933959.41,6439730.26</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                </rt:trouverNom>
+                <rt:trouverNom>
+                    <!-- reculas -->
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938370.90,6448536.79</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                </rt:trouverNom>
+                <rt:trouverNom>
+                    <!-- huez -->
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>941402.59,6448896.18</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                </rt:trouverNom>
+                <rt:trouverNom>
+                    <!-- oz -->
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>941324.68,6452362.77</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                </rt:trouverNom>
+                <rt:trouverNom>
+                    <!-- vaujany -->
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>941934.90,6455593.38</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                </rt:trouverNom>
+                <rt:trouverNom>
+                    <!-- chamrousse -->
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>938486.8,6443764.5</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                    <gml:featureMember>
+                        <ogr:oro fid="oro.0">
+                            <ogr:geometryProperty>
+                                <gml:Point srsName="EPSG:2154">
+                                    <gml:coordinates>925981.66,6449759.15</gml:coordinates>
+                                </gml:Point>
+                            </ogr:geometryProperty>
+                        </ogr:oro>
+                    </gml:featureMember>
+                </rt:trouverNom>
+            </rt:site>
+        </rt:indice>
+    </rt:indices>
+</rt:hypothèse>

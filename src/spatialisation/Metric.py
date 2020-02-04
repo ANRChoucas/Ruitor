@@ -388,9 +388,6 @@ class DirectionDe_Test(Angle):
 
 class DirectionDe_Test2(Distance):
     def _make_ellipse(self, obj1, obj2, r_ga, r_dga, shape):
-
-        # import ipdb; ipdb.set_trace()
-
         obj1 = obj1[0]
         obj2 = obj2[0]
 
@@ -402,19 +399,20 @@ class DirectionDe_Test2(Distance):
         return ellipse(cx, cy, ga, dga, shape=shape, rotation=rot)
 
     def _compute(self, values, *args):
-
-        ell_raster = np.zeros_like(values)
-        notnullcells = np.argwhere(values != 0)
-
-        # Points temp ()
-        values2 = np.zeros_like(values)
-        values2[0, 150, 310] = 1
-        values2 = np.argwhere(values2 != 0)
-
-        # Ellipse
-        ell = self._make_ellipse(notnullcells, values2, 2.5, 4, ell_raster.shape[1:])
+        # On récupère les deux rasters à
+        # partir du tuple
+        values1, values2 = values
+        # Création du raster de résultats
+        ell_raster = np.zeros_like(values1)
+        # Identification des cellules non nulles
+        # pour les deux rasters en entrée
+        notnullcells = np.argwhere(values1 != 0)
+        notnullcells2 = np.argwhere(values2 != 0)
+        # Construction de l'ellipse
+        ell = self._make_ellipse(
+            notnullcells, notnullcells2, 2.5, 4, ell_raster.shape[1:]
+        )
         ell_raster[0, ell[0], ell[1]] = 1
-
         # Calcul de la distance à l'ellipse
         return super()._compute(ell_raster)
 
