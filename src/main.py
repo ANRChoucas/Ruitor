@@ -12,10 +12,14 @@ import rasterio
 import csv
 import glob
 
+from rasterio.windows import Window
+
 
 import config
 from ontologyTools import SROnto, ROOnto
 from spatialisation import SpatialisationFactory
+from fusion.Fusion import fusion
+from fuzzyUtils.FuzzyRaster import FuzzyRaster
 
 import messager
 
@@ -79,6 +83,22 @@ def configuration(config):
         logger.debug("No proxy used")
 
 
+def set_zir(raster, zir):
+    # Spécification du padding
+    padding = {"x": 10, "y": 10}
+    # Calcul Zir
+    # Calcul des numéros de ligne et de colonne correspondant aux
+    # deux points de la bbox
+    row_ind, col_ind = zip(*map(lambda x: raster.index(*x), zir))
+    # Extraction du numéro de ligne/colonne minimum
+    row_min, col_min = min(row_ind), min(col_ind)
+    # Calcul du nombre de lignes/colonnes
+    row_num = abs(max(row_ind) - row_min) + padding["x"]
+    col_num = abs(max(col_ind) - col_min) + padding["y"]
+    # Définition de la fenêtre de travail
+    return Window(col_min, row_min, col_num, row_num)
+
+
 if __name__ == "__main__":
     # Import paramètres
     configuration(config)
@@ -95,47 +115,57 @@ if __name__ == "__main__":
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
     test = list(factor.make_Spatialisation())
 
-    # Magouille "dans la direction d'une station de ski"
-    # import pdb; pdb.set_trace()
-    station_parser = [Parser(i) for i in glob.glob("tests/xml/FilRouge_*.xml")]
-    station_factory = [
-        SpatialisationFactory(i.values, mnt, sro) for i in station_parser
-    ]
-    station_spatialisation = [
-        j for i in station_factory for j in i.make_Spatialisation()
-    ]
-
     parser2 = Parser("tests/xml/Debug.xml")
     spatialisationParms2 = parser2.values
     factor2 = SpatialisationFactory(spatialisationParms2, mnt, sro)
     test2 = list(factor2.make_Spatialisation())
 
-    # parser3 = Parser("tests/xml/GrandVeymont_auDela.xml")
-    # spatialisationParms3 = parser3.values
-    # factor3 = SpatialisationFactory(spatialisationParms3, mnt, sro)
-    # test3 = list(factor3.make_Spatialisation())
+    # Import MNT visibilité
+    visibility_rasters_files = [
+        rasterio.open(i) for i in glob.glob("data/visibility/*.tif")
+    ]
+    zir = [set_zir(i, parser2.values["zir"]) for i in visibility_rasters_files]
+    rast_visib = [
+        FuzzyRaster(raster=i, window=v) for i, v in zip(visibility_rasters_files, zir)
+    ]
+    fuzzy_prm = [(0, 0), (0.1, 1.0), (0.9, 1.0), (1, 0)]
+    _ = [i.fuzzyfication(fuzzy_prm) for i in rast_visib]
+
+    parser4 = Parser("tests/xml/FilRouge_direction.xml")
+    spatialisationParms4 = parser4.values
+    factor4 = SpatialisationFactory(spatialisationParms4, mnt, sro)
+    test4 = list(factor4.make_Spatialisation())
 
     tc1 = time.time()
     logger.info("Computation")
 
-    fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test))
-    fuzz2 = reduce(lambda x, y: x | y, (i.compute() for i in station_spatialisation))
+    #fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test))
+    # Direction ski
+    fuzz2 = test4[0].compute()
+    # Temps marche
     fuzz3 = test2[0].compute()
+    # visibilité
+    fuzz4 = reduce(lambda x, y: x | y, rast_visib)
 
-    fuzz = fuzz1 & fuzz3# & fuzz3
+    
+
+    # Agrégation des indices
+    fuzz_list = [fuzz4, fuzz2, fuzz3]
+    fusioner = fusion()
+    fuzz = fusioner.compute(fuzz_list)
+
     fuzz.summarize()
 
     logger.info("Computation : Done")
     tc2 = time.time()
 
-    # Test convolution
-    # from scipy import ndimage
-    # import numpy as np
-    # k = np.array([[[0,1,0],[0,1,0],[0,1,0]]])
-    # fuzz.values = ndimage.convolve(fuzz.values, k)
-
     # Export
     fuzz.write("_outTest/spatialisationResult.tif")
+    
+    # [
+    #     i.write("_outTest/fuzz%s.tif" % (c + 1))
+    #     for i, c in zip(fuzz_list, range(len(fuzz_list)))
+    # ]
 
     if True:
         fuzzCnt = fuzz.contour()
@@ -147,7 +177,7 @@ if __name__ == "__main__":
 
     time = tc2 - tc1
 
-    logger.info("Done in %s seconds", time)
+    logger.info("Done in %.2fs seconds", time)
     os.system("notify-send Ruitor done")
 
     if time > 120:
