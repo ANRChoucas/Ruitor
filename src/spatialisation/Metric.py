@@ -388,14 +388,20 @@ class DirectionDe_Test(Angle):
 
 class DirectionDe_Test2(Distance):
     def _make_ellipse(self, obj1, obj2, r_ga, r_dga, shape):
+        # Réupération de la première coordonée des deux
+        # objets.
+        # TODO: à changer pour prendre en compte les
+        # objets plus complexes
         obj1 = obj1[0]
         obj2 = obj2[0]
-
+        # Calcul des cordonnées du centre de l'ellipse
         _, cx, cy = (obj1 + obj2) / 2
+        # Calcul du grand axe
         ga = np.sqrt(np.sum(np.square(obj1 - obj2))) / r_ga
+        #  calcul du demi-grand axe
         dga = ga / r_dga
+        # Rotation de l'ellipse
         rot = np.arctan(np.divide(*np.flip(obj1 - obj2)[:-1]))
-
         return ellipse(cx, cy, ga, dga, shape=shape, rotation=rot)
 
     def _compute(self, values, *args):
