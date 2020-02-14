@@ -14,7 +14,7 @@ class fusion(object):
         else:
             self.evaluation_strategy = self.default_evaluation_strategy(self)
 
-    def compute(self, indices, evaluate=True):
+    def compute(self, indices, evaluate=False):
 
         f_indices = reduce(lambda x, y: x & y, indices)
 
