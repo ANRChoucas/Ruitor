@@ -147,21 +147,21 @@ if __name__ == "__main__":
     # visibilité
     fuzz4 = reduce(lambda x, y: x | y, rast_visib)
 
-    
-
     # Agrégation des indices
-    fuzz_list = [fuzz4, fuzz2, fuzz3]
-    fusioner = fusion()
-    fuzz = fusioner.compute(fuzz_list)
+    fuzz_list = [fuzz2, fuzz3, fuzz4]
+    fusioner = fusion(cellsize=50)
+    fuzz, fuzz_note = fusioner.compute(fuzz_list, evaluate="rank")
 
     fuzz.summarize()
+    fuzz_note.summarize()
 
     logger.info("Computation : Done")
     tc2 = time.time()
 
     # Export
     fuzz.write("_outTest/spatialisationResult.tif")
-    
+    fuzz_note.write("_outTest/spatialisationResult_eval.tif")
+
     # [
     #     i.write("_outTest/fuzz%s.tif" % (c + 1))
     #     for i, c in zip(fuzz_list, range(len(fuzz_list)))

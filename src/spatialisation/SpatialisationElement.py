@@ -12,7 +12,9 @@ class SpatialisationElement:
     Classe spatialisationElement
     """
 
-    def __init__(self, context, geom, metric, selector, rasterizer, modifier, *args, **kwargs):
+    def __init__(
+        self, context, geom, metric, selector, rasterizer, modifier, *args, **kwargs
+    ):
 
         self.context = context
         self.geom = geom
@@ -43,6 +45,22 @@ class SpatialisationElement:
     def rasterise(self):
         return self.rasteriser.rasterize()
 
+    def compute(self, *args, **kwargs):
+        # Rasterisation
+        geom_raster = self.rasterise()
+        tmp_res = self.metric.compute(geom_raster)
+        # Fuzzyfication
+        self.selector.compute(tmp_res)
+
+        if self.modifier:
+            tmp_res = self.modifier.modifing(tmp_res)
+
+        logger.debug("Element computed : %s " % self.metric)
+        return tmp_res
+
+
+class SpatialisationElementB(SpatialisationElement):
+    
     def compute(self, *args, **kwargs):
         # Rasterisation
         geom_raster = self.rasterise()
