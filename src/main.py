@@ -139,7 +139,7 @@ if __name__ == "__main__":
     tc1 = time.time()
     logger.info("Computation")
 
-    #fuzz1 = reduce(lambda x, y: x & y, (i.compute() for i in test))
+    fuzz1 = (i.compute() for i in test)
     # Direction ski
     fuzz2 = test4[0].compute()
     # Temps marche
@@ -148,7 +148,7 @@ if __name__ == "__main__":
     fuzz4 = reduce(lambda x, y: x | y, rast_visib)
 
     # Agrégation des indices
-    fuzz_list = [fuzz2, fuzz3, fuzz4]
+    fuzz_list = [*fuzz1, fuzz2, fuzz3, fuzz4]
     fusioner = fusion(cellsize=50)
     fuzz, fuzz_note = fusioner.compute(fuzz_list, evaluate="rank")
 

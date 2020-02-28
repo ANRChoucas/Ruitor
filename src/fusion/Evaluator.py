@@ -11,27 +11,33 @@ class Evaluator:
     def __init__(self, context):
         self.context = context
 
-    def evaluate(self, zones, rank=False):
+    def evaluate(self, zones, value="zone"):
         values = zones.values[0]
         # Regroupement pixels par région
         regions = self.regionalize(values)
         # Calcul des descripteurs par région
         regions_descriptors = self.descriptors(regions, values)
-        # Calcul des notes par région
-        # le calcul de la note est délégué aux objets héritant de
-        # la classe evaluator
-        regions_notes = self._evaluate(regions, regions_descriptors)
-        # Si souhaité on renvoie le rang de chaque zone en fonction de
-        # la note précédement calculée
-        if rank:
-            # Calcul de la note
-            ranked_regions = self.compute_range(regions_descriptors, regions_notes)
-            # extraction des listes [rang] et [regions] pour construire
-            # le raster des notes
-            regions_notes, regions_descriptors = zip(*ranked_regions)
+        if value == "note" or value == "rank":
+            # Calcul des notes par région
+            # le calcul de la note est délégué aux objets héritant de
+            # la classe evaluator
+            regions_notes = self._evaluate(regions, regions_descriptors)
+
+            # Si souhaité on renvoie le rang de chaque zone en fonction de
+            # la note précédement calculée
+            if value == "rank":
+                # Calcul de la note
+                ranked_regions = self.compute_range(regions_descriptors, regions_notes)
+                # extraction des listes [rang] et [regions] pour construire
+                # le raster des notes
+                regions_notes, regions_descriptors = zip(*ranked_regions)
+        elif value == "zone":
+            regions_notes = (i + 1 for i in range(len(regions)))
+
         # Génération du raster des notes contenant les notes ou le rang des régions
         # en fonction de la valeur du paramètre "rank"
         evalued_regions = self.region_value(regions_descriptors, regions_notes, zones)
+
         return evalued_regions
 
     def compute_range(self, descriptors, values):
@@ -80,7 +86,7 @@ class Evaluator:
             # Filtre utilisé pour l'érosion/dilatation
             closing_pattern = kwargs.get("closing_pattern", square(3))
             # Raster Closing
-            return closing(binary_raster, closing_pattern)
+            closing(binary_raster, closing_pattern, out=binary_raster)
 
         return binary_raster
 
@@ -91,7 +97,6 @@ class Evaluator:
 
         output_array = np.zeros_like(raster.values[0])
         meta = raster.raster_meta
-
         for region, note in zip(descriptors, values):
             output_array[region["slice"]][region["image"]] = note
 
