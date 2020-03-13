@@ -130,6 +130,8 @@ if __name__ == "__main__":
     ]
     fuzzy_prm = [(0, 0), (0.1, 1.0), (0.9, 1.0), (1, 0)]
     _ = [i.fuzzyfication(fuzzy_prm) for i in rast_visib]
+    _ = [i.write("_outTest/%s.tif" % v) for i,v in zip(rast_visib, range(len(rast_visib)))]
+
 
     parser4 = Parser("tests/xml/FilRouge_direction.xml")
     spatialisationParms4 = parser4.values
@@ -150,7 +152,7 @@ if __name__ == "__main__":
     # Agrégation des indices
     fuzz_list = [*fuzz1, fuzz2, fuzz3, fuzz4]
     fusioner = fusion(cellsize=50)
-    fuzz, fuzz_note = fusioner.compute(fuzz_list, evaluate="rank")
+    fuzz, fuzz_note = fusioner.compute(fuzz_list, evaluate="note")
 
     fuzz.summarize()
     fuzz_note.summarize()
