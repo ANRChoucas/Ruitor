@@ -1,16 +1,45 @@
-"""
-Module FuzzyOperators. 
+"""Module FuzzyOperators. 
 
-Contient la classe générique FuzzyOperators et des
+Contient la classe générique FuzzyOperators et ses
 spécialisations. 
+
+
+La classe FuzzyOperators est destinée à être l’ancêtre de toutes les
+classes implémentant les opérateurs inter-ensemble.
+
+Pour créer de nouveaux opérateurs il convient de créer une classe
+héritant de FuzzyOperators et surchargeant les méthodes privées
+"_norm" et "_conorm"
+
+:Example:
+# Création de nouveaux opérateurs
+
+>>> class MyOperators(FuzzyOperators):
+>>> 
+>>>     def __init__(self, context):
+>>>         super().__init__(context)
+>>> 
+>>>     def _norm(self, other):
+>>>         return self.context.values * other.values
+>>> 
+>>>     def _conorm(self, other):
+>>>         return self.context.values + other.values - self.context.values * other.values
+
 """
 
 import numpy as np
 
 
 class FuzzyOperators:
-    """
-    Classe d'opérateurs flous générique
+    """Classe d'opérateurs flous générique
+
+    Cette classe défini l'ensemble des méthodes permettant de faire
+    des union et des intersections entre rasters flous.
+
+    Cette classe n'est pas destinée à être utilisée directement, elle
+    sert d’ancêtre aux classes implémentant les t-normes et les
+    t-conormes.
+
     """
 
     def __init__(self, context):
