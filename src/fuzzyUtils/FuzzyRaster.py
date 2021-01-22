@@ -314,9 +314,14 @@ class FuzzyRaster:
         print(description_string)
 
     def __and__(self, other):
+        """Fontion pour les intersections inter-rasters
+
+        La fonction __or__ est automatique appelée lorsque l'on
+        utilise l'opérateur "&". Par exemple raster1 | raster2. Dans
+        ce cas, cette syntaxe est transformée en raster1.__and__(raster2).
+
         """
-        blabla	
-        """
+        
         # La gestion des opérations inter-raster est pas top à revoir
         # -> construire les paramètres du raster construit
         return FuzzyRaster(
@@ -326,6 +331,13 @@ class FuzzyRaster:
         )
 
     def __or__(self, other):
+        """Fontion pour les union inter-rasters
+
+        La fonction __and__ est automatique appelée lorsque l'on
+        utilise l'opérateur "|". Par exemple raster1 | raster2. Dans
+        ce cas, cette syntaxe est transformée en raster1.__or__(raster2).
+
+        """
         return FuzzyRaster(
             array=self.fuzzy_operators.conorm(other),
             meta=self.raster_meta,
@@ -333,6 +345,13 @@ class FuzzyRaster:
         )
 
     def __invert__(self):
+        """Fontion pour costruire la négation d'un raster
+
+        La fonction __invert__ est automatique appelée lorsque l'on
+        utilise l'opérateur "~". Par exemple ~raster. Dans ce cas,
+        cette syntaxe est transformée en raster.__invert__().
+
+        """
         return FuzzyRaster(
             array=(1 - self.values),
             meta=self.raster_meta,
@@ -340,6 +359,14 @@ class FuzzyRaster:
         )
 
     def __sub__(self, other):
+        """Fontion pour la différence de rasters
+
+        La fonction __sub__ est automatique appelée lorsque l'on
+        utilise l'opérateur "-". Par exemple raster1 - raster2. Dans
+        ce cas, cette syntaxe est transformée en
+        raster1.__sub__(raster2).
+
+        """
         return FuzzyRaster(
             array=(self.values - other.values),
             meta=self.raster_meta,
