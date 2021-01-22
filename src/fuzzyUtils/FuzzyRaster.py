@@ -190,35 +190,77 @@ class FuzzyRaster:
         #     self.crisp_values, parameters)
         # self.values = self.fuzzy_values
 
-        # On  
+        # On appelle la fonction "fuzzyfy" de l'objet "fuzzyfier" créé
+        # à l'initialisation de la classe. Dans les faits la fonction
+        # "fuzzyfication" de la classe fuzzyraster n'est qu'un "alias"
+        # vers la fonction ad hoc de l'objet.
+        #
+        # La méthode de "fuzzyfy" de l'objet "fuzzyfier" à la même
+        # signature que la méthode "fuzzyfication" de la classe
+        # "FuzzyRaster" (la méthode actuelle).
+        #
+        # Le résultat de la fuzzyfication écrase "self.values" qui est
+        # l'attribut qui contient les valeurs du raster sous la forme
+        # d'un array numpy. Lorsque l'on fuzzyfie, les valeurs
+        # d'origine sont perdues.
         self.values = self.fuzzyfier.fuzzyfy(self.values, parameters)
 
     def _init_from_rasterio(self, raster, window=None):
-        """
-        Fonction d'initialisation à partir d'un raster rasterio	
+        """Fonction d'initialisation à partir d'un raster rasterio
+
+	Cette fonction a besoin d'un raster rasterio et peu utiliser
+        un objet window de rasterio pour limiter la zone traitée.
+
         """
 
         # self.crisp_values = raster.read(window=window)
         # self.values = self.crisp_values  #[0]
 
+        # Les valeurs du raster sont transformées en array numpy et
+        # stoquées dans la variable "self.values" à l'aide de la
+        # fonction "read" de rasterio. Si la fenêtre est précisée la
+        # zone lue est cropée.
         self.values = raster.read(window=window)
 
+        # On sauvegarde les métadonnées géographiques du raster dans
+        # un attribut ad hoc.
         if window:
+            # Si une window est utilisé, alors les métadonnées du
+            # raster initial ne sont plus valables. Il est donc
+            # nécessaire de les mettre à jour.
 
+            # On copie les métadonnées (sous forme de dictionnaire)
+            # dans l'attribut self.raster_meta
             self.raster_meta = raster.meta.copy()
+
+            # On transforme les métadonnées en prennant en compte la
+            # fenêtre. Cette opération est faire avec la fonction
+            # "window.transform" de rasterio.
             nw_transform = rasterio.windows.transform(
                 window, self.raster_meta["transform"]
             )
 
+            # On met à jour "self.raster_meta" en modifiant la valeur
+            # des attributs modifiés par la fenêtre
             self.raster_meta.update(
                 {
+                    # La hauteur du raster
                     "height": window.height,
+                    # La largeur du raster
                     "width": window.width,
+                    # Et la matrice de transformation affine 3x3 qui
+                    # permet le géoréférencement du raster
+                    # (cf. https://github.com/sgillies/affine)
+                    #
+                    # Important : Si le raster est mal géoréférencé le
+                    # problème est surement ici
                     "transform": nw_transform,
                 }
             )
-
         else:
+            # Si on n'utilise pas de window alors la géométrie n'est
+            # pas modifiée, on peut donc utiliser les métadonnées
+            # telles quelles.
             self.raster_meta = raster.meta
 
     def _init_from_numpy(self, array, meta=None):
