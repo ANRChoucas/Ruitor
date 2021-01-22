@@ -264,17 +264,41 @@ class FuzzyRaster:
             self.raster_meta = raster.meta
 
     def _init_from_numpy(self, array, meta=None):
-        """
-        Fonction d'initialisation à partir d'un array numpy	
+        """Fonction d'initialisation à partir d'un array numpy
+
+	Cette fonction a besoin d'un array numpy et de métadonnées
+        géographiques. Avec ce processus de construction il n'est pas
+        possible de modifier l'emprise (pas d'utilisation d'objet window)
+
         """
 
         # self.crisp_values = array
         # self.values = self.crisp_values
+
+        # On copie l'array dans l'attribut "self.values"
         self.values = array
 
         if meta:
+            # S'il y a des métadonnées qui sont fournies, on les copie
             self.raster_meta = meta
         else:
+            # Sinon on les génére, du mieux que l'on peut.
+            #
+            # Les arrays numpys générés par rasterio sont toujours de
+            # la forme (height, width, count). Le paramètre "count"
+            # donne le numéro de la couche. Par exemple un raster RGB
+            # aura 3 couches et un panchromatique 5.
+            #
+            # Dans le cas où il n'y a qu'un couche, rasterio a besoin
+            # que ce paramètre soit de 1 et que la forme de l'array
+            # qui y soit associé soit (height, width, 1), alors qu'en
+            # général on construit des arrays (height, width)
+            # lorsqu'on ne travaille pas avec plusieurs couches.
+            #
+            # Pour que le tout marche on recupère la valeur de la
+            # troisième dimension de l'arrray. Si on obtient une
+            # IndexError, alors cela signifie que l'array est de la
+            # forme (x,y) et donc on attribue la valeur de 1
             try:
                 count = array.shape[2]
             except IndexError:
@@ -282,12 +306,19 @@ class FuzzyRaster:
 
             self.raster_meta = {
                 "count": count,
+                # Aucun CRS n'est fourni, donc on crée un raster sans
+                # CRS
                 "crs": None,
+                # Par défaut on travaille avec des GeoTiff
                 "driver": "GTiff",
+                # Le type, la hauteur et la largeur sont ceux de
+                # l'array numpy utilisé pour la construction
                 "dtype": array.dtype,
                 "height": array.shape[0],
                 "width": array.shape[1],
+                # On met -99999 en nodata
                 "nodata": -99999.0,
+                # Comme le CRS, pas de matrice affine
                 "transform": None,
             }
 
@@ -296,11 +327,16 @@ class FuzzyRaster:
     #   return self.values[self.values != self.raster_meta['nodata']]
 
     def plot(self):
+        """Trace le raster à l'aide de matplotlib
+
+        Fonction qui permet de représenter rapidement le raster flou
+        utilisé. N'est employable que lors d'utilisations en console
+
+        """
         pyplot.matshow(self.values, cmap="gray")
 
     def contour(self, max_val=1, by=0.1):
-        """
-        Génère les isolignes du raster
+        """Génère les isolignes du raster
         """
         cs = pyplot.contour(self.values[0], np.arange(0, max_val, by))
 
@@ -320,6 +356,8 @@ class FuzzyRaster:
         return lines
 
     def summarize(self):
+        """Affiche un résumé du raster
+        """
 
         nodata = self.raster_meta["nodata"]
         nodata_ind = self.values == nodata
@@ -416,15 +454,14 @@ class FuzzyRaster:
         )
 
     def write(self, path, write_params=None, write_window=None):
-        """
-        Enregistrement du raster
+        """Enregistrement du raster
 
         Par défaut, la fonction utilise les paramètres de self.raster_meta
 
         :param path: Emplacement du fichier
         :param write_params: Paramètres d'enregistrement
         """
-
+        
         if not write_params:
             write_params = self.raster_meta
 
