@@ -3,6 +3,8 @@ FuzzyRaster
 
 Module décrivant la classe FuzzyRaster.
 
+Ce module est le centre du package FuzzyUtils.
+
 """
 
 from . import Fuzzyfiers
@@ -20,8 +22,61 @@ from shapely.geometry import LineString
 
 class FuzzyRaster:
     """Classe FuzzyRaster
+    
+    La classe FuzzyRaster est une extension de la classe raster pour
+    traiter des rasters flous. Elle permet d'éffectuer des opérations
+    ensemblistes floues entre deux rasters de même emprise
+    (mapAlgebra).
+
+    Les rasters flous peuvent être créés de deux façons. Soit à partir
+    d'un raster rasterio, soit à partir d'un array numpy et d'un
+    ensemble de métadonnées géographiques.
+
+    :Example:
+
+    # D'après un raster rasterio
+    >>> import rasterio
+    >>> from fuzzyUtils.FuzzyRaster import FuzzyRaster
+    >>> dataset = rasterio.open('example.tif')
+    >>> FuzzyRaster(raster=dataset)
+
+    # D'après un array numpy
+    >>> import numpy as np
+    >>> from fuzzyUtils.FuzzyRaster import FuzzyRaster
+    # Raster exemple
+    >>> dataset = np.zeros((2, 3))
+    >>> FuzzyRaster(array=dataset)
+
+    # D'après un array numpy, avec fuzzyfication
+    >>> import numpy as np
+    >>> from fuzzyUtils.FuzzyRaster import FuzzyRaster
+    # Raster exemple
+    >>> dataset = np.zeros((2, 3))
+    >>> FuzzyRaster(array=dataset, fuzzyfication_parameters=[(0,0),(10,1)])
+
     """
 
+    # Ce module fait souvent appel au design pattern strategy
+    # (cf. https://en.wikipedia.org/wiki/Strategy_pattern). Certaines
+    # fonctions de la classe sont déléguées à des méthodes d'autres
+    # objets par composition.
+    #
+    # L'intêret de cette approche est qu'il est possible de définir de
+    # nouveaux comportements en changeant les relations de composition
+    # à la création de l'objet.
+    #
+    # Dans le cas de cette classe deux grandes fonctions sont délégués
+    # à d'autres objets : la fuzzyfication, qui est opérée par des
+    # objets dont la classe hérite de Fuzzyfier (classe définie dans
+    # le fichier Fuzzyfiers.py), et les opérations inter-raster, qui
+    # sont opérées par des objets héritant de la classe FuzzyOperators
+    # (classe définie dans le fichier FuzzyOperators.py).
+
+    # C'est deux variables de classe définissent les "strategies" par
+    # défaut. C'est-à-dire que (sans modification) chaque instance de
+    # la classe FuzzyRaster sera spatialisée à l'aide du fuzzyficateur
+    # Fuzzyfiers.FuzzyfierMoreSpeeeeed et utilisera les opérateurs de
+    # Zadeh, définis par la classe FuzzyOperators.ZadehOperators.
     default_fuzzy_operators_strategy = FuzzyOperators.ZadehOperators
     default_fuzzyfier_strategy = Fuzzyfiers.FuzzyfierMoreSpeeeeed
 
@@ -34,54 +89,108 @@ class FuzzyRaster:
         :param fuzzyfier_strategy: Strategie de fuzzyfication
 
         :return: Une instance de FuzzyRaster
+
+        Cette fonction permet la création de rasters flous. Elle prend
+        deux paramètres nommés, fuzzy_operators_strategy et
+        fuzzyfier_strategy qui permettent de surcharger les stategies
+        de fuzzyfication et les opérateurs flous à la création de l'objet.
+
+        Les paramètres de création de l'instance sont a fournir dans
+        le kwargs, ils ne sont pas nommés car deux configurations sont
+        possibles. Soit l'utilisateur renseigne le paramètre "raster"
+        et le paramètre "window" (optionel), soit il renseigne le
+        paramètre "array" et le paramètre "meta" (optionel).
+
+        Dans le cas où l'utilisateur le demande, on peut directement
+        fuzzyfier le raster. Pour ça il faut renseigner le paramétre
+        "fuzzyfication_parameters". Ce paramètre prend en entrée une
+        liste de tuples. Pour chaque tuple la première valeur donne le
+        x et la seconde le y (nécessairement compris entre 0 et
+        1). Une liste de deux valeurs (eg. [(10,0),(15.2,1)]) permet
+        de créer une fonction croissante, une liste de trois valeurs
+        (eg. [(5,0),(10,0),(15.2,1)]) une fonction triangulaire et une
+        liste de quatre valeurs une fonction trapézoidale. Pour plus
+        d'informations voir la documentation de la classe "Fuzzyfier".
+
         """
 
-        # Définition des opérateurs flous
+        # Définition des opérateurs flous Si une statégie alternative
+        # est donnée ("fuzzy_operators_strategy" != de None) alors on
+        # l'utilise, sinon on utilise la valeur de la variable de
+        # classe "default_fuzzy_operators_strategy".
         if fuzzy_operators_strategy:
             self.fuzzy_operators = fuzzy_operators_strategy(self)
         else:
             self.fuzzy_operators = self.default_fuzzy_operators_strategy(self)
 
         # Stratégie de fuzzyfication
+        # Fonctione de la même manière que ci-dessus
         if fuzzyfier_strategy:
             self.fuzzyfier = fuzzyfier_strategy(self)
         else:
             self.fuzzyfier = self.default_fuzzyfier_strategy(self)
 
-        # Construction raster flou
+        # Construction raster flou Premier cas, le raster flou est
+        # crée à partir d'un objet raster issu de rasterio
+        #
+        # Si le paramètre "raster" est renseigné alors on utilise la
+        # fonction de création à partir d'un objet rasterio
         if "raster" in kwargs:
+            # On récupère le raster
             raster = kwargs.get("raster")
+            # On récupére la valeur du paramètre "window" (peut-être
+            # vide) Le contenu de window doit être un objet window de
+            # rasterio
             window = kwargs.get("window", None)
+            # On utilise la méthode de création d'une instance de
+            # FuzzyRaster à partir d'un raster rasterio
             self._init_from_rasterio(raster, window=window)
+        # Si le paramètre "array" est renseigné
         elif "array" in kwargs:
+            # On renvoie un avertissement dans le cas où l'on cherche
+            # à utiliser une window avec un array (ne fonctionne pas).
             if "window" in kwargs:
                 raise Warning("Cannot use a window with a numpy array")
             array = kwargs.get("array")
+            # On récupére le contenu de meta (optionel)
             meta = kwargs.get("meta", None)
+            # On appelle la méthode permettant de crée un FuzzyRaster
+            # à partir d'un array numpu
             self._init_from_numpy(array, meta)
         else:
+            # Dans tous les autrs cas on renvoie une exception
             raise ValueError("Bad parameters")
 
-        # Fuzzyfication
+        # On fuzzyfie le raster si le paramètre
+        # "fuzzyfication_parameters" est renseigné.
         if "fuzzyfication_parameters" in kwargs:
             fuzzyfication_parameters = kwargs.get("fuzzyfication_parameters")
+            # On fuzzyfie
             self.fuzzyfication(fuzzyfication_parameters)
 
     def fuzzyfication(self, parameters):
-        """
-        Fonction de fuzzyfication.
+        """Fonction de fuzzyfication.
 
-        Prend en paramètre une liste de tuples dont la première valeur est un seuil
-        et la seconde le degré flou qui y est associé. 
+        Prend en paramètre une liste de tuples. Pour chaque tuple la
+        première valeur donne le x et la seconde le y (nécessairement
+        compris entre 0 et 1). Une liste de deux valeurs
+        (eg. [(10,0),(15.2,1)]) permet de créer une fonction
+        croissante, une liste de trois valeurs
+        (eg. [(5,0),(10,0),(15.2,1)]) une fonction triangulaire et une
+        liste de quatre valeurs une fonction trapézoidale. Pour plus
+        d'informations voir la documentation de la classe "Fuzzyfier".
 
         :param parameters: liste de tuples contenant les paramètres de fuzzyfication
         :type parameters: liste de 2-uples
 
-        :return: None	
+        :return: None
+
         """
         # self.fuzzy_values = self.fuzzyfier.fuzzyfy(
         #     self.crisp_values, parameters)
         # self.values = self.fuzzy_values
+
+        # On  
         self.values = self.fuzzyfier.fuzzyfy(self.values, parameters)
 
     def _init_from_rasterio(self, raster, window=None):
