@@ -1,7 +1,8 @@
 """
 FuzzyRaster
+-----------
 
-Module décrivant la classe FuzzyRaster.
+Module décrivant la classe :class:`FuzzyRaster`.
 
 Ce module est le centre du package FuzzyUtils.
 
@@ -33,24 +34,23 @@ class FuzzyRaster:
     ensemble de métadonnées géographiques.
 
     :Example:
-
-    # D'après un raster rasterio
+    >>> # D'après un raster rasterio
     >>> import rasterio
     >>> from fuzzyUtils.FuzzyRaster import FuzzyRaster
     >>> dataset = rasterio.open('example.tif')
     >>> FuzzyRaster(raster=dataset)
 
-    # D'après un array numpy
+    >>> # D'après un array numpy
     >>> import numpy as np
     >>> from fuzzyUtils.FuzzyRaster import FuzzyRaster
-    # Raster exemple
+    >>> # Raster exemple
     >>> dataset = np.zeros((2, 3))
     >>> FuzzyRaster(array=dataset)
 
-    # D'après un array numpy, avec fuzzyfication
+    >>> # D'après un array numpy, avec fuzzyfication
     >>> import numpy as np
     >>> from fuzzyUtils.FuzzyRaster import FuzzyRaster
-    # Raster exemple
+    >>> # Raster exemple
     >>> dataset = np.zeros((2, 3))
     >>> FuzzyRaster(array=dataset, fuzzyfication_parameters=[(0,0),(10,1)])
 

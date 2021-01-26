@@ -1,19 +1,19 @@
-"""Module FuzzyOperators. 
+"""
+Module FuzzyOperators 
+---------------------
 
-Contient la classe générique FuzzyOperators et ses
-spécialisations. 
+Contient la classe générique :class:`FuzzyOperators` et ses
+spécialisations.
 
-
-La classe FuzzyOperators est destinée à être l’ancêtre de toutes les
-classes implémentant les opérateurs inter-ensemble.
+La classe :class:`FuzzyOperators` est destinée à être l’ancêtre de
+toutes les classes implémentant les opérateurs inter-ensemble.
 
 Pour créer de nouveaux opérateurs il convient de créer une classe
-héritant de FuzzyOperators et surchargeant les méthodes privées
-"_norm" et "_conorm"
+héritant de :class:`FuzzyOperators` et surchargeant les méthodes
+privées :func:`_norm` et :func:`_conorm`
 
 :Example:
-# Création de nouveaux opérateurs
-
+>>> # Création de nouveaux opérateurs
 >>> class MyOperators(FuzzyOperators):
 >>> 
 >>>     def __init__(self, context):
@@ -43,64 +43,115 @@ class FuzzyOperators:
     """
 
     def __init__(self, context):
+        """Fonction d'initialisation"""
+
+        # Sauvegarde un lien vers l'objet qui instancie la
+        # classe (ie ue instance de la classe FuzzyRaster)
         self.context = context
 
     def _check_operators(self, other):
+        """Vérification des opérateurs flous
+
+        Fonction de l'api privée de la classe        
+
+        """
+        
+        # Vérifie que les deux rasters utilisés ont été paramétrés avec les
+        # mêmes opérateurs flous.
         if type(self.context.fuzzy_operators) != type(other.fuzzy_operators):
+            # Si le type est différent on renvoie une erreur
             raise ValueError("Incompatibles Fuzzy Operators")
 
     def __str__(self):
         return "fuzzy operator : %s" % (self.__class__.__name__)
 
     def norm(self, other):
-        """
-        Calcule la norme de deux ensembles flous
-        """
+        """Calcule la norme de deux ensembles flous
 
+        :param self: Un FuzzyRaster
+        :type self: FuzzyRaster
+
+        :param other: Un FuzzyRaster
+        :type other: FuzzyRaster
+
+        :return: Un array numpy
+        """
+        
+        # On vérifie que les deux rasters ont été instanciés avec le
+        # même type d'opérateurs flous
         self._check_operators(other)
+        
         # Récupération des valeurs 'nodata'
         nodata_self = self.context.raster_meta["nodata"]
         notada_other = other.raster_meta["nodata"]
-        # Calcul de la norme
+        
+        # Calcul de la t-norme On utilise la fonction _norm qui est
+        # surchagée par les classes implémentant les opérateurs flous
         norm = self._norm(other)
+        
         # Ajout des 'nodata' dans le cas ou il manque des valeurs
         nodata_vals = np.logical_or(
             self.context.values == nodata_self, other.values == notada_other
         )
         norm[nodata_vals] = nodata_self
+        
         return norm
 
     def conorm(self, other):
-        """
-        Calcule la conorme de deux ensembles flous
+        """Calcule la conorme de deux ensembles flous
+        
+        :param self: Un FuzzyRaster
+        :type self: FuzzyRaster
+
+        :param other: Un FuzzyRaster
+        :type other: FuzzyRaster
+
+        :return: Un array numpy
         """
 
+        # On vérifie que les deux rasters ont été instanciés avec le
+        # même type d'opérateurs flous
         self._check_operators(other)
+        
         # Récupération des valeurs 'nodata'
         nodata_self = self.context.raster_meta["nodata"]
         notada_other = other.raster_meta["nodata"]
-        # Calcul de la conorme
+        
+        # Calcul de la conorme.  On utilise la fonction _conorm qui est
+        # surchagée par les classes implémentant les opérateurs flous
         conorm = self._conorm(other)
+        
         # Ajout des 'nodata' dans le cas ou il manque des valeurs
         nodata_vals = np.logical_or(
             self.context.values == nodata_self, other.values == notada_other
         )
         conorm[nodata_vals] = nodata_self
+        
         return conorm
 
     def _norm(self, other):
+        """ """
         raise NotImplementedError("No t-norm defined")
 
     def _conorm(self, other):
+        """ """
         raise NotImplementedError("No t-norm defined")
 
 
 class ZadehOperators(FuzzyOperators):
-    """
-    Opérateurs flous tels que formalisés par Zadeh
+    """Opérateurs flous tels que formalisés par Zadeh
 
-    t-norme(a,b) = min(a,b)
-    t-conorme(a,b) = max(a,b)
+    Les opérateurs de Zadeh ont été proposés dans l'article fondateur
+    de la théorie des sous-ensembles flous
+    (`doi:10.1016/S0019-9958(65)90241-X <https://doi.org/10.1016/S0019-9958(65)90241-X>`_).
+
+    .. figure:: _static/opérateurs_zadeh.png
+
+    .. math::
+        t-norme(a,b) = \min (a,b)
+
+        t-conorme(a,b) = \max (a,b)
+
     """
 
     def __init__(self, context):
@@ -117,8 +168,11 @@ class LukasiewiczOperators(FuzzyOperators):
     """
     Opérateurs flous tels que formalisés par Lukasiewicz
 
-    t-norme(a,b) = max(a+b-1, 0)
-    t-conorme(a,b) = min(a+b, 1)
+    .. math::
+        t-norme(a,b) = \max(a+b-1, 0)
+
+        t-conorme(a,b) = \min(a+b, 1)
+
     """
 
     def __init__(self, context):
@@ -135,8 +189,10 @@ class ProbabilityOperators(FuzzyOperators):
     """
     Opérateurs probabilistes flous
 
-    t-norme(a,b) = a*b
-    t-conorme(a,b) = a+b-a*b
+    .. math::
+        t-norme(a,b) = a*b
+
+        t-conorme(a,b) = a+b-a*b
     """
 
     def __init__(self, context):
@@ -153,8 +209,11 @@ class NilpotentOperators(FuzzyOperators):
     """
     Opérateurs nilpotents
 
-    t-norme(a,b) = min(a,b) si a+b > 1; 0 sinon
-    t-conorme(a,b) = max(a,b) si a+b < 1; 1 sinon
+    .. math::
+        t-norme(a,b) = min(a,b) si a+b > 1; 0 sinon
+
+        t-conorme(a,b) = max(a,b) si a+b < 1; 1 sinon
+
     """
 
     def __init__(self, context):
@@ -189,8 +248,12 @@ class DrasticOperators(FuzzyOperators):
     """
     Opérateurs drastiques
 
-    t-norme(a,b) = b si a = 1; a si b = 1; 0 sinon
-    t-conorme(a,b) = b si a = 0; a si b = 0; 1 sinon
+    .. math::
+
+        t-norme(a,b) = b si a = 1; a si b = 1; 0 sinon
+
+        t-conorme(a,b) = b si a = 0; a si b = 0; 1 sinon
+
     """
 
     def __init__(self, context):

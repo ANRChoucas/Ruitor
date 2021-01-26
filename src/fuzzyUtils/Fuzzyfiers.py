@@ -1,5 +1,6 @@
 """
-Fuzzyfiers
+Module Fuzzyfiers
+-----------------
 
 sdqd
 """
