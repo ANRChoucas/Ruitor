@@ -15,6 +15,7 @@ import numpy as np
 import matplotlib.pyplot as pyplot
 
 import rasterio
+from rasterio.io import MemoryFile
 from rasterio.windows import get_data_window
 
 from shapely import affinity
@@ -391,7 +392,7 @@ class FuzzyRaster:
             self.fuzzyfier,
         )
 
-        print(description_string)
+        return description_string
 
     def __and__(self, other):
         """Fontion pour les intersections inter-rasters
@@ -470,3 +471,17 @@ class FuzzyRaster:
         # Ecriture du raster avec les paramètres initaux
         with rasterio.open(path, "w", **write_params) as dst:
             dst.write(self.values, window=write_window)
+
+            
+    def memory_write(self, mem_file, write_params=None, write_window=None):
+        
+        if not write_params:
+            write_params = self.raster_meta
+
+        write_params["driver"] = "GTiff"
+
+        # Ecriture du raster avec les paramètres initaux
+        with mem_file.open(**write_params) as dst:
+            dst.write(self.values, window=write_window)
+
+        return mem_file
