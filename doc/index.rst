@@ -22,6 +22,7 @@ direct.
     fuzzyutils
     ontologytools
     spatialisation
+    fusion
     parser
 
 

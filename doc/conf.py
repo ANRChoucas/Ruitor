@@ -68,6 +68,6 @@ autodoc_default_options = {
     'private-members': True
 }
 
-autodoc_mock_imports = ["rasterio", "shapely", "owlready2", "skimage", "pathos", "rdflib"]
+autodoc_mock_imports = ["rasterio", "shapely", "owlready2", "skimage", "pathos", "rdflib", "skfuzzy"]
 
 todo_include_todos = True
