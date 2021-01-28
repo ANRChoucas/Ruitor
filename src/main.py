@@ -2,20 +2,24 @@
 fichier main.py
 """
 
+# Packages nécessaires pour la génération de l'api
 from fastapi import FastAPI, File, UploadFile
-
 from fastapi.responses import StreamingResponse
 
-from typing import Optional
+# Import des schémas de données personnalisés
 from api_schema import Indice, Operateur, Evaluation
 
+# Import des classes rasterio
 import rasterio
 from rasterio.io import MemoryFile
-import io
 
+# Import des packages de la sdlib nécessaire
+import io
+from functools import reduce
+
+# Import des modules de ruitor
 from fuzzyUtils.FuzzyRaster import FuzzyRaster
 
-from functools import reduce
 
 # Initialisation
 
@@ -25,7 +29,10 @@ app = FastAPI()
 
 # Requête POST /spatialisation
 @app.post("/spatialisation")
-def spatialisation(indice: Indice, operateur: Optional[Operateur]):
+def spatialisation(indice: Indice, operateur: Operateur = None):
+    """La fonction prend en entrée un indice de localisation et renvoie
+    la zlc correspondante sous la forme d'un GeoTiff.
+    """
     return {"Hello": "World"}
 
 
@@ -45,6 +52,24 @@ async def fusion(
     evaluation: Evaluation = None,
     files: list[UploadFile] = File(...),
 ):
+    """
+    La fonction prend en entrée un ensemble de fichiers GeoTiff,
+    chacun représentant une zlc, et renvoie un seul GeoTiff,
+    représentant la zlp.
+
+    Plusieurs paramètres optionels peuvent être ajoutés dans la
+    requête. Il est possible d'évaluer la qualité de la zlp construite
+    (améliorations nécessaires) à l'aide du paramétre `evaluation`. Il
+    est également possible de sélectioner la t-norme qui sera utilisée
+    pour la fusion, à l'aide du paramètre `operateur`.
+
+    test
+    ----
+
+    .. todo::
+        - Implémentation de l'évaluation
+
+    """
 
     rasterio_files = []
 

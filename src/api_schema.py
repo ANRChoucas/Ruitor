@@ -87,8 +87,21 @@ class Operateur(str, Enum):
     drastique = "Drastique"
 
     
-class Evaluation(str, Enum):
+class EvaluationMetric(str, Enum):
     note = "Note"
+    zone = "Zone"
     rank = "Rank"
+
+    
+class Evaluator(str, Enum):
+    fuzzy = "FIS"
+    dst = "DST"
+
+    
+class Evaluation(BaseModel):
+    Evaluator: Optional[Evaluator]
+    Evaluation_Metric: EvaluationMetric
+    
+
 
 ## Retour Fusion
