@@ -1,3 +1,6 @@
+"""Fichier Fusion.py
+"""
+
 from .DSTEvaluator import HypothesisSet
 from .FuzzyEvaluator import FuzzyEvaluator
 
@@ -6,26 +9,45 @@ import numpy as np
 
 
 class fusion(object):
+    """Classe Fusion"""
 
     default_evaluation_strategy = FuzzyEvaluator
 
     def __init__(self, evaluation_strategy=None, **kwargs):
+        """
+        Fonction d'initialisation
+        """
+
         if evaluation_strategy:
             self.evaluation_strategy = evaluation_strategy(self, **kwargs)
         else:
             self.evaluation_strategy = self.default_evaluation_strategy(self, **kwargs)
 
-    def compute(self, indices, evaluate="rank"):
-        f_indices = self.aggregation(indices)
-        evaluation_output = self.evaluate(f_indices, rank=evaluate)
+    def compute(self, indices, evaluate=None):
+        """
+        Fonction de calcul de la fusion
+        """
+
+        # Caclcul de la fusion
+        f_indices = self.fusion(indices)
+
+        # Réalisation de l'évaluation
+        if evaluate:
+            evaluation_output = self.evaluate(f_indices, rank=evaluate)
+        else:
+            evaluation_output = None
+
         return f_indices, evaluation_output
 
-    def aggregation(self, indices):
-        #import ipdb; ipdb.set_trace()
-        #return reduce(lambda x, y: x & y, indices)
-        xx =  indices[0]
-        xx.values = np.argmin(np.stack([i.values for i in indices], axis=0), axis=0).astype(np.float32)
-        return  xx
+    def fusion(self, indices):
+        """
+        Clacul de la fusion
+        """
+        return reduce(lambda x, y: x & y, indices)
 
     def evaluate(self, zone, rank):
+        """
+        Fonction d'évaluation
+        """
+
         return self.evaluation_strategy.evaluate(zone, rank)

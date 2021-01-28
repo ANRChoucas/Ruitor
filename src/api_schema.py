@@ -5,6 +5,7 @@ Fichier contenant l'ensemble des
 from typing import Optional
 from enum import Enum
 from pydantic import BaseModel, Field, AnyUrl
+from fastapi import File, UploadFile
 
 
 # Types génériques
@@ -88,7 +89,6 @@ class Operateur(str, Enum):
     
 class Evaluation(str, Enum):
     note = "Note"
-
-
+    rank = "Rank"
 
 ## Retour Fusion

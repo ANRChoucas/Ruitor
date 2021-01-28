@@ -7,7 +7,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
 
 from typing import Optional
-from api_schema import Indice, Operateur
+from api_schema import Indice, Operateur, Evaluation
 
 import rasterio
 from rasterio.io import MemoryFile
@@ -28,6 +28,7 @@ app = FastAPI()
 def spatialisation(indice: Indice, operateur: Optional[Operateur]):
     return {"Hello": "World"}
 
+
 # Requête POST /fusion
 @app.post(
     "/fusion",
@@ -39,7 +40,11 @@ def spatialisation(indice: Indice, operateur: Optional[Operateur]):
         }
     },
 )
-async def fusion(operateur: Optional[Operateur], files: list[UploadFile] = File(...)):
+async def fusion(
+    operateur: Operateur = None,
+    evaluation: Evaluation = None,
+    files: list[UploadFile] = File(...),
+):
 
     rasterio_files = []
 
@@ -54,9 +59,9 @@ async def fusion(operateur: Optional[Operateur], files: list[UploadFile] = File(
 
     # Réalisation de la fusion
     raster_fusion = reduce(lambda x, y: x | y, rasterio_files)
-    
-    #fusioner = fusion(cellsize=50)
-    #fuzz, fuzz_note = fusioner.compute(fuzz_list, evaluate="note")
+
+    # fusioner = fusion(cellsize=50)
+    # fuzz, fuzz_note = fusioner.compute(fuzz_list, evaluate="note")
 
     # Mise en forme du résultat
     memory_file = MemoryFile()
