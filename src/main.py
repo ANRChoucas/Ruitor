@@ -7,7 +7,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
 
 # Import des schémas de données personnalisés
-from api_schema import Indice, Operateur, Evaluation
+from api_schema import Indice, Operateur, Evaluator, EvaluationMetric
 
 # Import des classes rasterio
 import rasterio
@@ -48,26 +48,26 @@ def spatialisation(indice: Indice, operateur: Operateur = None):
     },
 )
 async def fusion(
-    operateur: Operateur = None,
-    evaluation: Evaluation = None,
+    operator: Operateur = None,
+    evaluator: Evaluator = None,
+    evaluation_metric: EvaluationMetric = None,
     files: list[UploadFile] = File(...),
 ):
-    """
-    La fonction prend en entrée un ensemble de fichiers GeoTiff,
+    """La fonction prend en entrée un ensemble de fichiers GeoTiff,
     chacun représentant une zlc, et renvoie un seul GeoTiff,
     représentant la zlp.
 
+    **Le format de retour risque d'être modifié. En effet l'évaluation
+      conduit à construire un nouveau raster, il est possible qu'a
+      terme deux GeoTiff soient retournés, le premier correspondant à
+      la ZLP et le second à l'évaluation de composantes de la ZLP.**
+
     Plusieurs paramètres optionels peuvent être ajoutés dans la
     requête. Il est possible d'évaluer la qualité de la zlp construite
-    (améliorations nécessaires) à l'aide du paramétre `evaluation`. Il
-    est également possible de sélectioner la t-norme qui sera utilisée
-    pour la fusion, à l'aide du paramètre `operateur`.
-
-    test
-    ----
-
-    .. todo::
-        - Implémentation de l'évaluation
+    (améliorations nécessaires) à l'aide des paramètres `evaluator` et
+    `evaluation_metric`. Il est également possible de sélectioner la
+    t-norme qui sera utilisée pour la fusion, à l'aide du paramètre
+    `operator`.
 
     """
 
@@ -94,4 +94,4 @@ async def fusion(
     byte_gtiff = io.BytesIO(memory_fusion_gtiff.read())
 
     # Renvoi du résultat (lent, à voir)
-    await StreamingResponse(byte_gtiff, media_type="image/tiff")
+    return StreamingResponse(byte_gtiff, media_type="image/tiff")
