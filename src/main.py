@@ -20,6 +20,8 @@ from functools import reduce
 # Import des modules de ruitor
 from fuzzyUtils.FuzzyRaster import FuzzyRaster
 
+import numpy as np
+
 
 # Initialisation
 
@@ -28,12 +30,32 @@ from fuzzyUtils.FuzzyRaster import FuzzyRaster
 app = FastAPI()
 
 # Requête POST /spatialisation
-@app.post("/spatialisation")
+@app.post(
+    "/spatialisation",
+    response_class=StreamingResponse,
+    responses={
+        200: {
+            "content": {"image/tiff": {}},
+            "description": "Retourne un GeoTiff représentant la ZLC",
+        }
+    },
+)
 def spatialisation(indice: Indice, operateur: Operateur = None):
     """La fonction prend en entrée un indice de localisation et renvoie
     la zlc correspondante sous la forme d'un GeoTiff.
+
+    **Les arguments cette fonction ne sont pas encore fixés.**
+
     """
-    return {"Hello": "World"}
+
+    raster_temp = FuzzyRaster(array=np.zeros((2, 2)))
+
+    memory_file = MemoryFile()
+    memory_fusion_gtiff = raster_temp.memory_write(memory_file)
+    byte_gtiff = io.BytesIO(memory_fusion_gtiff.read())
+
+    # Renvoi du résultat (lent, à voir)
+    return StreamingResponse(byte_gtiff, media_type="image/tiff")
 
 
 # Requête POST /fusion
