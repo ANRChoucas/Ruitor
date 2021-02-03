@@ -2,11 +2,48 @@
 Fichier contenant l'ensemble des 
 """
 
-from typing import Optional
+from typing import Optional, Union, Tuple, List
 from enum import Enum
 from pydantic import BaseModel, Field, AnyUrl
+from geojson_pydantic import features, utils
 from fastapi import File, UploadFile
 
+
+DESC_SITE = """Site utilisé pour la spatialisation de l'indice de localisaition.
+
+Le site peut être de plusieurs types, en fonctions des paramètres de
+la relation de localisation utilisée.
+
+Si la relation ne demande qu'un site (cas classique), le site fourni
+dans le corps de la requête doit être une `FeatureCollection`
+geojson. Chacune des features de cette collection est traitée comme un
+site séparé et la fonction de spatialisation renvoie la zone qui
+correspond à **l'union** des ZLC construites pour chacun de ces sites.
+
+Dans le cas où la relaiton nécessite deux (ou plus) sites
+(p. ex. `orl#EntreXEtY`) alors le site fourni dans le cœur de la
+requête doit être une liste de liste de Features. La liste la plus
+"profonde" contient toutes les sites qui seront passés à la fonction
+de spatialisation lors de la spatialisation pour une configuration
+donnée. La liste de plus haut niveau contient toutes les listes de
+sites qui seront utilisées pour générer les ZLC, lesquelles seront
+ensuite unies pour créer la ZLC finale (elles jouent le même rôle que
+la FeatureCollection dans le premier cas).
+
+
+#### Dans le cas d'une relation simple (proche), avec un objet
+```site = FeatureCollection(geom1)```
+
+####  Dans le cas d'une relation simple (proche), avec plusieurs objets
+```site = FeatureCollection(geom1, geom2, ...)```
+
+####  Dans le cas d'une relation complexe (entre), avec un objet
+```site = [[site1, site2]]```
+
+####  Dans le cas d'une relation complexe (entre), avec plusieurs objets
+```site = [[site1, site2], [site2, site3], ...]```
+
+"""
 
 # Types génériques
 class Mnt(str, Enum):
@@ -18,7 +55,7 @@ class Mnt(str, Enum):
 # Types spatialisation
 class Modifieur(BaseModel):
     """
-    Classe trop cool
+    Classe définissant le type modifieur
     """
 
     # Les modifieurs sont définis dans l'ontologie ORL. Pour
@@ -27,8 +64,9 @@ class Modifieur(BaseModel):
 
 
 class RelationLocalisation(BaseModel):
-    """
-    Documentation
+    """Relation de localisation utilisée pour l'indice de localisation
+    spatialisé
+
     """
 
     # La relation spatiale est définie par une uri, qui permet
@@ -46,29 +84,19 @@ class RelationLocalisation(BaseModel):
     )
 
 
-class Site(BaseModel):
-    """
-    Documentation
-    """
-
-    pass
-
-
 class Indice(BaseModel):
     """
     Documentation
     """
 
-    cible: Optional[str]
+    zir: utils.BBox = Field(
+        description="Boundig Box de la Zone initiale de recherche (ZIR)"
+    )
+    # cible: Optional[str]
     relationLocalisation: RelationLocalisation
-    site: Site
-
-
-# Retour spatialisation
-
-
-class Fuzzy:
-    pass
+    site: Union[List[Tuple[features.Feature, ...]], features.FeatureCollection] = Field(
+        description=DESC_SITE
+    )
 
 
 # Types Fusion

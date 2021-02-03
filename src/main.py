@@ -65,11 +65,6 @@ def spatialisation(
 ):
     """La fonction prend en entrée un indice de localisation et renvoie la
       zlc correspondante sous la forme d'un GeoTiff.
-
-    **Les arguments cette fonction ne sont pas encore fixés.**
-
-
-
     """
 
     raster_temp = FuzzyRaster(array=np.zeros((2, 2)))
