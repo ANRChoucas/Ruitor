@@ -62,16 +62,6 @@ class Indice(BaseModel):
     cible: Optional[str]
     relationLocalisation: RelationLocalisation
     site: Site
-    # La confiance est une valeur que le secouriste peut définir pour
-    # donner une indication sur sa croyance en la véracité de l'indice
-    # de localisation.
-    #
-    # Cette valeur est optionelle. Si aucune valeur n'est fournie
-    # l'indice est spatialisé avec une certitude maximale, 1.
-    #
-    # La valeur de la confiance doit être comprise dans l'intervalle
-    # [0,1]
-    confiance: Optional[float] = Field(description="Confiance", ge=0, le=1)
 
 
 # Retour spatialisation

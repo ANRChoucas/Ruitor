@@ -3,8 +3,10 @@ fichier main.py
 """
 
 # Packages nécessaires pour la génération de l'api
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Query
 from fastapi.responses import StreamingResponse
+
+from typing import Optional
 
 # Import des schémas de données personnalisés
 from api_schema import Indice, Operateur, Evaluator, EvaluationMetric
@@ -21,6 +23,17 @@ from functools import reduce
 from fuzzyUtils.FuzzyRaster import FuzzyRaster
 
 import numpy as np
+
+
+DESC_CONFIANCE = """La confiance est une valeur que le secouriste peut
+définir pour donner une indication sur sa croyance en la véracité de
+l'indice de localisation.
+
+Cette valeur est optionelle. Si aucune valeur n'est fournie l'indice
+est spatialisé avec une certitude maximale, 1.
+
+La valeur de la confiance doit être comprise dans l'intervalle
+[0,1]"""
 
 
 # Initialisation
@@ -40,11 +53,22 @@ app = FastAPI()
         }
     },
 )
-def spatialisation(indice: Indice, operateur: Operateur = None):
-    """La fonction prend en entrée un indice de localisation et renvoie
-    la zlc correspondante sous la forme d'un GeoTiff.
+def spatialisation(
+    indice: Indice,
+    operateur: Operateur = None,
+    confiance: Optional[float] = Query(
+        None,
+        ge=0,
+        le=1,
+        description=DESC_CONFIANCE,
+    ),
+):
+    """La fonction prend en entrée un indice de localisation et renvoie la
+      zlc correspondante sous la forme d'un GeoTiff.
 
     **Les arguments cette fonction ne sont pas encore fixés.**
+
+
 
     """
 
