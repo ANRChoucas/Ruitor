@@ -94,3 +94,7 @@ class GeometryParser:
 
         return out_Line
 
+
+ class JSONGeometryParser:
+     pass
+
