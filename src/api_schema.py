@@ -61,7 +61,7 @@ class Modifieur(BaseModel):
     # Les modifieurs sont définis dans l'ontologie ORL. Pour
     # identifier le modifieur utrilisé il faut fournir son url
     uri: AnyUrl = Field(description="Uri du modifieur dans l'ontologie ORL")
-    value: Optional[Any]
+    value: Optional[Any] = Field(description="Valeur du modifieur, si nécessaire")
 
 
 class RelationLocalisation(BaseModel):
