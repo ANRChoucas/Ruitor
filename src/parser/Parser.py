@@ -4,6 +4,8 @@ Parser xml arguments
 
 
 from bs4 import BeautifulSoup
+import json
+
 from .Validator import Validator
 from .GeometryParser import GeometryParser, JSONGeometryParser
 
@@ -159,6 +161,7 @@ class Parser:
     def __str__(self):
         return self._xml_dict
 
+    
 
 class JSONParser:
     """
@@ -178,28 +181,24 @@ class JSONParser:
         else:
             self.geometryParser = self.default_geometryParser_strategy(self)
 
-        self._xml_dict = {}
-
-        with open(file) as f:
-            self.json = BeautifulSoup(f, "xml")
+        self._json_dict = {}
+        self.json = file
 
         self.parse()
 
     def parse(self):
 
         # Calcul Zir
-        if self.xml.zir:
-            self._xml_dict["zir"] = self.parse_zir(self.xml.zir)
+        if self.json.zir:
+            self._json_dict["zir"] = self.parse_zir(self.json.zir)
 
         # Parsage indices
-        self._xml_dict["indices"] = self.parse_indices(self.xml.indices)
+        self._json_dict["indices"] = self.parse_indices(self.json.indices)
 
     @property
     def values(self):
-        return self._xml_dict
+        return self._json_dict
 
-    def validation(self, file, schema):
-        return self.validator.validation(file, schema)
 
     def parse_indices(self, indices_xml, **kwargs):
 
@@ -284,18 +283,13 @@ class JSONParser:
         else:
             return 1.0
 
-    def parse_zir(self, zir_xml):
+    def parse_zir(self, zir_json):
         """
         Zone initiale de recherche au format Bbox.
         zir = [[x1, y1], [x2, y2]] 
         """
 
-        zir_coords = zir_xml.Envelope
-        # Calcul Zir
-        lc = zir_coords.lowerCorner
-        up = zir_coords.upperCorner
-        bbox = [[float(j) for j in i.string.split()] for i in (lc, up)]
-
+        bbox = [[*i] for i in zip(zir_json[0::2],zir_json[1::2])]
         return bbox
 
     def __str__(self):

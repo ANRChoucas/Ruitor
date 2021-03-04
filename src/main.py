@@ -11,18 +11,30 @@ from typing import Optional
 # Import des schémas de données personnalisés
 from api_schema import Indice, Operateur, Evaluator, EvaluationMetric
 
+import logging
+import logging.config
+
 # Import des classes rasterio
 import rasterio
 from rasterio.io import MemoryFile
 
 # Import des packages de la sdlib nécessaire
 import io
+import os
 from functools import reduce
 
 # Import des modules de ruitor
 from fuzzyUtils.FuzzyRaster import FuzzyRaster
+from fusion.Fusion import fusion
+from ontologyTools import SROnto, ROOnto
+from spatialisation import SpatialisationFactory
+from parser import JSONParser
+
 
 import numpy as np
+
+import config
+
 
 
 DESC_CONFIANCE = """La confiance est une valeur que le secouriste peut
@@ -36,7 +48,100 @@ La valeur de la confiance doit être comprise dans l'intervalle
 [0,1]"""
 
 
+logger = logging.getLogger(__name__)
+
+
+# Fonctions d'initialisation
+def set_proxy(url, port):
+    """
+    Fonction permettant la définition du proxy (usage ign)
+    """
+    
+    proxy = "%s:%s" % (url, port)
+
+    os.environ["http_proxy"] = proxy
+    os.environ["HTTP_PROXY"] = proxy
+    os.environ["https_proxy"] = proxy
+    os.environ["HTTPS_PROXY"] = proxy
+    
+    logger.info("The proxy : %s is used" % proxy)
+
+
+def load_mnt(params, name=None, precision=None):
+    """
+    Fonction permettant de charger le MNT pour la spatialisation
+    """
+    
+    if name:
+        rasters = [i for i in params["MNT"] if i["name"] == name]
+    elif precision:
+        rasters = [i for i in params["MNT"] if i["precision"] == precision]
+    else:
+        raise ValueError("No Mnt corresponding")
+    mntfile = get_file(rasters[0])
+
+    logger.debug(
+        "Used MNT : %s (precision %s)" % (rasters[0]["name"], rasters[0]["precision"])
+    )
+
+    return rasterio.open(mntfile)
+
+
+def get_file(params):
+    file_folder = params["path"]
+    file_name = params["filename"]
+    file = os.path.join(file_folder, file_name)
+
+    return file
+
+
+def load_ontology(params, onto_type):
+    onto_dispacher = {"SRO": SROnto, "ROO": ROOnto}
+    ontology = [i for i in params if i["type"] == onto_type]
+    ontology_file = get_file(ontology[0])
+
+    logger.debug("Used ontology : %s" % ontology[0]["type"])
+
+    return onto_dispacher[onto_type](ontology_file)
+
+
+def configuration(config):
+    # Configuration logging
+    logging.config.dictConfig(config.logging_configuration)
+
+    # Définition proxy
+    try:
+        set_proxy(**config.proxy)
+    except AttributeError:
+        logger.debug("No proxy used")
+
+
+def set_zir(raster, zir):
+    # Spécification du padding
+    padding = {"x": 10, "y": 10}
+    # Calcul Zir
+    # Calcul des numéros de ligne et de colonne correspondant aux
+    # deux points de la bbox
+    row_ind, col_ind = zip(*map(lambda x: raster.index(*x), zir))
+    # Extraction du numéro de ligne/colonne minimum
+    row_min, col_min = min(row_ind), min(col_ind)
+    # Calcul du nombre de lignes/colonnes
+    row_num = abs(max(row_ind) - row_min) + padding["x"]
+    col_num = abs(max(col_ind) - col_min) + padding["y"]
+    # Définition de la fenêtre de travail
+    return Window(col_min, row_min, col_num, row_num)
+
+
 # Initialisation
+
+# Chargement de la configuration 
+#configuration(config)
+
+# Chargement ontologie ORL
+#sro = load_ontology(config.ontology, "SRO")
+
+# Import données
+#mnt = load_mnt(config.data, name="BR")
 
 
 # Déclaration de l'api
@@ -67,7 +172,21 @@ def spatialisation(
       zlc correspondante sous la forme d'un GeoTiff.
     """
 
-    raster_temp = FuzzyRaster(array=np.zeros((2, 2)))
+    print(indice)
+
+
+    parser = JSONParser(indice)
+    
+    spatialisationParms = parser.values
+    
+    factor = SpatialisationFactory(spatialisationParms, mnt, sro)
+    
+    test4 = list(factor4.make_Spatialisation())
+
+    
+    
+    raster_temp = FuzzyRaster()
+
 
     memory_file = MemoryFile()
     memory_fusion_gtiff = raster_temp.memory_write(memory_file)
@@ -75,6 +194,8 @@ def spatialisation(
 
     # Renvoi du résultat (lent, à voir)
     return StreamingResponse(byte_gtiff, media_type="image/tiff")
+
+
 
 
 # Requête POST /fusion

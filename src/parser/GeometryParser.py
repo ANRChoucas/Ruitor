@@ -95,6 +95,12 @@ class GeometryParser:
         return out_Line
 
 
- class JSONGeometryParser:
-     pass
+
+class JSONGeometryParser:
+    """
+    Parseur de géométries GeoJson
+    """
+    
+    def __init__(self, context):
+        self.context = context
 
