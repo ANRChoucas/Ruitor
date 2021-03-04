@@ -170,19 +170,21 @@ class JSONParser:
     default_geometryParser_strategy = JSONGeometryParser
 
     def __init__(
-            self, file, geometryParser_strategy=None
+            self, indice, confiance, geometryParser_strategy=None
     ):
         """
         Fonction d'initialisation
         """
 
+        # Définition de la strategie de parsage de la géometrie
         if geometryParser_strategy:
             self.geometryParser = geometryParser_strategy(self)
         else:
             self.geometryParser = self.default_geometryParser_strategy(self)
 
         self._json_dict = {}
-        self.json = file
+        self.json = indice
+        self._confiance = confiance
 
         self.parse()
 
@@ -192,68 +194,57 @@ class JSONParser:
         if self.json.zir:
             self._json_dict["zir"] = self.parse_zir(self.json.zir)
 
-        # Parsage indices
-        self._json_dict["indices"] = self.parse_indices(self.json.indices)
+        # Parsage indice
+        self._json_dict["indices"] = self.parse_indices(self.json)
 
     @property
     def values(self):
         return self._json_dict
 
 
-    def parse_indices(self, indices_xml, **kwargs):
+    def parse_indices(self, indices_json, **kwargs):
 
-        indice_key = kwargs.get("indice_key", "indice")
-
-        indices = []
-
-        for i in indices_xml.children:
-            if i.name == indice_key:
-                indices.append(self.parse_indice(i))
-
+        indices = [self.parse_indice(indices_json)]
         return indices
 
-    def parse_indice(self, indice_xml):
+    def parse_indice(self, indice_json):
 
         indice_dict = {}
 
-        confiance = self.parse_confiance(indice_xml.attrs.get("confiance"))
-        relSpa = self.parse_relationSpatiale(indice_xml.relationSpatiale)
-        cible = self.parse_cible(indice_xml.cible)
-        site = self.parse_site(indice_xml.site)
+        relSpa = self.parse_relationSpatiale(indice_json.relationLocalisation)
+        cible = self.parse_cible()
+        site = self.parse_site(indice_json.site)
 
-        indice_dict["confiance"] = confiance
+        indice_dict["confiance"] = self._confiance
         indice_dict["relationSpatiale"] = relSpa
         indice_dict["cible"] = cible
         indice_dict["site"] = site
-
+        print(indice_dict)
+        
         return indice_dict
 
-    def parse_cible(self, cible_xml):
+    def parse_cible(self):
         return "Nothing"
 
-    def parse_relationSpatiale(self, relSpa_xml):
+    def parse_relationSpatiale(self, relSpa_json):
         relSpaDic = {}
-        relSpaUri = relSpa_xml.attrs.get("about")
 
-        relSpaDic["uri"] = relSpaUri
+        relSpaDic["uri"] = str(relSpa_json.uri)
 
-        for child in relSpa_xml.children:
-            if child.name == "modifieurs":
-                relSpaDic["modifieurs"] = self.parse_modifieur(child)
+        print(relSpa_json)
+
+        for child in relSpa_json.modifieurs:
+            relSpaDic["modifieurs"] = self.parse_modifieur(child)
 
         return relSpaDic
 
-    def parse_modifieur(self, mod_xml):
+    def parse_modifieur(self, mod_json):
         outList = []
-        for i in mod_xml:
-            if i.name == "modifieur":
-                dic = {}
-                uri = i.attrs.get("about")
-                dic["uri"] = uri
-                value = i.string
-                if value:
-                    dic["value"] = value
-                    outList.append(dic)
+        for i in mod_json:
+            dic = {}
+            dic["uri"] = str(mod_json.uri)
+            dic["value"] = mod_json.value
+            outList.append(dic)
         return outList
 
     def parse_site(self, site_xml, **kwargs):

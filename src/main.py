@@ -162,7 +162,7 @@ def spatialisation(
     indice: Indice,
     operateur: Operateur = None,
     confiance: Optional[float] = Query(
-        None,
+        1,
         ge=0,
         le=1,
         description=DESC_CONFIANCE,
@@ -175,7 +175,7 @@ def spatialisation(
     print(indice)
 
 
-    parser = JSONParser(indice)
+    parser = JSONParser(indice, confiance)
     
     spatialisationParms = parser.values
     

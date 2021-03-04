@@ -2,7 +2,7 @@
 Fichier contenant l'ensemble des 
 """
 
-from typing import Optional, Union, Tuple, List
+from typing import Optional, Union, Tuple, List, Any
 from enum import Enum
 from pydantic import BaseModel, Field, AnyUrl
 from geojson_pydantic import features, utils
@@ -61,6 +61,7 @@ class Modifieur(BaseModel):
     # Les modifieurs sont définis dans l'ontologie ORL. Pour
     # identifier le modifieur utrilisé il faut fournir son url
     uri: AnyUrl = Field(description="Uri du modifieur dans l'ontologie ORL")
+    value: Optional[Any]
 
 
 class RelationLocalisation(BaseModel):
