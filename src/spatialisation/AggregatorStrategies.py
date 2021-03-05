@@ -68,7 +68,7 @@ class ParallelAggregator(AggregatorStrategy):
         for i in input:
             v = self.context[i].compute()
             # Écriture des rasters objets
-            v.write("./_outTest/%s-%s-%s.tif" % i)
+            #v.write("./_outTest/%s-%s-%s.tif" % i)
             tmp[i] = v
 
         logger.debug("agg_spa_rel : Begin")
@@ -182,7 +182,7 @@ class FirstAggregator(AggregatorStrategy):
 
             for k, v in cmp_dic.items():
                 f_name = "obj%s_part%s_rel%s" % k
-                v.write("./_outTest/%s.tif" % f_name)
+                #v.write("./_outTest/%s.tif" % f_name)
                 logger.debug("Spatial relation %s writing : Done", f_name)
 
             logger.debug("Spatial relations writing : Done")
@@ -191,7 +191,7 @@ class FirstAggregator(AggregatorStrategy):
 
             for k, v in zou.items():
                 f_name = "obj%s_part%s" % k
-                v.write("./_outTest/%s.tif" % f_name)
+                #v.write("./_outTest/%s.tif" % f_name)
                 logger.debug("Object part %s writing  : Done", f_name)
 
             logger.debug("Objects Parts writing : Done")

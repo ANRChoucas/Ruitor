@@ -42,7 +42,7 @@ class SpatialisationFactory:
             self.zir = self.set_zir(self.raster, spaParms["zir"])
         else:
             self.zir = None
-
+            
     def make_modifieurs(self, xml_modifieurs=None):
         """
         """

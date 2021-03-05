@@ -214,14 +214,13 @@ class JSONParser:
 
         relSpa = self.parse_relationSpatiale(indice_json.relationLocalisation)
         cible = self.parse_cible()
-        site = list(self.parse_site(indice_json.site))
+        site = self.parse_site(indice_json.site)
 
         indice_dict["confiance"] = self._confiance
         indice_dict["relationSpatiale"] = relSpa
         indice_dict["cible"] = cible
         indice_dict["site"] = site
-        print(indice_dict)
-        
+
         return indice_dict
 
     def parse_cible(self):
@@ -229,13 +228,13 @@ class JSONParser:
 
     def parse_relationSpatiale(self, relSpa_json):
         relSpaDic = {}
-
         relSpaDic["uri"] = str(relSpa_json.uri)
-
-        print(relSpa_json)
-
-        for child in relSpa_json.modifieurs:
-            relSpaDic["modifieurs"] = self.parse_modifieur(child)
+        
+        try:
+            for child in relSpa_json.modifieurs:
+                relSpaDic["modifieurs"] = self.parse_modifieur(child)
+        except TypeError:
+            pass
 
         return relSpaDic
 

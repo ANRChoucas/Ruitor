@@ -173,19 +173,18 @@ def spatialisation(
       zlc correspondante sous la forme d'un GeoTiff.
     """
 
-    print(indice)
-
+    print("DD")
 
     parser = JSONParser(indice, confiance)
+
     
     spatialisationParms = parser.values   
     
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
-   
-    #test = list(factor.make_Spatialisation())
 
-        
-    raster_temp = FuzzyRaster(raster=mnt)
+    test = list(factor.make_Spatialisation())
+
+    raster_temp = test[0].compute()
 
 
     memory_file = MemoryFile()
