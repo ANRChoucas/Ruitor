@@ -135,17 +135,18 @@ def set_zir(raster, zir):
 # Initialisation
 
 # Chargement de la configuration 
-#configuration(config)
+configuration(config)
 
 # Chargement ontologie ORL
-#sro = load_ontology(config.ontology, "SRO")
+sro = load_ontology(config.ontology, "SRO")
 
 # Import données
-#mnt = load_mnt(config.data, name="BR")
-
+mnt = load_mnt(config.data, name="BR")
 
 # Déclaration de l'api
 app = FastAPI()
+
+# Définition points entrée API
 
 # Requête POST /spatialisation
 @app.post(
@@ -177,15 +178,14 @@ def spatialisation(
 
     parser = JSONParser(indice, confiance)
     
-    spatialisationParms = parser.values
+    spatialisationParms = parser.values   
     
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
-    
-    test4 = list(factor4.make_Spatialisation())
+   
+    #test = list(factor.make_Spatialisation())
 
-    
-    
-    raster_temp = FuzzyRaster()
+        
+    raster_temp = FuzzyRaster(raster=mnt)
 
 
     memory_file = MemoryFile()

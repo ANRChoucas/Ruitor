@@ -2,6 +2,7 @@
 Parser xml arguments
 """
 
+import geojson_pydantic
 
 from bs4 import BeautifulSoup
 import json
@@ -213,7 +214,7 @@ class JSONParser:
 
         relSpa = self.parse_relationSpatiale(indice_json.relationLocalisation)
         cible = self.parse_cible()
-        site = self.parse_site(indice_json.site)
+        site = list(self.parse_site(indice_json.site))
 
         indice_dict["confiance"] = self._confiance
         indice_dict["relationSpatiale"] = relSpa
@@ -247,23 +248,20 @@ class JSONParser:
             outList.append(dic)
         return outList
 
-    def parse_site(self, site_xml, **kwargs):
-
-        site_key = kwargs.get("site_key", "featureMember")
-        temp_key = kwargs.get("temp_key", "trouverNom")
-
+    def parse_site(self, site_json, **kwargs):
         geom_counter = 0
-        for child in site_xml.children:
-            if child.name == temp_key:
-                geoms = []
-                for subchild in child.children:
-                    if subchild.name == site_key:
-                        geoms.append(self.parse_geometry(subchild))
-                        yield (geom_counter, geoms)
-                        geom_counter += 1
-            elif child.name == site_key:
+        for child in site_json:
+            if isinstance(site_json, geojson_pydantic.features.FeatureCollection):
                 yield (geom_counter, self.parse_geometry(child))
                 geom_counter += 1
+            else:
+                it = iter(child)
+                geoms = []
+                for subchild in child:
+                    geoms.append(self.parse_geometry(subchild))
+                    yield (geom_counter, geoms)
+                    geom_counter += 1
+
 
     def parse_geometry(self, geometry_gml):
         return self.geometryParser.parse_geometry(geometry_gml)
@@ -284,4 +282,4 @@ class JSONParser:
         return bbox
 
     def __str__(self):
-        return self._xml_dict
+        return self._json_dict

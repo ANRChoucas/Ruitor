@@ -3,7 +3,7 @@ Module Geometry parser
 """
 
 from bs4 import BeautifulSoup
-from shapely.geometry import Point, LineString, Polygon, MultiPolygon
+from shapely.geometry import shape, Point, LineString, Polygon, MultiPolygon
 
 
 class GeometryParser:
@@ -104,3 +104,5 @@ class JSONGeometryParser:
     def __init__(self, context):
         self.context = context
 
+    def parse_geometry(self, geojson):
+        return shape(geojson.geometry)
