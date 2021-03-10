@@ -244,7 +244,7 @@ async def fusion(
                 rasterio_files.append(f_raster)
 
     # Réalisation de la fusion
-    raster_fusion = reduce(lambda x, y: x | y, rasterio_files)
+    raster_fusion = reduce(lambda x, y: x & y, rasterio_files)
 
     # fusioner = fusion(cellsize=50)
     # fuzz, fuzz_note = fusioner.compute(fuzz_list, evaluate="note")
