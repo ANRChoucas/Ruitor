@@ -1,10 +1,10 @@
 beautifulsoup4==4.9.3
 fastapi==0.63.0
-geojson_pydantic==0.2.2
+geojson-pydantic==0.2.2
 lxml==4.5.1
 matplotlib==3.3.3
 numpy==1.19.4
-Owlready2==0.28
+Owlready2==0.26
 pathos==0.2.7
 pydantic==1.7.3
 python-multipart==0.0.5
