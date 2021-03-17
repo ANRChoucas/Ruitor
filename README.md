@@ -47,8 +47,15 @@ Une fois le serveur lancé on peut utiliser Ruitor à l'aide d'une API REST, dé
 Le code est documenté, pour construire la documentation :
 
 ```sh
-cd ./Ruitor/doc
+cd ./Ruitor
+source ./venv/bin/activate
+
+pip install sphinx
+
+cd ./doc
 make html
+
+firefox ./_build/html/index.html 
 ```
 
 ## À venir
