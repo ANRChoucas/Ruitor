@@ -1,42 +1,44 @@
 """
-fichier main.py
+Fichier d'entrée de Ruitor
+
+Déclaration de l'API et traitement des requêtes Rest
 """
 
-# Packages nécessaires pour la génération de l'api
+# Packages nécessaires pour la génération de l'api Rest
 from fastapi import FastAPI, File, UploadFile, Query
 from fastapi.responses import StreamingResponse
-
 from typing import Optional
 
 # Import des schémas de données personnalisés
 from api_schema import Indice, Operateur, Evaluator, EvaluationMetric
 
+# Packages pour l'écriture de logs
 import logging
 import logging.config
 
-# Import des classes rasterio
+# Import des classes rasterio nécessaires pour générer des rasters en mémoire
 import rasterio
 from rasterio.io import MemoryFile
 
-# Import des packages de la sdlib nécessaire
+# Import des packages de la sdlib nécessaires
 import io
 import os
 from functools import reduce
 
-# Import des modules de ruitor
+# Import des modules de ruitor nécessaires
 from fuzzyUtils.FuzzyRaster import FuzzyRaster
 from fusion.Fusion import fusion
 from ontologyTools import SROnto, ROOnto
 from spatialisation import SpatialisationFactory
 from parser import JSONParser
 
-
-import numpy as np
-
+# Import de la configuration de ruitor
+# Voir fichier "config.py"
 import config
 
 
-
+# Cette constante contient la description du paramètre "confiance",
+# utilisable lors de l'appel à la requête POST /spatialisation
 DESC_CONFIANCE = """La confiance est une valeur que le secouriste peut
 définir pour donner une indication sur sa croyance en la véracité de
 l'indice de localisation.
@@ -47,23 +49,42 @@ est spatialisé avec une certitude maximale, 1.
 La valeur de la confiance doit être comprise dans l'intervalle
 [0,1]"""
 
-
+# Initialisation du loger pour ce module (ie. ce fichier)
 logger = logging.getLogger(__name__)
 
 
-# Fonctions d'initialisation
+# Définition des fonctions utilisées lors de l'initialisation de
+# Ruitor
+
+
 def set_proxy(url, port):
+    """Fonction permettant la définition du proxy (usage ign)
+
+    Lorsqu'elle est appelée cette fonction défini le contenu des
+    variables d'environnement "http_proxy", "https_proxy",
+    "HTTP_PROXY" et "HTTPS_PROXY".
+
+    ATTENTION, cette fonction donne la même valeur aux 4 variables
+    d'environnement, dans la situation actuelle il n'est pas possible
+    de donner une URL de proxy différente pour l'http et l'https. Ce
+    fonctionement est compatible avec le proxy de l'ign, mais peut
+    poser des problèmes dans d'autres situations.
+
+    ATTENTION bis, cette fonction a été définie pour linux, il est
+    possible qu'elle ne fonctionne pas sous windows avec le vpn de
+    l'ign.
     """
-    Fonction permettant la définition du proxy (usage ign)
-    """
-    
+
     proxy = "%s:%s" % (url, port)
 
+    # On écrit la valeur des variables d’environnement
     os.environ["http_proxy"] = proxy
     os.environ["HTTP_PROXY"] = proxy
     os.environ["https_proxy"] = proxy
     os.environ["HTTPS_PROXY"] = proxy
-    
+
+    # On écrit dans le log quelle est la valeur du proxy, avec
+    # priorité "info"
     logger.info("The proxy : %s is used" % proxy)
 
 
@@ -71,7 +92,7 @@ def load_mnt(params, name=None, precision=None):
     """
     Fonction permettant de charger le MNT pour la spatialisation
     """
-    
+
     if name:
         rasters = [i for i in params["MNT"] if i["name"] == name]
     elif precision:
@@ -134,7 +155,7 @@ def set_zir(raster, zir):
 
 # Initialisation
 
-# Chargement de la configuration 
+# Chargement de la configuration
 configuration(config)
 
 # Chargement ontologie ORL
@@ -170,22 +191,20 @@ def spatialisation(
     ),
 ):
     """La fonction prend en entrée un indice de localisation et renvoie la
-      zlc correspondante sous la forme d'un GeoTiff.
+    zlc correspondante sous la forme d'un GeoTiff.
     """
 
     print("DD")
 
     parser = JSONParser(indice, confiance)
 
-    
-    spatialisationParms = parser.values   
-    
+    spatialisationParms = parser.values
+
     factor = SpatialisationFactory(spatialisationParms, mnt, sro)
 
     test = list(factor.make_Spatialisation())
 
     raster_temp = test[0].compute()
-
 
     memory_file = MemoryFile()
     memory_fusion_gtiff = raster_temp.memory_write(memory_file)
@@ -193,8 +212,6 @@ def spatialisation(
 
     # Renvoi du résultat (lent, à voir)
     return StreamingResponse(byte_gtiff, media_type="image/tiff")
-
-
 
 
 # Requête POST /fusion
