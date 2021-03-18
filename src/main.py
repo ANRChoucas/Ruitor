@@ -127,6 +127,11 @@ def load_ontology(params, onto_type):
 
 
 def configuration(config):
+    """Prend en entrée un module contenant les options de configuration
+    et les applique
+    """
+
+    
     # Configuration logging
     logging.config.dictConfig(config.logging_configuration)
 
@@ -155,6 +160,8 @@ def set_zir(raster, zir):
 
 # Initialisation
 
+# C'est à partir de cet endroit du code que le serveur démarre
+
 # Chargement de la configuration
 configuration(config)
 
@@ -163,6 +170,9 @@ sro = load_ontology(config.ontology, "SRO")
 
 # Import données
 mnt = load_mnt(config.data, name="BR")
+
+
+# Définition de l'API
 
 # Déclaration de l'api
 app = FastAPI()
