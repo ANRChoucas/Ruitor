@@ -194,8 +194,6 @@ def spatialisation(
     zlc correspondante sous la forme d'un GeoTiff.
     """
 
-    print("DD")
-
     parser = JSONParser(indice, confiance)
 
     spatialisationParms = parser.values
