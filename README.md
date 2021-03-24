@@ -63,7 +63,7 @@ sudo docker build -t ruitor .
 #### Lancement du serveur
 
 ```sh
-sudo docker run -d --name ruitor_cont -p 80:80 ruitor
+sudo docker run -d --name ruitor_cont -p 8000:80 ruitor
 ```
 
 
