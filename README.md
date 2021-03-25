@@ -64,6 +64,13 @@ git checkout API
 sudo docker build -t ruitor .
 ```
 
+**NB :** Dans le cas où cette instruction est effectuée à l'IGN il est nécessaire de préciser (*une nouvelle fois*) le proxy. La commande à utiliser est donc :
+
+```sh
+# Variante de la commande pour le proxy IGN
+sudo docker build --build-arg http_proxy=http://proxy.ign.3128 --build-arg https_proxy=http://proxy.ign.fr:3128 -t ruitor .
+```
+
 #### Lancement du serveur
 
 ```sh
