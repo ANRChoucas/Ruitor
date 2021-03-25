@@ -44,6 +44,10 @@ python -m uvicorn main:app --reload
 Prérequis:
 - Docker
 
+**NB :** Sur les ordinateurs IGN il est nécessaire de configurer le proxy pour pour pouvoir utiliser Docker. [Ce forum](https://stackoverflow.com/a/38386911) explique la procédure à suivre sous ubuntu.
+
+
+
 1. Télécharger le dépôt
 
 ```sh
