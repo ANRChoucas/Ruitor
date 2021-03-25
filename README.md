@@ -44,6 +44,10 @@ python -m uvicorn main:app --reload
 Prérequis:
 - Docker
 
+**NB :** Sur les ordinateurs IGN il est nécessaire de configurer le proxy pour pour pouvoir utiliser Docker. [Ce forum](https://stackoverflow.com/a/38386911) explique la procédure à suivre sous ubuntu.
+
+
+
 1. Télécharger le dépôt
 
 ```sh
@@ -58,6 +62,13 @@ git checkout API
 ```sh
 # Peut prendre beaucoup de temps
 sudo docker build -t ruitor .
+```
+
+**NB :** Dans le cas où cette instruction est effectuée à l'IGN il est nécessaire de préciser (*une nouvelle fois*) le proxy. La commande à utiliser est donc :
+
+```sh
+# Variante de la commande pour le proxy IGN
+sudo docker build --build-arg http_proxy=http://proxy.ign.3128 --build-arg https_proxy=http://proxy.ign.fr:3128 -t ruitor .
 ```
 
 #### Lancement du serveur
