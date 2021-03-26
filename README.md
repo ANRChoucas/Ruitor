@@ -77,6 +77,7 @@ sudo docker build --build-arg http_proxy=http://proxy.ign.3128 --build-arg https
 sudo docker run -d --name ruitor_cont -p 8000:80 ruitor
 ```
 
+**NB :** Par défaut Ruitor effectue ses calculs en parrallèle. `docker run` propose plusieurs options pour gérer la manière dont le conteneur utilise le CPU (voir   [la documentation de docker](https://docs.docker.com/config/containers/resource_constraints/#cpu))
 
 ## API
 
