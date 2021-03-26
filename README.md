@@ -38,6 +38,13 @@ source ./venv/bin/activate
 pip install -r ./requirements.txt
 ```
 
+**NB :** à l'IGN il est nécessaire d'utiliser pip avec l'option ```--proxy```
+
+
+```sh
+pip install -r ./requirements.txt --proxy=proxy.ign.fr:3128
+```
+
 #### Lancement du serveur
 
 ```sh
