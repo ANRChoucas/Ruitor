@@ -5,6 +5,8 @@
 
 ### Installation classique
 
+**Pour windows priviliégier l'installation docker**
+
 Prérequis:
 - Python 3.9
 
