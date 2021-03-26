@@ -17,16 +17,24 @@ cd ./Ruitor
 git checkout API 
 ```
 
-2. Création de l'environnement virtuel
+2. Création et activation de l'environnement virtuel
 
 ```sh
 python -m venv ./venv
+```
+ On active l'environnement virtuel :
+
+```sh
+# Sous linux
+source ./venv/bin/activate
+
+# Sous windows
+.\venv\Scripts\activate
 ```
 
 3. Téléchargement et installation des dépendances
 
 ```sh
-source ./venv/bin/activate
 pip install -r ./requirements.txt
 ```
 
