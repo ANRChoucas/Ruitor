@@ -45,6 +45,8 @@ pip install -r ./requirements.txt
 pip install -r ./requirements.txt --proxy=http://proxy.ign.fr:3128
 ```
 
+**NB :** Sous windows certaines dépendances (notamment `rasterio`) peuvent ne pas s'installer. Il faut donc installer manuellement `rasterio 1.2.1` et `gdal 3.2.2` en passant par les `wheels`, puis executer ```pip install -r ./requirements.txt --proxy=http://proxy.ign.fr:3128```. [La documention de rasterio](https://pypi.org/project/rasterio/#windows) détaille la procédure et donne le lien des wheels.
+
 #### Lancement du serveur
 
 ```sh
