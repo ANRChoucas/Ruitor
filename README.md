@@ -42,7 +42,7 @@ pip install -r ./requirements.txt
 
 
 ```sh
-pip install -r ./requirements.txt --proxy=proxy.ign.fr:3128
+pip install -r ./requirements.txt --proxy=http://proxy.ign.fr:3128
 ```
 
 #### Lancement du serveur
