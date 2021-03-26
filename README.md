@@ -44,7 +44,30 @@ python -m uvicorn main:app --reload
 Prérequis:
 - Docker
 
-**NB :** Sur les ordinateurs IGN il est nécessaire de configurer le proxy pour pour pouvoir utiliser Docker. [Ce forum](https://stackoverflow.com/a/38386911) explique la procédure à suivre sous ubuntu.
+**NB :** Sur les ordinateurs IGN il est nécessaire de configurer le proxy pour pour pouvoir utiliser Docker. La procédure à suivre (sous linux avec `systemd`) est :
+
+1. Créer le dossier `docker.service.d`
+
+```sh
+mkdir /etc/systemd/system/docker.service.d
+```
+
+2. Créer le fichier `http-proxy.conf` dans ce dossier et y ajouter les lignes suivantes :
+
+```sh
+[Service]
+Environment="HTTP_PROXY=http://proxy.ign.fr:3128/"
+Environment="HTTPS_PROXY=http://proxy.ign.fr:3128/"
+```
+
+3. Redémarer le service docker
+
+```sh
+systemctl daemon-reload
+systemctl restart docker
+```
+
+Source : [ce forum](https://stackoverflow.com/a/38386911).
 
 
 
