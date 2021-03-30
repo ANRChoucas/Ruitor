@@ -7,6 +7,7 @@ Déclaration de l'API et traitement des requêtes Rest
 # Packages nécessaires pour la génération de l'api Rest
 from fastapi import FastAPI, File, UploadFile, Query
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 
 # Import des schémas de données personnalisés
@@ -176,6 +177,20 @@ mnt = load_mnt(config.data, name="BR")
 
 # Déclaration de l'api
 app = FastAPI()
+
+
+origins = [
+    "http://localhost",
+    #"http://localhost:8008",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Définition points entrée API
 
