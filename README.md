@@ -59,6 +59,8 @@ source ./venv/bin/activate
 .\venv\Scripts\activate
 ```
 
+Si l'activation s'est bien passée le prompt du terminal doit être préfixé de ```(venv)```. Par exemple : ```(venv) /Ruitor $```
+
 3. Téléchargement et installation des dépendances
 
 ```sh
