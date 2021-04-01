@@ -6,7 +6,8 @@ Déclaration de l'API et traitement des requêtes Rest
 
 # Packages nécessaires pour la génération de l'api Rest
 from fastapi import FastAPI, File, UploadFile, Query
-from fastapi.responses import StreamingResponse
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import StreamingResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 
@@ -167,10 +168,10 @@ def set_zir(raster, zir):
 configuration(config)
 
 # Chargement ontologie ORL
-sro = load_ontology(config.ontology, "SRO")
+SRO = load_ontology(config.ontology, "SRO")
 
 # Import données
-mnt = load_mnt(config.data, name="BR")
+MNT = load_mnt(config.data, name="BR")
 
 
 # Définition de l'API
@@ -193,6 +194,35 @@ app.add_middleware(
 )
 
 # Définition points entrée API
+
+
+# Requête GET /mnt/bbox
+@app.get("/mnt/bbox")
+def mnt_bbox():
+    """Renvoie la bbox du MNT utilisé pour le calcul des ZLC et de la ZLP
+
+    Dans le cas où la ZIR spécifiée par l'utilisateur n'est pas
+    renseignée, le calcul ne peut pas aboutir.
+
+    La BBOX renvoyée est de la forme [XMIN, YMIN, XMAX, YMAX]
+
+    Les coordonées sont exprimées dans le système de projection de la
+    couche.
+
+    """
+    json_compatible_item_data = jsonable_encoder(MNT.bounds)
+    return JSONResponse(content=json_compatible_item_data)
+
+
+# Requête GET /mnt/crs
+@app.get("/mnt/crs")
+def mnt_bbox():
+    """
+    Renvoie le CRS du MNT utilisé
+    """
+    json_compatible_item_data = jsonable_encoder(MNT.crs)
+    return JSONResponse(content=json_compatible_item_data)
+
 
 # Requête POST /spatialisation
 @app.post(
@@ -223,7 +253,7 @@ def spatialisation(
 
     spatialisationParms = parser.values
 
-    factor = SpatialisationFactory(spatialisationParms, mnt, sro)
+    factor = SpatialisationFactory(spatialisationParms, MNT, SRO)
 
     test = list(factor.make_Spatialisation())
 
