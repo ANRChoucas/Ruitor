@@ -3,7 +3,7 @@ Module Geometry parser
 """
 
 from bs4 import BeautifulSoup
-from shapely.geometry import Point, LineString, Polygon
+from shapely.geometry import shape, Point, LineString, Polygon, MultiPolygon
 
 
 class GeometryParser:
@@ -22,10 +22,14 @@ class GeometryParser:
 
         if geometry_property.find("exterior", recursive=False):
             geometry = self.parse_polygon(geometry_property)
-        elif geometry_property.find("posList", recursive=False):
+        elif geometry_property.find("Polygon", recursive=False):
+            geometry = self.parse_polygon(geometry_property, version=2)
+        elif geometry_property.find("LineString", recursive=False):
             geometry = self.parse_lineString(geometry_gml)
         elif geometry_property.find("Point", recursive=False):
             geometry = self.parse_point(geometry_gml)
+        elif geometry_property.find("MultiPolygon", recursive=False):
+            geometry = self.parse_multiPolygon(geometry_property)
         else:
             raise ValueError("Unkwon type")
 
@@ -45,15 +49,22 @@ class GeometryParser:
 
         return parsed_coords
 
-    def parse_polygon(self, polygon_gml):
+    def parse_polygon(self, polygon_gml, version=1):
 
         # Calcul coordonées enveloppe
-        ext_coordinates = self.parse_coordinates(polygon_gml.exterior.coordinates)
+        if version == 1:
+            ext_coordinates = self.parse_coordinates(polygon_gml.exterior.coordinates)
+        elif version == 2:
+            ext_coordinates = self.parse_coordinates(
+                polygon_gml.outerBoundaryIs.coordinates
+            )
+
+        inter_name = "innerBoundaryIs"
 
         # Calcul coordonées interieur
-        if polygon_gml.interior:
+        if polygon_gml.innerBoundaryIs:
             int_coordinates = []
-            for inter in polygon_gml.find_all("interior"):
+            for inter in polygon_gml.find_all(inter_name):
                 int_coordinates.append(self.parse_coordinates(inter.coordinates))
         else:
             int_coordinates = None
@@ -62,6 +73,15 @@ class GeometryParser:
         out_polygon = Polygon(shell=ext_coordinates, holes=int_coordinates)
         return out_polygon
 
+    def parse_multiPolygon(self, multiPolygon_gml):
+        polygons = []
+        for polygon in multiPolygon_gml.find_all("polygonMember"):
+            polygons.append(self.parse_polygon(polygon, 2))
+
+        out_multi_polygon = MultiPolygon(polygons)
+
+        return out_multi_polygon
+
     def parse_point(self, point_gml):
         coordinates = self.parse_coordinates(point_gml.coordinates)
         out_point = Point(*coordinates)
@@ -69,4 +89,20 @@ class GeometryParser:
         return out_point
 
     def parse_lineString(self, lineString_gml):
-        return None
+        coordinates = self.parse_coordinates(lineString_gml.coordinates)
+        out_Line = LineString(coordinates)
+
+        return out_Line
+
+
+
+class JSONGeometryParser:
+    """
+    Parseur de géométries GeoJson
+    """
+    
+    def __init__(self, context):
+        self.context = context
+
+    def parse_geometry(self, geojson):
+        return shape(geojson.geometry)

@@ -30,8 +30,7 @@ release = '0.1'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo', 'sphinx.ext.viewcode'
-]
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo', 'sphinx.ext.viewcode']
 
 
 # Add any paths that contain templates here, relative to this directory.
@@ -69,6 +68,6 @@ autodoc_default_options = {
     'private-members': True
 }
 
-
+autodoc_mock_imports = ["rasterio", "shapely", "owlready2", "skimage", "pathos", "rdflib", "skfuzzy"]
 
 todo_include_todos = True

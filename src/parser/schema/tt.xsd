@@ -1,107 +1,155 @@
 <?xml version="1.0" ?>
 
 <xs:schema
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:gml="http://www.opengis.net/gml/3.2"
-  xmlns:ogr="http://ogr.maptools.org/"
-  targetNamespace="urn:ruitorXSD"
-  xmlns="urn:ruitorXSD"
-  elementFormDefault="qualified">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:gml="http://www.opengis.net/gml/3.2"
+    xmlns:ogr="http://ogr.maptools.org/"
+    targetNamespace="urn:ruitorXSD"
+    xmlns="urn:ruitorXSD"
+    elementFormDefault="qualified">
 
- <xs:import
-   namespace="http://www.opengis.net/gml/3.2"
-   schemaLocation="http://schemas.opengis.net/gml/3.2.1/feature.xsd" />
+  <xs:import
+      namespace="http://www.opengis.net/gml/3.2"
+      schemaLocation="http://schemas.opengis.net/gml/3.2.1/feature.xsd" />
 
- <!-- Définition d'un type personalisé, un flotant [0,1] -->
- <xs:simpleType
-   name="zeroOneFloat"
-   id="zeroOneFloat">
-  <xs:restriction base="xs:float">
-   <xs:minInclusive value="0" />
-   <xs:maxInclusive value="1" />
-  </xs:restriction>
- </xs:simpleType>
 
- <xs:element
-   name="zir"
-   substitutionGroup="gml:boundedBy" />
+  <!-- Définition d'un type personalisé, un flotant [0,1] -->
+  <xs:simpleType
+      name="zeroOneFloat"
+      id="zeroOneFloat">
+    <xs:restriction base="xs:float">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
 
- <!-- -->
- <xs:element name="cible"></xs:element>
-
- <!-- -->
- <xs:element name="relationSpatiale">
-  <xs:complexType>
-   <xs:sequence minOccurs="0">
-    <xs:element ref="sequenceModifieur" />
-   </xs:sequence>
-   <xs:attribute
-     name="about"
-     use="required"
-     type="xs:anyURI" />
+  <!-- Définition d'un type personalisé, extension du type xs:string
+  avec un attribut about de type URI. 
+  Permet de lier un modifieur à l'ontologie -->
+  <xs:complexType name="modifieurType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute
+            name="about"
+            use="required"
+            type="xs:anyURI" />
+      </xs:extension>
+    </xs:simpleContent>
   </xs:complexType>
- </xs:element>
 
- <!-- -->
- <xs:element name="modifieur">
-  <xs:complexType>
-   <xs:attribute
-     name="about"
-     use="required"
-     type="xs:anyURI" />
-  </xs:complexType>
- </xs:element>
+<xs:complexType name="featureMemberTyped">
+  <xs:complexContent>
+    <xs:extension base="gml:AbstractFeatureMemberType">
+      <xs:attribute
+      name="about"
+      use="required"
+      type="xs:anyURI" />
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
 
- <!-- -->
- <xs:element
-   name="site"
-   substitutionGroup="gml:FeatureCollection" />
+  <!-- Définition de l'élément zir. L'élément est
+  défini comme un alias pour le type BBOX défini en GML.
+  Permet de définir une zone de calcul. La même zone 
+  intitiale de recherche s'applique à tous les indices -->
+  <xs:element
+      name="zir"
+      substitutionGroup="gml:boundedBy" />
 
- <xs:element name="indice">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element ref="cible" />
-    <xs:element ref="relationSpatiale" />
-    <xs:element ref="site" />
-   </xs:sequence>
-   <xs:attribute
-     name="confiance"
-     default="1.0"
-     type="zeroOneFloat" />
-  </xs:complexType>
- </xs:element>
+  <!-- Définition de l'élément cibre -->
+  <xs:element name="cible"></xs:element>
 
- <!-- -->
- <xs:element name="sequenceModifieur">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element
-      ref="modifieur"
-      minOccurs="1"
-      maxOccurs="unbounded" />
-   </xs:sequence>
-  </xs:complexType>
- </xs:element>
+  <!-- Définition de l'élément modifieur. 
+  Le type est une extension de xs:string, définie plus haut-->
+  <xs:element
+      name="modifieur"
+      type="modifieurType" />
 
- <!-- -->
- <xs:element name="sequenceIndice">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element
-      ref="indice"
-      maxOccurs="unbounded" />
-   </xs:sequence>
-  </xs:complexType>
- </xs:element>
+  <!-- Définition d'une séquence de modifieurs.
+  Contient au moins un modifieur -->
+  <xs:element name="modifieurs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element
+            ref="modifieur"
+            minOccurs="1"
+            maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
- <!-- Définition de la racine -->
- <xs:element name="hypothèse">
-  <xs:complexType>
-   <xs:all>
-    <xs:element ref="zir" />
-    <xs:element ref="sequenceIndice" />
-   </xs:all>
-  </xs:complexType>
- </xs:element>
+  <!-- Définition d'une relation spatiale.
+  Est composée d'une URI, obligatoire, pour 
+  lier la relation spatiale à l'ontologie et 
+  d'une séquence, optionelle de modifieurs -->
+  <xs:element name="relationSpatiale">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="modifieurs" />
+      </xs:sequence>
+      <xs:attribute
+          name="about"
+          use="required"
+          type="xs:anyURI" />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Définition du site -->
+  <xs:element name="site">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+          <xs:element ref="gml:featureMember" />
+        </xs:sequence>
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+          <xs:element name="trouverNom">
+            <xs:complexType>
+              <xs:sequence minOccurs="2" maxOccurs="2">
+                <xs:element ref="gml:featureMember" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+
+  <!-- Définition d'un indice -->
+  <xs:element name="indice">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cible" />
+        <xs:element ref="relationSpatiale" />
+        <xs:element ref="site" />
+      </xs:sequence>
+      <xs:attribute
+          name="confiance"
+          default="1.0"
+          type="zeroOneFloat" />
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Définition d'une séquence d'indices -->
+  <xs:element name="indices">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element
+            ref="indice"
+            minOccurs="1"
+            maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Définition de la racine -->
+  <xs:element name="hypothèse">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="zir" />
+        <xs:element ref="indices" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
 
 </xs:schema>

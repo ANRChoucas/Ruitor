@@ -19,5 +19,14 @@ class Not(Modifier):
         super().__init__(context)
 
     def _modifing(self, values):
-        return 1 - values
+        return ~values
 
+
+class Remapping(Modifier):
+    def __init__(self, context, *args, **kwargs):
+        self.function_parameters = kwargs.get("value")
+        super().__init__(context)
+
+    def _modifing(self, values):
+        values.fuzzyfication(self.function_parameters)
+        return values

@@ -1,10 +1,10 @@
 FuzzyUtils
-==========
+++++++++++
 
 Contient l'ensemble des classes nécessaires à la gestion des rasters flous
 
 Documentation
--------------
+=============
 
 .. automodule:: fuzzyUtils
    :members:

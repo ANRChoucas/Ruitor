@@ -19,9 +19,11 @@ direct.
 .. toctree::
     :caption: Packages:
 
+    initialisation              
     fuzzyutils
     ontologytools
     spatialisation
+    fusion
     parser
 
 

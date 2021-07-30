@@ -66,7 +66,10 @@ class ParallelAggregator(AggregatorStrategy):
         tmp = {}
         # calc
         for i in input:
-            tmp[i] = self.context[i].compute()
+            v = self.context[i].compute()
+            # Écriture des rasters objets
+            #v.write("./_outTest/%s-%s-%s.tif" % i)
+            tmp[i] = v
 
         logger.debug("agg_spa_rel : Begin")
         keysList = list(tmp.keys())
@@ -158,11 +161,11 @@ class FirstAggregator(AggregatorStrategy):
 
         logger.info("Compute : Begin")
 
-        with Pool(processes=self.pools) as t:
-            cmp_res = t.map(self.context.element_compute, sp_list[1])
+        #with Pool(processes=self.pools) as t:
+        #    cmp_res = t.map(self.context.element_compute, sp_list[1])
 
         # Version debug
-        # cmp_res = map(self.context.element_compute, sp_list[1])
+        cmp_res = map(self.context.element_compute, sp_list[1])
 
         logger.info("Compute : Done")
 
@@ -179,7 +182,7 @@ class FirstAggregator(AggregatorStrategy):
 
             for k, v in cmp_dic.items():
                 f_name = "obj%s_part%s_rel%s" % k
-                v.write("./_outTest/%s.tif" % f_name)
+                #v.write("./_outTest/%s.tif" % f_name)
                 logger.debug("Spatial relation %s writing : Done", f_name)
 
             logger.debug("Spatial relations writing : Done")
@@ -188,7 +191,7 @@ class FirstAggregator(AggregatorStrategy):
 
             for k, v in zou.items():
                 f_name = "obj%s_part%s" % k
-                v.write("./_outTest/%s.tif" % f_name)
+                #v.write("./_outTest/%s.tif" % f_name)
                 logger.debug("Object part %s writing  : Done", f_name)
 
             logger.debug("Objects Parts writing : Done")

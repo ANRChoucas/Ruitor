@@ -15,3 +15,5 @@ src/pycallgraph.png
 deb.tif.aux.xml
 data/ontologies/catalog-v001.xml
 **_resultsAnalysis/
+src/messager.py
+**/examples/*.png

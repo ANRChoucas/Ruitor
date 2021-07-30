@@ -20,3 +20,6 @@ Documentation
 
 .. automodule:: spatialisation.Selector
    :members:
+
+.. automodule:: spatialisation.Rasterizer
+   :members:
