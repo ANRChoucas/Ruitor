@@ -9,7 +9,7 @@ cligj==0.7.1
 cycler==0.10.0
 decorator==4.4.2
 dill==0.3.3
-fastapi==0.63.0
+fastapi==0.65.2
 geojson-pydantic==0.2.2
 h11==0.12.0
 httptools==0.1.1
