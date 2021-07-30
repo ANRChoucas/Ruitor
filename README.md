@@ -196,4 +196,4 @@ Le fichier d'index de la documention est : ```./Ruitor/doc/_build/html/index.htm
 
 ## Pour plus de détails
 
-- Bunel (2021), *Modélisation et raisonnement spatial flou pour l'aide de la localisation de victimes en montagne,* Thèse de doctorat. (publication à venir)
+- Bunel (2021), [*Modélisation et raisonnement spatial flou pour l'aide de la localisation de victimes en montagne,*](https://tel.archives-ouvertes.fr/tel-03298717) Thèse de doctorat.
