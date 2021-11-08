@@ -1322,7 +1322,7 @@
 	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
 	<rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqVal"/>
 	<Ornitho:pythonName>EqVal</Ornitho:pythonName>
-	<Ornitho:pythonParameter>{'value':0}</Ornitho:pythonParameter>
+	<Ornitho:pythonParameter>{'value':0, 'step':100}</Ornitho:pythonParameter>
 </rdf:Description>
 <!--  -->
 <!-- http://www.semanticweb.org/mbunel/ontologies/Ornitho#EqVal -->
