@@ -9,7 +9,9 @@ Deux modes d'installation sont possibles.
 
 **NB :** La première méthode d'installation peut être difficile à utiliser sous windows, il vaut mieux privilégier docker (nécessite Windows X)
 
-### Installation "classique"
+---
+
+### Installation "classique" (déconseillée)
 
 #### Prérequis:
 - Python 3.9 [**Windows :** le python de Qgis ne compte pas]
@@ -22,7 +24,7 @@ Deux modes d'installation sont possibles.
 La commande ```git clone``` permet de télécharger un dépôt distant
 
 ```sh
-git clone https://github.com/MBunel/Ruitor/
+git clone https://github.com/ANRChoucas/Ruitor/
 cd ./Ruitor
 ```
 
@@ -79,10 +81,13 @@ pip install -r ./requirements.txt --proxy=http://proxy.ign.fr:3128
 
 **NB Windows 2:** Le package `uvloop` (qui est dans les `requirements` et qui est demandé par `uvicorn`) ne fonctione pas, il faut donc le retirer du `requierement.txt`
 
+---
+
 ### Avec Docker
 
 #### Prérequis:
-- Docker
+
+- Docker (nécessite windows X ou linux)
 
 **NB IGN:** Il est nécessaire de configurer le proxy pour pour pouvoir utiliser Docker. La procédure à suivre (sous linux avec `systemd`) est :
 
@@ -95,7 +100,7 @@ Le proxy est configurable dans les options du client graphique Docker
 1. Créer le dossier `docker.service.d`
 
 ```sh
-mkdir /etc/systemd/system/docker.service.d
+sudo mkdir -p /etc/systemd/system/docker.service.d
 ```
 
 2. Créer le fichier `http-proxy.conf` dans ce dossier et y ajouter les lignes suivantes :
@@ -109,11 +114,11 @@ Environment="HTTPS_PROXY=http://proxy.ign.fr:3128/"
 3. Redémarer le service docker
 
 ```sh
-systemctl daemon-reload
-systemctl restart docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 
-Source : [ce forum](https://stackoverflow.com/a/38386911).
+Voir la [documentation](https://docs.docker.com/config/daemon/systemd/#httphttps-proxy).
 
 #### Installation
 
@@ -122,7 +127,7 @@ Source : [ce forum](https://stackoverflow.com/a/38386911).
 La commande ```git clone``` permet de télécharger un dépôt distant
 
 ```sh
-git clone https://github.com/MBunel/Ruitor/
+git clone https://github.com/ANRChoucas/Ruitor/
 cd ./Ruitor
 ```
 
@@ -148,8 +153,10 @@ docker build -t ruitor .
 
 ```sh
 # Variante de la commande pour le proxy IGN
-docker build --build-arg http_proxy=http://proxy.ign.3128 --build-arg https_proxy=http://proxy.ign.fr:3128 -t ruitor .
+# Sinon l'étape qui utilise pip ne fonctionne pas
+docker build --build-arg http_proxy=http://proxy.ign.fr:3128 --build-arg https_proxy=http://proxy.ign.fr:3128 -t ruitor .
 ```
+---
 
 ## Lancement du serveur
 
@@ -169,6 +176,8 @@ docker run -d --name ruitor_cont -p 8000:80 ruitor
 ```
 
 **NB :** Par défaut Ruitor effectue ses calculs en parrallèle. `docker run` propose plusieurs options pour gérer la manière dont le conteneur utilise le CPU (voir   [la documentation de docker](https://docs.docker.com/config/containers/resource_constraints/#cpu))
+
+---
 
 ## API
 
