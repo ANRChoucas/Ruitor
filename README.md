@@ -122,7 +122,7 @@ Source : [ce forum](https://stackoverflow.com/a/38386911).
 La commande ```git clone``` permet de télécharger un dépôt distant
 
 ```sh
-git clone https://github.com/MBunel/Ruitor/
+git clone https://github.com/ANRChoucas/Ruitor/
 cd ./Ruitor
 ```
 
