@@ -40,7 +40,7 @@ Shapely==1.7.1
 six==1.15.0
 snuggs==1.4.7
 soupsieve==2.2
-starlette==0.13.6
+starlette==0.25.0
 tifffile==2021.3.16
 typing-extensions==3.7.4.3
 uvicorn==0.13.4
